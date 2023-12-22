@@ -1,0 +1,64 @@
+.pro-img{
+    width : 70%;
+    margin: 25% 15% 0% 15%;
+
+}
+
+.my-cus-button{
+    --slds-c-button-brand-color-background: #155c9e;
+     --slds-c-button-brand-color-background-hover: #0f3a63;
+ }
+
+
+.input-qty{
+    width: 120px;
+}
+
+.desc-card{
+    margin-top: 10%;
+}
+.product-preview-card{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.pro-desc h4.pro-title {
+    text-align: center;
+     margin-bottom: 15px;
+}
+ .pro-desc h4.pro-title:hover {
+    color: #0a32c6;
+}
+
+ .pro-desc h4 {
+    font-size: 14px;
+     font-weight: 600;
+     margin-top: 10px;
+     margin-bottom: 10px;
+     display: flex;
+     justify-content: space-between;
+}
+ .pro-desc h4 span {
+     display: inline-block;
+}
+ .pro-desc h4 span.price {
+    color: #0a32c6;
+     display: inline-block;
+}
+ .pro-desc .desc p{
+     font-size: 10pt;
+     padding: 10px 0px;
+     text-align: justify;
+}
+ .quantity-holder{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+ .btn-holder{
+     display: flex;
+    margin-top: 20px;
+}
+
+.action-button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

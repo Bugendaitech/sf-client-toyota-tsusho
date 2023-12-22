@@ -1,0 +1,31 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+.border-style{
+    border-bottom : 1px solid #dddddd;
+    padding: 18px;
+  }
+.total-padding{
+    padding: 15px;
+}
+.text-alignval{
+    text-align: right;
+}
+.btn-size{
+    width: 100%;
+}
+.order-summary-box{
+    background: #FFFFFF;
+    /* border: 1px solid #D4D4D4; */
+    margin-top: 3%;
+}
+
+.register-btn,.go-back-btn{
+    width: 150px;
+}
+
+button{
+    padding: 10px;
+}

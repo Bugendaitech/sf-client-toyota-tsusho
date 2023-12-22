@@ -1,0 +1,330 @@
+<template>
+  <div class="slds-align_absolute-center">
+    <lightning-spinner if:false={spinnerStatus} variant="brand" size="medium" style="position: absolute!important;z-index: 1000 !important;"></lightning-spinner>
+  </div>
+    <h3 style="font-size:1.5rem;font-weight:bold; text-align:center;margin-top:5%" >PRODUCTS</h3>
+    <lightning-layout multiple-rows>
+
+      
+      <lightning-layout-item key={index} 
+                        size="12"
+                        small-device-size="12"
+                        medium-device-size="12"
+                        large-device-size="12"
+                        padding="around-small">
+                          <span class="slds-badge custom-badge custom-badge-active" onclick={handleCategory} data-title="All">All</span>
+                          
+                          <template for:each={proFamiles} for:item="item"> 
+                            <span class="slds-badge custom-badge" key={item} onclick={handleCategory} data-title={item.value}>{item.value}</span>
+                          </template>
+
+      </lightning-layout-item>
+
+        <template for:each={records} for:item="index">
+
+                    <lightning-layout-item key={index} 
+                        size="12"
+                        small-device-size="6"
+                        medium-device-size="4"
+                        large-device-size="3"
+                        padding="around-small"> 
+
+                        <lightning-card class="product-box slds-p-around_small">
+                            <div class="demo-only">
+                            
+                              <article class="slds-tile slds-p-around_medium">
+                                <div class="pro-img" onclick={handleNavigation} 
+                                data-type="comm__namedPage" 
+                                data-name="view-product"
+                                data-id={index.id}
+                                >
+                                  <template if:true={index.imgSrc}>
+                                    <img src={index.imgSrc} onclick={handleNavigation} 
+                                    data-type="comm__namedPage" 
+                                    data-name="view-product"                                  
+                                    data-id={index.id}>
+                                  </template>
+                                  <template if:false={index.imgSrc}>
+                                    <img src="https://canvassproperties.com/wp-content/uploads/2017/10/dummy-image.jpg" onclick={handleNavigation} 
+                                    data-type="comm__namedPage" 
+                                    data-name="view-product"                                  
+                                    data-id={index.id}>
+                                  </template>
+                                  
+                                </div>
+
+                                <div class="pro-desc">
+                                  <h3 class="slds-tile__title slds-truncate pro-title" title={index.name} 
+                                    onclick={handleNavigation} 
+                                    data-type="comm__namedPage" 
+                                    data-name="view-product"
+                                    data-id={index.id}>{index.name}
+                                  </h3>
+                                   
+                                  <h4>Price  : 
+                                    <span> 
+                                      <template if:true={index.unitPrice}>
+                                        <lightning-formatted-number value={index.unitPrice} format-style="currency"
+                                          minimum-integer-digits="3" ></lightning-formatted-number>
+                                      </template>
+                                      <template if:false={index.unitPrice}>
+                                        <lightning-formatted-number value={index.unitPrice} format-style="currency"
+                                          minimum-integer-digits="1" maximum-fraction-digits="2"
+                                          minimum-fraction-digits="2"></lightning-formatted-number>
+                                      </template>
+                                    </span>                     
+                                  </h4>
+                                  <h4>Short Description  : </h4>
+                                  <template if:true={index.shortDesc}>
+                                    <p>{index.shortDesc}</p>
+                                  </template>
+                                  <template if:false={index.shortDesc}>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iure assumenda, corrupti atque adipisci porro minima.</p>
+                                  </template>
+                                </div>
+
+                                <div class="pro-btn-box">
+                                   <lightning-button label="Add to Cart" class="slds-button slds-align_absolute-center" 
+                                    icon-name="utility:cart"
+                                    data-pro-code={index.id} data-pro-qty="1" variant="brand"
+                                    onclick={addToCart}></lightning-button>
+
+                                    <lightning-button label="View Product" class="slds-button slds-align_absolute-center" icon-name="utility:preview" 
+                                    variant="brand"
+                                    onclick={handleNavigation} 
+                                    data-type="comm__namedPage" 
+                                    data-id={index.id}
+                                    data-name="view-product" ></lightning-button>
+                                </div>
+
+  
+                              </article>
+                          
+                            
+                            </div>
+                             
+
+              
+                            
+              
+                          </lightning-card>
+                    </lightning-layout-item>
+
+
+         
+    </template>
+
+    </lightning-layout>
+
+
+
+
+
+
+
+
+    <section role="dialog" aria-modal="true" class={editPaymentClassJob} tabindex="-1" aria-labelledby="modal-heading-01">
+
+      <div class="slds-modal__container ">
+  
+        <div class="slds-modal__header">
+          <h2 id="modal-heading-09" class="slds-modal__title slds-hyphenate header">
+            PLEASE PROVIDE PAYMENT INFORMATION
+          </h2>
+        </div>
+  
+          <div class="slds-modal__content slds-p-around_medium " id="modal-content-id-6" style=" overflow: initial;">
+  
+            <lightning-layout multiple-rows>
+              <lightning-layout-item>
+                <h1 style="text-transform: uppercase;">Product Name : <span style="font-size: larger; font-weight:bold">{productName}</span></h1>
+              </lightning-layout-item>
+  
+            </lightning-layout>
+  
+            <lightning-layout multiple-rows>
+  
+              <lightning-layout-item padding="around-small"  size="4">
+                <label for="fieldid"> First Name</label><br>
+                <lightning-input name="fname" type="text" class="first-name"  variant="label-hidden" data-field="firstName" required="true" ></lightning-input>
+              </lightning-layout-item>
+              <lightning-layout-item  padding="around-small" size="4">
+  
+                <label for="fieldid"> Middle Name</label><br>
+                <lightning-input class="mid-name" name="fname"  variant="label-hidden" data-field="middleName"></lightning-input>
+  
+  
+              </lightning-layout-item>
+  
+              <lightning-layout-item  padding="around-small" size="4">
+                <label for="fieldid">Last Name</label><br>
+                <lightning-input type="text" name="lname" class="last-name" data-field="lastName"  variant="label-hidden"
+                  required="true"></lightning-input>
+  
+  
+              </lightning-layout-item>
+  
+            </lightning-layout>
+            <lightning-layout multiple-rows>
+  
+              <lightning-layout-item  padding="around-small" size="12">
+                <label for="wname">Card Number</label>
+                <lightning-input name="fname" variant="label-hidden"  data-field="cardNumber" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="16" message-when-too-long="Max 16 characters allowed" message-when-pattern-mismatch="Credit Card number is not valid" placeholder="xxxx xxxx xxxx xxxx"></lightning-input>
+              </lightning-layout-item>
+  
+            </lightning-layout>
+            <lightning-layout multiple-rows>
+  
+  
+              <lightning-layout-item  padding="around-small" size="4">
+                <label for="fname">CVV</label>
+                <lightning-input type="password" name="fname" variant="label-hidden" data-field="cvv" maxlength="4" pattern="[0-9]{3,4}"
+                message-when-pattern-mismatch="CVV Number is not valid"></lightning-input>
+              </lightning-layout-item>
+             
+              <lightning-layout-item  padding="around-small" size="4">
+                <label for="fname" >Exp Year</label>
+                <lightning-input type="number" name="fname" variant="label-hidden"  data-field="year" maxlength="4"></lightning-input>
+                <!-- <lightning-combobox label="Year"  variant="label-hidden" data-field="year"></lightning-combobox> -->
+  
+              </lightning-layout-item>
+  
+              <lightning-layout-item  padding="around-small" size="4">
+                <label for="fname">Exp Month</label>
+                <!-- <lightning-combobox label="Month"  variant="label-hidden" data-field="expDate"></lightning-combobox> -->
+  
+                <!-- <select name="month" id="month" data-field="expDate" class="input-cls">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select> -->
+                <lightning-input type="text" name="fname" variant="label-hidden" data-field="expDate"  maxlength="2"></lightning-input>
+              </lightning-layout-item>
+              
+  
+            </lightning-layout>
+         
+  
+            <p id="modal-heading-10" class="slds-modal__title slds-hyphenate " style="font-size:large; text-transform: uppercase;
+              color: #033942;">
+             Product Description
+            </p>
+  
+            <lightning-layout multiple-rows>
+              <lightning-layout-item  padding="around-small" size="12">
+                <label for="wname" >Total Amount</label>
+                <lightning-input type="text" name="fname" variant="label-hidden"  placeholder="$0.00" value={productPrice}  readonly></lightning-input>
+              </lightning-layout-item>
+            </lightning-layout>
+  
+           
+  
+            <lightning-layout multiple-rows>
+              <lightning-layout-item padding="around-small">
+                <div class="slds-checkbox">
+  
+                  <input type="checkbox" name="options" id="checkbox-unique-id-86" class="checkbox"
+                    onchange={handleCheck} />
+                    <!-- <lightning-input class="slds-p-left_xx-large" type="checkbox" data-id="checkbox" label="checkbox" onchange={handleCheck} ></lightning-input> -->
+  
+          
+                  <label class="slds-checkbox__label" for="checkbox-unique-id-86">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label slds-m-around_small">I agree to the <a href="#">Terms and Conditions</a></span>
+                  </label>
+                </div>
+              </lightning-layout-item>
+            </lightning-layout>
+  
+          
+  
+          </div>
+  
+          <div class="slds-modal__footer">
+            <lightning-layout multiple-rows="true" horizontal-align="end">
+              <lightning-layout-item >
+                <lightning-button label="Close" title="Close" onclick={closeModal}
+                  class="slds-m-left_x-small">
+                </lightning-button>
+  
+              </lightning-layout-item>
+              <lightning-layout-item >
+                <!-- <template if:true={isChecked}> -->
+                <lightning-button variant="brand" label="Proceed to Checkout" title="Proceed to Checkout" onclick={handlePayment}
+                  class="slds-m-left_x-small" disabled={isChecked}>
+                </lightning-button>
+             
+              </lightning-layout-item>
+            </lightning-layout>
+          </div>
+  
+       
+      </div>
+  
+    </section>
+    <div class={editPaymentBackdropClassJobDetails} role="presentation"></div>
+  
+ 
+    <!-- <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+          <table class="slds-table slds-scrollable slds-table_bordered slds-table_cell-buffer">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th scope="col">
+                  <div class="slds-truncate  " title="Product Name">Product Name</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate  " title="Product Family">Product Family</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate  " title="Product Quantity">Product Quantity</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate  " title="Action">Action</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody >
+              <template for:each={records} for:item="index">
+    
+                <tr key={index} class="slds-hint-parent">
+                  <td class="slds-size_1-of-3  "> {index.Name} </td>
+                  <td class="slds-size_1-of-3  "> {index.Family} </td>
+    
+                
+                  <td class="slds-size_1-of-2 price-description  ">{index.Quantity}</td>
+                  <td class="slds-size_1-of-3  ">
+    
+                    <lightning-button label="Select" class="slds-button slds-p-around_xx-small select-btn"
+                      data-name={index.Name} data-price={index.Family} data-desc={index.Quantity} variant="brand"
+                      onclick={handleSelect}></lightning-button>
+              
+    
+                  </td>
+                </tr>
+    
+              </template>
+            </tbody>
+          </table>
+    
+    
+        </lightning-layout-item>
+    
+    
+      </lightning-layout> -->
+    <!-- <template for:each={records} for:item="index">
+        {index.Name}
+        {index.Family}
+        {index.Quantity}
+        </template> -->
+    
+    </template>

@@ -1,0 +1,4 @@
+.my-icon {
+    --sds-c-icon-color-foreground-default: rgba(255, 60, 0, 0.953);
+    --sds-c-icon-color-background: white;
+}

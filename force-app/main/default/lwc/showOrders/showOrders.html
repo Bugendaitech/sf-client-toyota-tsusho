@@ -1,0 +1,213 @@
+<template>
+
+   <c-container>
+
+      <div class="slds-align_absolute-center">
+         <lightning-spinner if:false={spinnerStatus} variant="brand" size="medium"></lightning-spinner>
+      </div>
+
+
+      <lightning-tabset  variant="scoped">
+         <lightning-tab label="Orders">
+            <div class="slds-modal__content slds-p-around_medium">
+               <template if:true={haveData}>
+                  <table class="slds-table slds-table_cell-buffe table slds-scrollable_y ownTable table-style">
+                     <thead clas="theadcls">
+                        <tr class="slds-line-height_reset tr-border">
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Order</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Customer</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Type</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Order Start Date</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Amount</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Status</th>
+                           <th class="th-background slds-border_right" style="font-size:1rem;font-weight:bold">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="slds-hint-parent tr-border" for:each={records} for:item="rec" key={index}
+                           style="cursor: pointer; border-bottom: 1px solid lightgray;">
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span tabindex="-1" data-id={rec.OrderNumber} style="font-size:0.8;font-weight:bold">{rec.OrderNumber}</span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span tabindex="-1" data-id={rec.OrderNumber} style="font-size:0.8;font-weight:bold">{rec.Name}</span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span tabindex="-1" data-id={rec.Type} style="font-size:0.8;font-weight:bold">{rec.Type}</span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span tabindex="-1" data-id={rec.EffectiveDate} style="font-size:0.8;font-weight:bold">
+                                 <lightning-formatted-date-time value={rec.EffectiveDate}></lightning-formatted-date-time>
+                              </span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span style="font-size:0.8;font-weight:bold">
+                                 <lightning-formatted-number value={rec.TotalAmount} format-style="currency"
+                                 minimum-integer-digits="2"></lightning-formatted-number>
+                              </span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <span style="font-size:0.8;font-weight:bold">{rec.Status}</span>
+                           </th>
+                           <th class="slds-cell-wrap slds-border_right th-background" title="">
+                              <template if:true={isDealer}>
+                                 <lightning-button variant="brand" class="slds-m-right_xx-small icnClass" alternative-text="Approve"
+                                    title="Approve" onclick={handleUpdate} label="Approve" data-id={rec.Id} data-status="Approved by Headoffice">
+                                 </lightning-button>
+                                 <lightning-button variant="brand" class="slds-m-right_xx-small icnClass" alternative-text="Reject"
+                                    title="Reject" onclick={handleUpdate}  label="Reject" data-id={rec.Id} data-status="Rejected By Head Office">
+                                 </lightning-button>
+                              </template>
+                              <lightning-button label="View Details" data-id={rec.Id} onclick={handleViewOrderedProduct} style="font-size: 1rem;"></lightning-button>
+                           </th>
+                        </tr>
+                     </tbody>
+                  </table>
+               </template>
+               <template if:false={spinnerStatus}>
+                  <template if:false={haveData}>
+                     <p style="text-align: center;">Loading ...</p>
+                  </template>
+               </template>
+               <template if:true={spinnerStatus}>
+                  <template if:false={haveData}>
+                     <p style="text-align: center;">No Record Found</p>
+                  </template>
+               </template>
+            </div>
+         </lightning-tab>
+      </lightning-tabset>
+
+
+
+      <!-- Modal To show Details of Products -->
+      <div class="slds-align_absolute-center">
+         <section role="dialog" aria-modal="true" class={editOrderClassJob} tabindex="-1"
+            aria-labelledby="modal-heading-01">
+            <div class="slds-modal__container">
+               <button
+                  class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                  onclick={handleCancel}
+                  >
+                  <h1>X</h1>
+                  <span class="slds-assistive-text">Cancel and close</span>
+               </button>
+               <div class="slds-modal__header">
+                  <h1 id="modal-heading-09" class="slds-modal__title slds-hyphenate header" style="padding:1rem">
+                     Order Details
+                  </h1>
+               </div>
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-7" style="overflow-x: scroll;">
+                  <lightning-layout multiple-rows>
+                     <lightning-layout-item size="12">
+                        <div class="slds-p-horizontal_small">
+                           <table class="slds-table slds-table_cell-buffe table slds-scrollable order-table">
+                              <thead>
+                                 <tr>
+                                    <th>Order Number</th>
+                                    <th>{orderNumber}</th>
+                                    <th></th>
+                                    <th>Order Date</th>
+                                    <th><lightning-formatted-date-time value={orderDate}></lightning-formatted-date-time></th>
+                                 </tr>
+                                 <tr>
+                                    <th>Customer Name</th>
+                                    <th>{orderUserName}</th>
+                                    <th></th>
+                                    <!-- <th>Email</th>
+                                    <th>
+                                       <template if:true={orderUserEmail}>
+                                          {orderUserEmail}
+                                       </template>
+                                       <template if:false={orderUserEmail}>
+                                          N/A
+                                       </template>
+                                    </th> -->
+                                 </tr>
+                                 <tr>
+                                    <th>Address</th>
+                                    <th colspan="4">{orderUserAddress}</th>
+                                 </tr>
+                                 <tr>
+                                    <th>City</th>
+                                    <th>{orderUserCity}</th>
+                                    <th></th>
+                                    <th>State</th>
+                                    <th>{orderUserState}</th>
+                                 </tr>
+                                 <tr>
+                                    <th>Zipcode</th>
+                                    <th>{orderUserZipcode}</th>
+                                    <th></th>
+                                    <th>Country</th>
+                                    <th>{orderUserCountry}</th>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="5">
+                                       <hr style="margin: 3px 0px;">
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="5">Products</td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="5"> 
+                                    </td>
+                                 </tr>
+                                  
+                              </thead>
+                               
+                           </table>
+                           <table class="slds-table slds-table_cell-buffe table slds-scrollable ownTable order-table">
+                            <thead >
+                               <tr class="slds-line-height_reset">
+                                  <th style="background:#b7b9bd;">Product Image</th>
+                                  <th style="background:#b7b9bd;">Product Name</th>
+                                  <th style="background:#b7b9bd;">Product Family</th>
+                                  <th style="background:#b7b9bd;">Product Description</th>
+                                  <th style="background:#b7b9bd;">QUANTITY</th>
+                                  <th style="background:#b7b9bd;">GST</th>
+                                  <th style="background:#b7b9bd;">TOTAL</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr class="slds-hint-parent" for:each={orderItemRecords} for:item="rec" key={index}>
+                                 <th><img src={rec.Image} width="60px"></th>
+                                  <th class="slds-cell-wrap slds-border_right" title={rec.Product}>
+                                     <span tabindex="-1" data-id={rec.Product} style="font-size:0.8;font-weight:bold">{rec.Product}</span>
+                                  </th>
+                                  <th class="slds-cell-wrap slds-border_right">
+                                     <span tabindex="-1"  style="font-size:0.8;font-weight:bold">{rec.ProductFamily}</span>
+                                  </th>
+                                  <th class="slds-cell-wrap slds-border_right">
+                                     <span tabindex="-1" style="font-size:0.8;font-weight:bold">{rec.Description}</span>
+                                  </th>
+                                  <th class="slds-cell-wrap slds-border_right" title={rec.Quantity}>
+                                     <span style="font-size:0.8;font-weight:bold">{rec.Quantity}</span>
+                                  </th>
+                                  <th class="slds-cell-wrap slds-border_right">
+                                     <span style="font-size:0.8;font-weight:bold">
+                                        <lightning-formatted-number value={rec.GST} format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                                     </span>
+                                  </th>
+                                  <th class="slds-cell-wrap slds-border_right" title="End Date">
+                                     <span style="font-size:0.8;font-weight:bold">{rec.TotalPrice}</span>
+                                  </th>
+                               </tr>
+                            </tbody>
+                         </table>
+                        </div>
+                     </lightning-layout-item>
+                     
+                  </lightning-layout> 
+               </div>
+            </div>
+         </section>
+         <div class={editOrderClassJobDetails} role="presentation"></div>
+      </div>
+
+
+      <c-dashboard></c-dashboard>
+   </c-container>
+
+</template>

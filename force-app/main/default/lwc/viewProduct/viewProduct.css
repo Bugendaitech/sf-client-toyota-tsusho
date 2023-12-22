@@ -1,0 +1,13 @@
+.pro-img{
+    margin-top:20px
+}
+
+.pro-desc h4.pro-title {text-align: center; margin-bottom: 15px; }
+.pro-desc h4.pro-title:hover {color: #0a32c6;}
+.pro-desc h4 {font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.pro-desc h4 span { display: inline-block; }
+.pro-desc h4 span.price {color: #0a32c6; display: inline-block; }
+.pro-desc .desc p{ font-size: 10pt; padding: 10px 0px;;    text-align: justify; }
+ 
+.quantity-holder h4{ margin-top: 0px;}
+.btn-holder{ display: flex;margin-top: 20px;}

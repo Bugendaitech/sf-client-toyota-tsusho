@@ -1,0 +1,30 @@
+.border-0{border: 0;}
+
+         .shipbill-add-sec{padding: 30px 10px; display: block;}
+
+         .shipbill-add-sec .slds-card__body{padding: 5px;}
+         .shipbill-add-sec .bg-light{background: #ffffcc; display: block; padding: 5px;}
+         .shipbill-add-sec h5{font-size: 14px; margin: 0; font-weight: 600;}
+         .shipbill-add-sec p{font-size: 14px; margin: 0;}
+         .slds-col-6{display: inline-block; width: 49%; padding: 0 4px; vertical-align: top;}
+
+
+			.termsSec .slds-card__body{padding: 5px; display: block;}
+         .termsSec {
+            padding: 30px 5px;
+        }
+
+        .termsSec ol {
+            list-style: auto;
+            list-style-position: inside;
+        }
+
+
+         .billTable{width: 100%; max-width: 400px; margin: 10px 0 0 auto;}
+
+         .cartTable table{width: 100%;}
+         .cartTable th{color: blue;}
+         .cartTable table, .cartTable  th, .cartTable  td {
+				  border: 1px solid black !important;
+				  border-collapse: collapse;
+				}

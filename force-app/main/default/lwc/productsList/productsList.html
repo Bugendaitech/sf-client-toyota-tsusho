@@ -1,0 +1,70 @@
+<template>
+    <h3 style="font-size:1.5rem;font-weight:bold; text-align:center;">PRODUCTS</h3>
+    <lightning-layout multiple-rows="true">
+        <template for:each={records} for:item="index">
+            <lightning-layout-item key={index} padding="around-small" size="3">
+                <div class="slds-box">
+                    <lightning-layout horizontal-align="center">
+                        <lightning-layout-item class="slds-p-around_x-small">
+                            <h3 style="font-size: large;" class="slds-tile__title slds-truncate">
+                                {index.Name}
+                            </h3>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-p-around_x-small">
+                            <p style="font-size: medium;"><span class="slds-text-color_weak">Product Family : </span> {index.Family}</p>
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-p-around_x-small">
+                            <p style="font-size: medium;"><span class="slds-text-color_weak">Product Price  : </span> <lightning-formatted-number value={index.UnitPrice} format-style="currency">
+                                </lightning-formatted-number></p>
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="center">
+                        <lightning-layout-item size="12">
+                            <button type="Add To Cart" class="slds-button slds-button_brand slds-button_stretch"  data-name={index.Name} data-family={index.Family} data-desc={index.Quantity} data-price={index.UnitPrice} variant="brand"
+                            onclick={handleSelect}>Add To Cart</button>
+                            
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                </div>
+                <!-- <lightning-card class="slds-p-around_small">
+            <div class="demo-only" style="width:32rem">
+              
+                <article class="slds-tile slds-p-around_medium">
+                  <h3 class="slds-tile__title slds-truncate " title="Salesforce UX">
+                    <a href="#">{index.Name}</a>
+                  </h3>
+                  <div class="slds-tile__detail ">
+                    <dl class="slds-list_horizontal slds-wrap">
+                      <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Product Family">Product Family    :</dt>
+                      <dd class="slds-item_detail slds-truncate" title="Product Family">{index.Family}</dd>
+                  
+                      <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Product price">Product Price      :</dt>
+                      <dd class="slds-item_detail slds-truncate" title="Product price">
+                        <lightning-formatted-number value={index.UnitPrice} format-style="currency" minimum-integer-digits="3"></lightning-formatted-number></dd>
+
+                    </dl>
+                  </div>
+                </article>
+              </div><br>
+              <lightning-button label="Select" class="slds-button slds-p-around_xx-small select-btn"
+              data-name={index.Name} data-family={index.Family} data-desc={index.Quantity} data-price={index.UnitPrice} variant="brand"
+              onclick={handleSelect}></lightning-button>
+            </lightning-card> -->
+            </lightning-layout-item>
+        </template>
+
+    </lightning-layout>
+
+
+
+
+
+</template>

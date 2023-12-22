@@ -1,0 +1,36 @@
+<template>
+    <div class="card">
+        <div class="login-box">
+            
+            <!-- <div class="logo">
+                <img src="">
+            </div> -->
+
+            <div class="input-fields-box">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12"
+                       small-device-size="12"
+                       medium-device-size="12"
+                       padding="around-small">
+                       <lightning-input type="text" label="User Name"  required="true" onchange={handleInputs} placeholder="Enter Username"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12"
+                       small-device-size="12"
+                       medium-device-size="12"
+                       padding="around-small">
+                       <lightning-input type="password" label="Password"  required="true" onchange={handleInputs} placeholder="Enter Password"></lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12"
+                        small-device-size="12"
+                        medium-device-size="12"
+                        padding="around-small">
+                        <button type="button"  onclick={handleLogin} class="slds-button slds-button_brand btn-size">Login</button>
+                        
+                        <a href="#" style="margin-top: 8px;">Create a new Account?</a>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </div>
+    </div>
+</template>

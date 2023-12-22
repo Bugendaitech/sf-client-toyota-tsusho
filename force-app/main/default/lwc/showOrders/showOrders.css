@@ -1,0 +1,25 @@
+:host {
+    /* --slds-c-tabs-item-color-border-active: red; */
+    /* --slds-c-tabs-item-color-border-hover: red; */
+    --slds-c-tabs-list-color-border: black;
+}
+.theadcls{
+    font-size: large;
+    border-bottom: 1px solid lightgray;
+}
+.table-style{
+    border: 1px solid lightgray;
+}
+.th-background{
+    
+    text-align: center;
+}
+.tr-border{
+    
+        border-bottom: 1px solid lightgray;
+
+}
+
+.th-background{
+    background: #F6F7F9
+}

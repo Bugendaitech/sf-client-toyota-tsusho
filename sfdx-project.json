@@ -5,7 +5,7 @@
       "default": true
     }
   ],
-  "name": "Toyota",
+  "name": "Toyota-Sandbox",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "58.0"

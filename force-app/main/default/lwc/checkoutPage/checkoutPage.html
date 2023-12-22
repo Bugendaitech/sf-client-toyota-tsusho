@@ -1,0 +1,211 @@
+<template>
+   <div class="slds-align_absolute-center">
+      <lightning-spinner if:false={spinnerStatus} variant="brand" size="medium" style="position: absolute!important;z-index: 1000 !important;"></lightning-spinner>
+    </div>
+   <h2>Checkout Form </h2>
+    <lightning-layout multiple-rows>
+       <lightning-layout-item size="12" 
+          small-device-size="8"
+          medium-device-size="8"
+          padding="around-small">
+          <div class="card">
+             <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-input type="text" label="First Name" value={_userFName}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-input type="text" label="Last Name" required="true" value={_userLName}></lightning-input>
+                </lightning-layout-item>
+             </lightning-layout>
+             <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-input type="email" label="Email" required="true" value={_userEmail}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-input type="tel" label="Mobile" value={_userMobile}></lightning-input>
+                </lightning-layout-item>
+             </lightning-layout>
+             <div class="box"> 
+               <hr style="margin-top: 20px; margin-bottom: 20px;">
+                Billing Address
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="12"
+                      small-device-size="12"
+                      medium-device-size="12"
+                      padding="around-small">
+                      <lightning-textarea name="input1" label="Address" value={_userStreet} ></lightning-textarea>
+                   </lightning-layout-item>
+                   
+                </lightning-layout>
+                <lightning-layout multiple-rows>
+                  <lightning-layout-item size="12"
+                      small-device-size="6"
+                      medium-device-size="6"
+                      padding="around-small">
+                      <lightning-input type="text" label="City" value={_userCity}></lightning-input>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="12"
+                      small-device-size="6"
+                      medium-device-size="6"
+                      padding="around-small">
+                      <!-- <lightning-combobox label="State" options={states} data-field="year" ></lightning-combobox> -->
+                      <lightning-input type="text" label="State" value={_userState}></lightning-input>
+                   </lightning-layout-item>
+                   
+                </lightning-layout>
+                
+                <lightning-layout multiple-rows>
+                  <lightning-layout-item size="12"
+                      small-device-size="6"
+                      medium-device-size="6"
+                      padding="around-small">
+                      <lightning-input type="text" label="Zip" value={_userZipcode}></lightning-input>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="12"
+                      small-device-size="6"
+                      medium-device-size="6"
+                      padding="around-small">
+                      <lightning-input type="text" label="Country" value={_userCountry}></lightning-input>
+                   </lightning-layout-item>
+                </lightning-layout>
+                
+
+                <lightning-layout multiple-rows>
+                     <lightning-layout-item 
+                       size="12"
+                       small-device-size="6"
+                       medium-device-size="6"
+                       padding="around-small">
+                       <template if:false={isLoggedIn}>
+                           <button type="button"  onclick={handleNavigation} data-type="comm__loginPage" 
+                              data-name="login" class="slds-button slds-button_brand register-btn">Login</button>
+                       </template>
+                       
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="12"
+                       class="slds-text-align_right"
+                       small-device-size="6"
+                       medium-device-size="6"
+                       padding="around-small">
+                       <button type="button" onclick={handleNavigation} data-type="comm__namedPage" data-name="shoppingcart" 
+                       class="slds-button slds-button_base go-back-btn ">Go To Cart</button>
+
+                       <!-- <button type="button" onclick={handleReset}
+                       class="slds-button go-back-btn ">Reset</button> -->
+
+                     </lightning-layout-item>
+                 </lightning-layout>
+             </div>
+          </div>
+       </lightning-layout-item>
+       <lightning-layout-item size="12"
+          small-device-size="4"
+          medium-device-size="4"
+          padding="around-small">
+          <div class="box">
+             <!-- Box 2 -->
+             <lightning-layout multiple-rows>
+               <lightning-layout-item size="12"
+                  small-device-size="12"
+                  medium-device-size="12"
+                  padding="around-small">
+                  <lightning-input type="text" label="Full Name on card" required="true" placeholder="Enter Full Name" onchange={handleCardValues}></lightning-input>
+               </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="12"
+                   medium-device-size="12"
+                   padding="around-small">
+                   <lightning-input type="tel" label="Card Number" required="true" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="16" message-when-too-long="Max 16 characters allowed" message-when-pattern-mismatch="Credit Card number is not valid" placeholder="xxxx xxxx xxxx xxxx" onchange={handleCardValues}></lightning-input>
+                </lightning-layout-item>
+             </lightning-layout>
+             <lightning-layout multiple-rows>                
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-combobox label="Year" options={years} data-field="year" required="true" onchange={handleCardValues} class="combobox"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12"
+                   small-device-size="6"
+                   medium-device-size="6"
+                   padding="around-small">
+                   <lightning-combobox label="Month" options={months} data-field="month" required="true" onchange={handleCardValues} class="combobox"></lightning-combobox>
+                </lightning-layout-item>
+             </lightning-layout>
+             <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="12"
+                   medium-device-size="12"
+                   padding="around-small">
+                   <lightning-input type="password" name="CVV" label="CVV" variant="CVV" data-field="cvv" maxlength="4" pattern="[0-9]{3,4}"
+                      message-when-pattern-mismatch="CVV Number is not valid" required="true" onchange={handleCardValues}></lightning-input>
+                </lightning-layout-item>
+             </lightning-layout>
+          </div>
+          <div class="order-summary-box">
+             <!-- Box 3 -->
+             <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="12"
+                   medium-device-size="12"
+                   padding="around-small">
+                   <hr style="margin-top: 0px; margin-bottom: 10px;">
+                   <table>
+                      <!-- <tr>
+                         <td class="border-style">1x Gift Card</td>
+                         <td class="border-style text-alignval">$200</td>
+                      </tr> -->
+                      <tr>
+                        <td class="border-style">Subtotal</td>
+                        <td class="border-style text-alignval">
+                           <lightning-formatted-number value={totalSubAmount} format-style="currency"
+                                  minimum-integer-digits="1" maximum-fraction-digits="2"
+                                  minimum-fraction-digits="2"></lightning-formatted-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="border-style">Tax (0%)</td>
+                        <td class="border-style text-alignval">
+                           <lightning-formatted-number value={totalTax} format-style="currency"
+                                  minimum-integer-digits="1" maximum-fraction-digits="2"
+                                  minimum-fraction-digits="2"></lightning-formatted-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="total-padding">Total</td>
+                        <td class="total-padding text-alignval">
+                           <lightning-formatted-number value={totalAmount} format-style="currency"
+                                  minimum-integer-digits="1" maximum-fraction-digits="2"
+                                  minimum-fraction-digits="2"></lightning-formatted-number>
+                        </td>
+                      </tr>
+                   </table>
+                </lightning-layout-item>
+             </lightning-layout>
+             <lightning-layout multiple-rows>
+                <lightning-layout-item size="12"
+                   small-device-size="12"
+                   medium-device-size="12"
+                   padding="around-small">
+                   <button type="button"  onclick={handlePay} class="slds-button slds-button_brand btn-size">Confirm &amp; Pay</button>
+                   </lightning-layout-item>
+                   </lightning-layout>
+          </div>
+       </lightning-layout-item>
+    </lightning-layout> 
+ </template>

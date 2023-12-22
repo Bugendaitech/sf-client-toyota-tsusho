@@ -1,0 +1,49 @@
+<template>
+    
+    <template if:true={_isLoggedIn}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item 
+              size="12"
+              small-device-size="12"
+              medium-device-size="12"
+              >
+                <div class="navbar">
+                    <h4 class="slds-text-align_right"> 
+                        <!-- Dashboard,  --> 
+
+                        <!-- <lightning-button onclick={handleLogout}
+                        icon-name="utility:logout"
+                        variant="brand-outline"
+                        size="small"
+                        label="Logout"
+                      ></lightning-button> -->
+
+
+                        <span onclick={handleNavigation}
+                        title="Click Here For Dashboard"                          
+                        data-type="comm__namedPage"   
+                        data-name="user-dashboard"  
+                        style="color: #5471d5; font-size:12pt;cursor:pointer">Dashboard | </span>  
+                         
+
+                        <lightning-icon
+                            icon-name="utility:power"
+                            alternative-text="Click Here For Logout" 
+                            class="my-icon"
+                            size="x-small"
+                            onclick={handleNavigation}
+                            data-type="comm__namedPage"   
+                            data-name="logout" 
+                            title="Click Here For Logout"
+                        >
+                        </lightning-icon>
+
+
+ 
+                    </h4>
+                </div>  
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+
+</template>

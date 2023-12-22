@@ -1,0 +1,11 @@
+div.fixed {
+    position: fixed;
+    left: 10px;
+    bottom: 50px;
+}
+
+.contantDiv{
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+}

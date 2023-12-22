@@ -1,0 +1,338 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-15-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+  <lightning-button label="New" slot="actions"></lightning-button>
+-->
+<template>
+    <template if:true={showButton}> 
+        <div>
+            <button class="slds-button slds-button_brand" onclick={handleDealerOrderFormClick}> DealerOrderForm </button>
+            <!--<button onclick={handle}> </button>	-->
+        </div>
+    </template>
+<!--
+    <lightning-card  title="Address">
+        
+        <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
+        <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
+        <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
+        <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
+        <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
+        <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p>
+    </lightning-card>
+
+    -->
+    <div class="tableMain" style="padding: 10px; background: #fff">
+    <div class="shipbill-add-sec">
+    
+               <div class="slds-col-6">
+                    <h5>Bill To</h5>
+                    <div  title="Bill To" class="bg-light">
+    
+                        <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
+    
+                        <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
+    
+                        <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
+    
+                        <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
+    
+                        <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
+    
+                        <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p>
+    
+                    </div>
+    
+                   
+                    <h5>Ship To</h5>
+                    <div title="Ship To" class="bg-light">
+    
+                        <p class="slds-p-horizontal_small">BIDARAHALLI HOBLI, NO 3/1, AVALAHALLI VILLAGE, VIRGONAGAR POST</p>
+    
+                        <p class="slds-p-horizontal_small"> HOSKOTE ROAD BANGALORE, Bengaluru Rural, Karnataka, 560049</p>
+    
+                    </div>
+    
+               </div>
+    
+               <div class="slds-col-6">
+    
+                   <table class="slds-table billTable">
+    
+                       <tr>
+    
+                           <td><strong>P.O. No.:</strong></td>
+    
+                           <td>Abc</td>
+    
+                       </tr>
+    
+                       <tr>
+    
+                           <td><strong>Date:</strong></td>
+    
+                           <td>13-12-2023</td>
+    
+                       </tr>
+    
+                       <tr>
+    
+                           <td><strong>Place:</strong></td>
+    
+                           <td>This is my Address</td>
+    
+                       </tr>
+    
+                   </table>
+    
+               </div>
+    
+            </div>
+     
+       
+    
+        <div class="border-0">
+    
+            <div class="slds-box slds-theme–default cartTable">
+    
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+    
+                        <thead>
+    
+                        <tr class="slds-line-height_reset">
+    
+                            <th class="" scope="col">
+    
+                                Part number
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                Colour
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                Part Description
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                UOM
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                Order Qty
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                Price per UOM
+    
+                            </th>
+    
+                            <th class="" scope="col">
+    
+                                Total Price
+    
+                            </th>
+    
+                        </tr>
+    
+                    </thead>
+    
+                    <tbody>
+    
+                        <template if:true={productData}>
+    
+                            <template for:each={productData} for:item="it">
+    
+                                <tr class="slds-hint-parent" key={it.Id}>
+    
+                                    <td data-label="Part number">
+    
+                                        <div class="slds-cell-wrap">{it.OrderItemNumber}</div>
+    
+                                    </td>
+    
+                                    <td data-label="Colour">
+    
+                                        <div class="slds-cell-wrap">{it.Product2Id}</div>
+    
+                                    </td>
+    
+                                    <td data-label= "Part Description">
+    
+                                        <div class="slds-cell-wrap">{it.Description}</div>
+    
+                                    </td>
+    
+                                    <td data-label="UOM">
+    
+                                        <div class="slds-cell-wrap">{it.OrderId}</div>
+    
+                                    </td>
+    
+                                    <td data-label="Order Qty">
+    
+                                        <div class="slds-cell-wrap">{it.Quantity}</div>
+    
+                                    </td>
+    
+                                    <td data-label="Price per UOM">
+    
+                                        <div class="slds-cell-wrap">{it.UnitPrice}</div>
+    
+                                    </td>
+    
+                                    <td data-label="Total Price">
+    
+                                        <div class="slds-cell-wrap">{it.TotalPrice}</div>
+    
+                                    </td>
+    
+                                </tr>
+    
+                            </template>
+    
+                        </template>
+    
+                    </tbody>
+    
+                </table>
+    
+                <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div>
+    
+            </div>
+    
+        </div>
+    
+        <div class="border-0 termsSec">
+            <h5><strong>Terms and conditions:</strong></h5>
+               <div style="padding: 5px 5px">
+    
+                <ol>
+    
+                    <li>The parts details with pricing structure (incl. delivery charges, excl. GST%) are mentioned in Annexure I- Accessories Line-up.</li>
+    
+                    <li>Payment Terms: 100% advance payment with PO.</li>
+    
+                    <li>All orders will be sold in the form of sets of 6 parts only.</li>
+    
+                    <li>Single orders will be accepted only in case of serviceability or warranty replacement.</li>
+    
+                    <li>Warranty for all products will be valid for 1 year from the date of sale to end customer or 20,000 km or whichever is earlier.</li>
+    
+                    <li>Warranty terms will be strictly applicable as per terms and conditions mentioned in Annexure II- User Manual only.</li>
+    
+                    <li>For every sales, the dealership is required to collect signed MOU (annexure III) from every end customer. Absence of signed MOU will nullify the warranty extension of the sold parts.</li>
+    
+                    <li>Dealer should strictly follow the installation manuals. Any damages to the parts occuring during installation will not be covered under warranty/replacement.</li>
+    
+                    <li>The delivery lead times from the date of order are as under for every region. Order cut-off time from Monday to Saturday will be 1600hrs, any orders placed post that will be considered for the next day. Sundays will be weekly off.</li>
+    
+                </ol>   <br>
+    
+                        <div class="slds-box slds-theme–default">
+    
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left"  style="width: 500px;">
+    
+                                    <thead>
+    
+                                    <tr class="slds-line-height_reset">
+    
+                                        <th class="" scope="col">
+    
+                                            Region
+    
+                                        </th>
+    
+                                        <th class="" scope="col">
+    
+                                            Mark
+    
+                                        </th>
+    
+                                        <th class="" scope="col">
+    
+                                            Delivery Lead Days
+    
+                                        </th>
+    
+                                    </tr>
+    
+                                </thead>
+    
+                                <tbody>
+    
+                                    <template iterator:it={zoneData}>
+    
+                                        <tr class="slds-hint-parent" key = {it.value.Region}>
+    
+                                            <td data-label="Region">
+    
+                                                <div class="slds-cell-wrap">{it.value.Region}</div>
+    
+                                            </td>
+    
+                                            <td data-label="Mark">
+    
+                                                <div class="slds-cell-wrap">{it.value.Mark}</div>
+    
+                                            </td>
+    
+                                            <td data-label= "Days">
+    
+                                                <div class="slds-cell-wrap">{it.value.Days}</div>
+    
+                                            </td>
+    
+                                        </tr>
+    
+                                    </template>
+    
+                                </tbody>
+    
+                            </table>
+
+
+    
+                            <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div>
+    
+                        </div>
+    
+                        <p> The above lead times will be valid only in nomal situations. The lead times will not hold good in abnormal situations like bandh, strike, Force Majure etc.</p>                    
+    
+                        <p style="padding-top: 50px;">Grand total in words:</p>
+               </div>
+            </div>
+    
+        <div >
+    
+           <div class="forSign" style="padding: 5px 100px;">
+    
+               <strong>For Toyota Tusho India Pvt Ltd</strong>
+    
+            <p style="padding-top: 100px;">AUTHORISED SIGNATORY</p>
+    
+           </div>   
+    
+        </div>
+    
+        <div >
+    
+            <p style="margin: 0; text-align: center; padding: 10px;"><strong>NOTE : Terms & Conditions of this Order Form should be strictly followed</strong></p>
+    
+        </div>
+    </div>
+   
+</template>

@@ -1,0 +1,220 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-22-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+    <c-container>
+
+    <div class="top">
+        <h1>Shopping Cart</h1>
+        <lightning-button
+        icon-name="utility:clear"
+        class="empty-cart slds-m-bottom_x-large"
+        onclick={handleConfirmClick}
+        label="Empty Cart">
+        </lightning-button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="slds-table slds-table_cell-buffe table slds-scrollable_y ownTable table-style">
+            <thead >
+               <tr class="slds-line-height_reset">
+                  <th class="th-background slds-border_right">Action</th>
+                  <th class="th-background slds-border_right">Product Img</th>
+                  <th class="th-background slds-border_right">Product Code</th>
+                  <th class="th-background slds-border_right">Description</th>
+                  <th class="th-background slds-border_right">Unit Price</th>
+                  <th class="th-background slds-border_right">Quantity</th>
+                  <th class="th-background slds-border_right">GST %</th>
+                  <th class="th-background slds-border_right">Total Amount</th>
+               </tr>
+            </thead>
+            <tbody>
+                <template if:true={productsInCart}>
+                    <tr class="slds-hint-parent" for:each={cartArray} for:item="index" key={index}
+                    style="cursor: pointer; border-bottom: 1px solid lightgray;">
+                    <td class="slds-cell-wrap slds-border_right">
+                      <lightning-icon
+                      icon-name="action:close"
+                      size="xx-small"
+                      variant="inverse"
+                      alternative-text="Remove Products"
+                      onclick={removeProduct}
+                      data-key={index.srNum}
+                      >
+                      </lightning-icon>
+                    </td>
+                    <td class="slds-cell-wrap slds-border_right" title={index.name}>
+                        <img src={index.proImg}
+                        onclick={handleNavigation}
+                        data-type="comm__namedPage"
+                        data-name="product-details"
+                        data-id={index.code}
+                        class="product-title"
+                        alt={index.name}>
+                     </td>
+
+                     <td class="slds-cell-wrap slds-border_right" title={index.name}>
+                        <h4
+                        onclick={handleNavigation}
+                        data-type="comm__namedPage"
+                        data-name="product-details"
+                        data-id={index.code}
+                        class="product-title">{index.itemCode}</h4>
+                     </td>
+                     <td class="slds-cell-wrap slds-border_right" title={index.name}>
+                       <h4
+                       onclick={handleNavigation}
+                       data-type="comm__namedPage"
+                       data-name="product-details"
+                       data-id={index.code}
+                       class="product-title">{index.name}</h4>
+                    </td>
+                    <td class="slds-cell-wrap slds-border_right">
+                      <template if:true={index.price}>
+                          <lightning-formatted-number value={index.price} format-style="currency"
+                            minimum-integer-digits="2"></lightning-formatted-number>
+                        </template>
+                        <template if:false={index.price}>
+                          <lightning-formatted-number value={index.price} format-style="currency"
+                            minimum-integer-digits="1" maximum-fraction-digits="2"
+                            minimum-fraction-digits="2"></lightning-formatted-number>
+                        </template>
+                    </td>
+                    <td class="slds-cell-wrap slds-border_right">
+                        <lightning-button-icon
+                        icon-name="utility:dash"
+                        variant="bare"
+                        size="small"
+                        alternative-text="Decrease Quantity"
+                        onclick={updateQty}
+                        data-type="Decrease"
+                        data-key={index.srNum} >
+                    </lightning-button-icon>
+                        <span class="slds-m-horizontal_medium">{index.qty} </span>
+                        <lightning-button-icon
+                        icon-name="utility:add"
+                        variant="bare"
+                        size="small"
+                        alternative-text="Increase Quantity"
+                        onclick={updateQty}
+                        data-type="Increase"
+                        data-key={index.srNum}>
+                    </lightning-button-icon>
+
+                    </td>
+                    <td class="slds-cell-wrap slds-border_right">
+                        <lightning-formatted-number value={index.prodGST} format-style="percent" maximum-fraction-digits="3"></lightning-formatted-number>
+                    </td>
+                    <td class="slds-cell-wrap slds-border_right">
+                      <template if:true={index.subTotal}>
+                          <lightning-formatted-number value={index.subTotal} format-style="currency"
+                            minimum-integer-digits="2"></lightning-formatted-number>
+                        </template>
+                        <template if:false={index.subTotal}>
+                          <lightning-formatted-number value={index.subTotal} format-style="currency"
+                            minimum-integer-digits="1" maximum-fraction-digits="2"
+                            minimum-fraction-digits="2"></lightning-formatted-number>
+                        </template>
+                    </td>
+                 </tr>
+                </template>
+                <template if:false={productsInCart}>
+                    <tr style="cursor: pointer; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray;">
+                        <td></td>
+                        <td colspan="6" class="slds-text-align_center">
+                            <h4><span class="no-product" onclick={handleNavigation} data-type="standard__namedPage" data-name="home">Continue Shopping ! </span>No Product in your cart.</h4>
+                        </td>
+                        <td></td>
+                    </tr>
+                </template>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="slds-align_absolute-left"><Strong>Final Amount</Strong></td>
+                    <td class="align-center">
+                        <template if:true={totalSubAmount}>
+                        <lightning-formatted-number value={totalSubAmount} format-style="currency"
+                            minimum-integer-digits="2"></lightning-formatted-number>
+                        </template>
+                        <template if:false={totalSubAmount}>
+                        <lightning-formatted-number value={totalSubAmount} format-style="currency"
+                            minimum-integer-digits="1" maximum-fraction-digits="2"
+                            minimum-fraction-digits="2"></lightning-formatted-number>
+                        </template>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="slds-align_absolute-left"><Strong>Total Tax </Strong></td>
+                    <td class="align-center">
+                        <template if:true={totalGstAmount}>
+                        <lightning-formatted-number value={totalGstAmount} format-style="currency"
+                            minimum-integer-digits="2"></lightning-formatted-number>
+                        </template>
+                        <template if:false={totalGstAmount}>
+                        <lightning-formatted-number value={totalGstAmount} format-style="currency"
+                            minimum-integer-digits="1" maximum-fraction-digits="2"
+                            minimum-fraction-digits="2"></lightning-formatted-number>
+                        </template>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="slds-align_absolute-center"><Strong>Final Amount</Strong></td>
+                    <td class="align-center">
+
+                        <lightning-formatted-number value={totalAmount} format-style="currency"
+                            minimum-integer-digits="1" maximum-fraction-digits="2"
+                            minimum-fraction-digits="2"></lightning-formatted-number>
+
+                    </td>
+                </tr> -->
+            </tfoot>
+        </table>
+    </div>
+
+
+
+
+
+
+    <div class="button-grid slds-m-top_x-large">
+        <lightning-button onclick={handleNavigation}
+        variant="brand"
+        icon-name="utility:add"
+        data-type="standard__namedPage"
+        class="my-cus-button"
+        data-name="home" label="Add More">
+        </lightning-button>
+        <lightning-button onclick={handleNavigation}
+        icon-name="utility:checkout"
+        variant="brand" data-type="comm__namedPage"
+        class="my-cus-button"
+        data-name="checkout" label="Checkout">
+        </lightning-button>
+    </div>
+
+</c-container>
+</template>

@@ -1,0 +1,111 @@
+<template>
+    <div class="card">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item  
+                size="12"
+                small-device-size="6"
+                medium-device-size="6"
+                large-device-size="6"
+                padding="around-small">
+                    <div class="card">
+                        <!-- <h4>Product Image</h4> -->
+                        <lightning-button onclick={handleNavigation} class="slds-button " data-type="standard__namedPage"   data-name="home" label="Go Back">
+                        </lightning-button>
+                        <div class="pro-img slds-text-align_center slds-m-top_medium">
+                            <img src={proImg}>
+                        </div>
+                        
+                    </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item  
+                size="12"
+                small-device-size="6"
+                medium-device-size="6"
+                large-device-size="6"
+                padding="around-small">
+
+                    <div class="card">
+                        <div class="pro-desc">
+                            <h4 style="font-size:20px;">Product Details</h4>
+                            <hr>
+                            <h4 class="pro-title">Title        <span>{proName}</span></h4>
+                            <h4>Unit Price   <span class="price"><lightning-formatted-number value={proUnitPrice} format-style="currency"
+                                minimum-integer-digits="1" maximum-fraction-digits="2"
+                                minimum-fraction-digits="2"></lightning-formatted-number></span></h4>
+                            
+                            <h4>Short Description    </h4>
+                            <span class="desc">
+                                <template if:true={proShortDesc}>
+                                    <p>{proShortDesc}</p>
+                                </template>
+                                <template if:false={proShortDesc}>
+                                    <p>Short Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iure assumenda, corrupti atque adipisci porro minima, labore expedita culpa ea id consequatur exercitationem cumque quod fugiat quidem magnam quasi cum.</p>
+                                </template>
+                            </span>
+
+                            <h4>Full Description  </h4>                                                       
+                            <span class="desc">
+                                <template if:true={proFullDesc}>
+                                    <p>{proFullDesc}</p>
+                                </template>
+                                <template if:false={proFullDesc}>
+                                    <p>Short Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iure assumenda, corrupti atque adipisci porro minima, labore expedita culpa ea id consequatur exercitationem cumque quod fugiat quidem magnam quasi cum.
+                                        Short Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iure assumenda, corrupti atque adipisci porro minima, labore expedita culpa ea id consequatur exercitationem cumque quod fugiat quidem magnam quasi cum.
+                                        Short Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iure assumenda, corrupti atque adipisci porro minima, labore expedita culpa ea id consequatur exercitationem cumque quod fugiat quidem magnam quasi cum.
+                                    </p>
+                                     
+                                </template>
+                            </span>  
+
+                            <div class="quantity-holder">
+
+                                <lightning-layout multiple-rows>
+                                    <lightning-layout-item  
+                                        size="3"
+                                        small-device-size="3"
+                                        medium-device-size="3"
+                                        large-device-size="3" >                                        
+                                            <h4>Quantity</h4>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item  
+                                        size="4"
+                                        small-device-size="4"
+                                        medium-device-size="4"
+                                        large-device-size="4" >
+                                        <lightning-input type="number" label="Quantity" variant="label-hidden" value="1" min="1" max="10" data-field="proQty" class="input" message-when-range-underflow="Minimum Quantity should be One"></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item  
+                                        size="5"
+                                        small-device-size="5"
+                                        medium-device-size="5"
+                                        large-device-size="5" >
+                                    </lightning-layout-item>
+                                </lightning-layout>
+
+                                
+                                                            
+                            </div>
+                            
+                            <div class="btn-holder">
+                                <lightning-button label="Add to Cart" class="slds-button slds-align_absolute-center" style="margin:0px;" icon-name="utility:cart"
+                                variant="brand"
+                                onclick={addToCart}></lightning-button>
+
+                                <lightning-button label="Go To Cart" class="slds-button slds-align_absolute-center" 
+                                icon-name="utility:customer"
+                                variant="brand-outline" 
+                                onclick={handleNavigation}  
+                                data-type="comm__namedPage"   
+                                data-name="shoppingcart"
+                                ></lightning-button>
+                            </div>
+                            
+                        </div>
+                         
+ 
+                    </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

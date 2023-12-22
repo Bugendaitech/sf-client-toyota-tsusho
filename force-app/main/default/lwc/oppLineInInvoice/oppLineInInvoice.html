@@ -1,0 +1,46 @@
+<template>
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <h3 class="slds-text-heading_small slds-col slds-truncate" title="Opportunity Line Items">Opportunity Line Items</h3>
+        </div>
+        <div class="slds-card__body">
+            <template if:true={oppLineItems}>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-align_center" scope="col">
+                                <div class="slds-truncate" title="Name">Name</div>
+                            </th>
+                            <th class="slds-text-align_center" scope="col">
+                                <div class="slds-truncate" title="Product">Product</div>
+                            </th>
+                            <th class="slds-text-align_center" scope="col">
+                                <div class="slds-truncate" title="Quantity">Quantity</div>
+                            </th>
+                            <th class="slds-text-align_center" scope="col">
+                                <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                            </th>
+                            <th class="slds-text-align_center" scope="col">
+                                <div class="slds-truncate" title="Total Price">Total Price</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={oppLineItems} for:item="oli">
+                            <tr key={oli.Id}>
+                                <td class="slds-text-align_left" data-label="Name">{oli.Name}</td>
+                                <td class="slds-text-align_left" data-label="Product">{oli.Product2.Name}</td>
+                                <td class="slds-text-align_right" data-label="Quantity">{oli.Quantity}</td>
+                                <td class="slds-text-align_right" data-label="Unit Price">{oli.UnitPrice}</td>
+                                <td class="slds-text-align_right" data-label="Total Price">{oli.TotalPrice}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template if:false={oppLineItems}>
+                <p>No Opportunity Line Items found.</p>
+            </template>
+        </div>
+    </div>
+</template>

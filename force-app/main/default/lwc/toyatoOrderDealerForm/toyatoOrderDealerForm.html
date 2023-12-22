@@ -1,0 +1,207 @@
+<template>
+    <div>
+       <p>Supplier</p>
+
+       <lightning-layout multiple-rows>
+          <lightning-layout-item size="1">
+             <img src="https://i.pinimg.com/originals/c7/f8/35/c7f835ec91ec48dae97a0cb8c95a426b.png"/>
+          </lightning-layout-item>
+          <lightning-layout-item size="7">
+             <p class="slds-p-horizontal_small slds-text-heading_medium"><b>Toyota Tsusho India Pvt. Ltd.</b></p>
+             <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
+             <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
+             <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
+             <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
+             <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p>
+          </lightning-layout-item>
+          <lightning-layout-item size="4">
+          </lightning-layout-item>
+       </lightning-layout>
+
+
+       <lightning-layout multiple-rows>
+          <lightning-layout-item size="12">
+             <center class="slds-text-heading_medium">
+                <i>DEALER ORDER FORM</i>
+             </center>
+          </lightning-layout-item>
+       </lightning-layout>
+       <br>
+
+
+       <div>
+          <lightning-layout multiple-rows>
+             <lightning-layout-item size="5">
+                <p><b>Bill To</b></p>
+                <br>
+                <p class="slds-p-horizontal_small">GROUND FLOOR, 1 TO 5, SPINERL COMPLEX, OPP.KARGIL </p>
+                <p class="slds-p-horizontal_small">PETROL PUMP SOLA, Ahmedabad, Ahmedabad, Gujarat, 380060</p>
+             </lightning-layout-item>
+             <lightning-layout-item size="3"></lightning-layout-item>
+             <lightning-layout-item size="3">
+                <table>
+                   <tr>
+                      <td>
+                         <b>
+                         P.O. No. :
+                         </b>
+                      </td>
+                      <td>TTIPL Bidadi/July2023/</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <b>
+                         Date :
+                         </b>
+                      </td>
+                      <td></td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <b>
+                         Order Type :
+                         </b>
+                      </td>
+                      <td>
+                        <lightning-combobox label="" options={orderType} variant="label-hidden" data-field=""></lightning-combobox>
+                      </td>
+                   </tr>
+                </table>
+             </lightning-layout-item>
+             <lightning-layout-item size="1"></lightning-layout-item>
+          </lightning-layout>
+          <br>
+          <lightning-layout multiple-rows>
+             <lightning-layout-item size="4">
+                <p><b>Ship To</b></p>
+                <br>
+                <p class="slds-p-horizontal_small">GROUND FLOOR, 1 TO 5, SPINERL COMPLEX, OPP.KARGIL </p>
+                <p class="slds-p-horizontal_small">PETROL PUMP SOLA, Ahmedabad, Ahmedabad, Gujarat, 380060</p>
+             </lightning-layout-item>
+             <lightning-layout-item size="2"></lightning-layout-item>
+             <lightning-layout-item size="6"></lightning-layout-item>
+          </lightning-layout>
+       </div>
+       <br>
+
+       <lightning-layout multiple-rows>
+          <lightning-layout-item size="12">
+            <p>Attn:</p>
+             <table width="100" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left" >
+                <thead>
+                   <tr>
+                      <th class="slds-text-align_center">Part number</th>
+                      <th class="slds-text-align_center">Colour</th>
+                      <th class="slds-text-align_center">Part Description</th>
+                      <th class="slds-text-align_center">UOM</th>
+                      <th class="slds-text-align_center">Order Qty</th>
+                      <th class="slds-text-align_center">Price per UOM</th>
+                      <th class="slds-text-align_center">Total Price</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td>MD341-06003-1N</td>
+                      <td></td>
+                      <td>Front Spoiler</td>
+                      <td>Pcs</td>
+                      <td>1</td>
+                      <td>
+                        <lightning-formatted-number value="43042.60" format-style="currency"
+                        minimum-integer-digits="1" maximum-fraction-digits="2"
+                        minimum-fraction-digits="2"></lightning-formatted-number>
+                      </td>
+                      <td>
+                        <lightning-formatted-number value="43042.60" format-style="currency"
+                        minimum-integer-digits="1" maximum-fraction-digits="2"
+                        minimum-fraction-digits="2"></lightning-formatted-number>
+                      </td>
+                   </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                       <td colspan="5" style="border-top: 1px solid lightgrey;">&nbsp;</td>
+                       <td style="border-top: 1px solid lightgrey;">
+                          SubTotal
+                       </td>
+                       <td style="border-top: 1px solid lightgrey;">
+                        <lightning-formatted-number value="43042.60" format-style="currency"
+                        minimum-integer-digits="1" maximum-fraction-digits="2"
+                        minimum-fraction-digits="2"></lightning-formatted-number>
+                       </td>
+                    </tr>
+                 </tfoot>
+             </table>
+          </lightning-layout-item>
+       </lightning-layout>
+       <br>
+
+
+       <lightning-layout multiple-rows>
+          <lightning-layout-item size="12">
+             <span style="text-decoration: underline;" class="slds-text-heading_small"><b>Terms and conditions:</b></span><br>
+             1. The parts details with pricing structure (incl. delivery charges, excl. GST%) are mentioned in Annexure I- Accessories Line-up.<br>
+             2. Payment Terms: 100% advance payment with PO.<br>
+             3. All orders will be sold in the form of sets of 6 parts only.<br>
+             4. Single orders will be accepted only in case of serviceability or warranty replacement.<br>
+             5. Warranty for all products will be valid for 1 year from the date of sale to end customer or 20,000 km or whichever is earlier.<br>
+             6. Warranty terms will be strictly applicable as per terms and conditions mentioned in Annexure II- User Manual only.<br>
+             7. For every sales, the dealership is required to collect signed MOU (annexure III) from every end customer. Absence of signed MOU will nullify the warranty extension <br>					
+             of the sold parts.<br>
+             8. Dealer should strictly follow the installation manuals. Any damages to the parts occuring during installation will not be covered under warranty/replacement.<br>						
+             9. The delivery lead times from the date of order are as under for every region. Order cut-off time from Monday to Saturday will be 1600hrs, any orders placed post that<br> 						
+             will be considered for the next day. Sundays will be weekly off.</p>
+          </lightning-layout-item>
+          <lightning-layout-item size="6">
+             <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left" >
+                <thead>
+                   <th class="slds-text-align_center">Region</th>
+                   <th class="slds-text-align_center">Mark</th>
+                   <th class="slds-text-align_center">Delivery Lead Days</th>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td>South India</td>
+                      <td></td>
+                      <td>2 days</td>
+                   </tr>
+                </tbody>
+             </table>
+          </lightning-layout-item>
+          <lightning-layout-item size="6"></lightning-layout-item>
+          <lightning-layout-item size="12">
+             <p> The above lead times will be valid only in nomal situations. The lead times will not hold good in abnormal situations like bandh, strike, Force Majure etc.</p>
+             <br> <br>
+             <p>Grand total in words:</p>
+          </lightning-layout-item>
+       </lightning-layout>
+
+       <br>
+       <lightning-layout multiple-rows>
+          <lightning-layout-item size="3">
+            <p class="slds-text-heading_small"><b>For Toyota Tusho India Pvt Ltd</b></p>
+          </lightning-layout-item>
+          <lightning-layout-item size="3">
+             <!-- <p class="slds-text-heading_small"><b>For Toyota Tusho India Pvt Ltd</b></p> -->
+          </lightning-layout-item>
+          <lightning-layout-item size="5"></lightning-layout-item>
+         <br>
+         <br>
+         <br>
+          <lightning-layout-item size="2">
+            <p><b>AUTHORISED SIGNATORY</b></p>
+          </lightning-layout-item>
+          <lightning-layout-item size="3">
+             <!-- <p class="slds-p-left_large"><b>AUTHORISED SIGNATORY</b></p> -->
+          </lightning-layout-item>
+          <lightning-layout-item size="7"></lightning-layout-item>
+          <br>
+          <lightning-layout-item size="12">
+            <!-- <center> -->
+                <p class="slds-text-heading_small"><b>NOTE : Terms & Conditions of this Order Form should be strictly followed</b></p>
+            <!-- </center> -->
+          </lightning-layout-item>
+       </lightning-layout>
+
+    </div>
+ </template>

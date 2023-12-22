@@ -1,0 +1,386 @@
+<template>
+   <c-container>
+    <div class="slds-align_absolute-center">
+       <lightning-spinner if:false={spinnerStatus} variant="brand" size="medium" style="position: absolute!important;z-item: 1000 !important;"></lightning-spinner>
+     </div>
+     <h2 class="slds-p-horizontal_small">User Dashboard </h2>
+
+     <lightning-layout multiple-rows>
+        
+         <lightning-layout-item 
+           size="12"
+           small-device-size="3"
+           medium-device-size="3"
+           padding="around-small">
+            <div class="box">
+               <lightning-card  title="My Profile">
+                  <!-- <lightning-button label="Logout" variant="label-hidden" slot="actions" icon-name="utility:power" onclick={handleNavigation}
+                  data-type="comm__namedPage"   
+                  data-name="logout" ></lightning-button> -->
+                  
+                  <hr>
+                  <h4 class="slds-p-horizontal_small">Hey , <span style="font-size: 12pt;color:blue">{_userFName} {_userLName}</span></h4>
+                  <!-- <br> -->
+                  <!-- <p class="slds-p-horizontal_small"> 
+                     Every purchase will be made with pleasure<br>
+                     Continue to manage your orders!
+                  </p> -->
+                  <br>
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>Email  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userEmail}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+                  
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>Mobile  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userMobile}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>City  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userCity}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>State  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userState}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>ZipCode  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userZipcode}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+
+                  <lightning-layout multiple-rows>        
+                     <lightning-layout-item 
+                       size="3"
+                       small-device-size="3"
+                       medium-device-size="3"
+                       class="slds-p-horizontal_small">
+                       <p>Country  </p>
+                     </lightning-layout-item>
+                     <lightning-layout-item 
+                       size="9"
+                       small-device-size="9"
+                       medium-device-size="9"
+                       class="slds-p-horizontal_small">
+                       <p>: {_userCountry}</p>
+                     </lightning-layout-item>
+                  </lightning-layout>
+                  
+                  <hr>
+                  <p class="slds-p-horizontal_small slds-text-align_center">
+                        
+                       <lightning-button 
+                        onclick={handleNavigation} 
+                        variant="brand" 
+                        icon-name="utility:workforce_engagement"
+                        data-type="comm__namedPage"   
+                        data-name="contactsupport" 
+                        label="Support" 
+                        style="width: 100%;">
+                        </lightning-button>
+                     
+                     <!-- <lightning-icon
+                     icon-name="utility:workforce_engagement"
+                     alternative-text="Click Here For Support" 
+                     class="my-icon"
+                     size="small"
+                     onclick={handleNavigation}
+                     data-type="comm__namedPage"   
+                     data-name="contactsupport" 
+                     title="Click Here For Support" -->
+                 <!-- >
+                 </lightning-icon> -->
+                 </p>
+              </lightning-card>
+            </div>
+            
+         </lightning-layout-item>
+         <lightning-layout-item 
+           size="12" 
+           small-device-size="9"
+           medium-device-size="9"
+           padding="around-small">
+               <lightning-card  title={title}> 
+                  <hr>
+                  <div class="slds-p-horizontal_small table-responsive">
+                     <table class="slds-table slds-table_cell-buffe table slds-scrollable ownTable main-table">
+                        <thead>
+                           <tr> 
+                              <th>Order Number</th>
+                              <th>Amount</th>
+                              <th>Order Date</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <template if:true={haveOrders}>
+                              <template for:each={records} for:item="item">
+                                 <tr key={item}>
+                                    <td>{item.OrderNumber}</td>
+                                    <td>
+                                       <lightning-formatted-number value={item.TotalAmount} format-style="currency"
+                                       minimum-integer-digits="1" maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </td>
+                                    <td>
+                                       <lightning-formatted-date-time value={item.EffectiveDate}></lightning-formatted-date-time>
+                                    </td>
+                                    <td>{item.Status}</td>
+                                    <td>
+                                       
+                                       <lightning-button-icon
+                                       icon-name="utility:preview"
+                                       variant="brand"
+                                       size="large"
+                                       alternative-text="View Order Details"
+                                       onclick={fetchOrderDetails} 
+                                       data-id={item.Id} 
+                                    >
+                                    </lightning-button-icon>
+                     
+                                       <!-- <lightning-button                                      
+                                       class="slds-button slds-align_absolute-center" 
+                                       icon-name="utility:preview" 
+                                       variant="brand"
+                                       onclick={handleViewOrderDetails}  
+                                       data-name="view-product" ></lightning-button> -->
+                                    </td> 
+                                 </tr>
+                              </template>
+                           </template>
+                           <template if:false={haveOrders}>
+                              <tr>
+                                 <td colspan="5" style="text-align:center;">No Orders Found</td> 
+                              </tr>
+                           </template>
+                           
+                        </tbody>
+                     </table>
+                  </div>
+               </lightning-card>
+         </lightning-layout-item>
+     </lightning-layout> 
+
+
+
+     
+     <!-- modal code start here -->
+     <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" class={modelClasses}>
+      <template if:true={isModelOpen}>
+        <div class="slds-align_absolute-center">
+          <lightning-spinner if:false={modalspinner} variant="brand" size="medium"></lightning-spinner>
+       </div>         
+      </template>
+        <div class="slds-modal__container">
+          <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"><svg class="slds-button__icon slds-button__icon_large" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg><span class="slds-assistive-text">Cancel and close</span></button> -->
+          <div class="slds-modal__header">
+            <h4 id="modal-heading-03" class="slds-modal__title slds-hyphenate"> Order Details </h4>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+            <lightning-layout multiple-rows>
+               <lightning-layout-item size="12">
+                  <div class="slds-p-horizontal_small">
+                     <table class="slds-table slds-table_cell-buffe table slds-scrollable order-table">
+                        <thead>
+                           <tr>
+                              <th>Order Number</th>
+                              <th>{orderNumber}</th>
+                              <th></th>
+                              <th>Order Date</th>
+                              <th><lightning-formatted-date-time value={orderDate}></lightning-formatted-date-time></th>
+                           </tr>
+                           <tr>
+                              <th>Customer Name</th>
+                              <th>{orderUserName}</th>
+                              <th></th>
+                              <th>Email</th>
+                              <th>
+                                 <template if:true={orderUserEmail}>
+                                    {orderUserEmail}
+                                 </template>
+                                 <template if:false={orderUserEmail}>
+                                    N/A
+                                 </template>
+                              </th>
+                           </tr> 
+                           <tr>
+                              <th>Address</th>
+                              <th colspan="4">{orderUserAddress}</th>                              
+                           </tr>
+                           <tr>
+                              <th>City</th>
+                              <th>{orderUserCity}</th>     
+                              <th></th>                        
+                              <th>State</th>                        
+                              <th>{orderUserState}</th>                        
+                           </tr> 
+                           <tr>
+                              <th>Zipcode</th>
+                              <th>{orderUserZipcode}</th>     
+                              <th></th>                        
+                              <th>Country</th>                        
+                              <th>{orderUserCountry}</th>                        
+                           </tr> 
+                           <tr>
+                              <td colspan="5">
+                                 <hr style="margin: 3px 0px;">
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="5">Products</td>
+                           </tr>
+                           <tr>
+                              <td colspan="5"> 
+                              </td>
+                           </tr>
+                            
+                        </thead>
+                         
+                     </table>
+                     <table class="slds-table slds-table_cell-buffe table slds-scrollable ownTable order-table">
+                        <thead>                            
+                           <tr> 
+                              <th style="background:#b7b9bd;">Image</th>
+                              <th style="background:#b7b9bd;">Title</th>
+                              <th style="background:#b7b9bd;">Unit Price</th>
+                              <th style="background:#b7b9bd;">Quantity</th>
+                              <th style="background:#b7b9bd;">Sub Amount</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <template if:true={haveLineItems}>
+                              <template for:each={orderItems} for:item="item">
+                                 <tr key={item}>
+                                    <td><img src={item.Product2.Product_Image__c} width="60px"></td>
+                                    <td>{item.Product2.Name}</td>
+                                    <td>
+                                       <lightning-formatted-number value={item.UnitPrice} format-style="currency"
+                                       minimum-integer-digits="1" maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </td>
+                                    <td>{item.Quantity}</td>
+                                    <td>
+                                       <lightning-formatted-number value={item.TotalPrice} format-style="currency"
+                                       minimum-integer-digits="1" maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </td>                                  
+                                 </tr>
+                              </template>
+                           </template>
+                           <template if:false={haveLineItems}>
+                              <tr> 
+                                 <td colspan="5" style="text-align:center;">No Products Found</td> 
+                              </tr>
+                           </template>
+                                                      
+                        </tbody>
+                        <tfoot>
+                           <tr>
+                              <td colspan="5">
+                                 <hr style="margin: 3px 0px;"> 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="4" style="text-align: right!important;font-weight:bold;">Total Sub Amount</td>
+                              <td style="font-weight:bold;">
+                                 <lightning-formatted-number value={totalAmount} format-style="currency"
+                                    minimum-integer-digits="1" maximum-fraction-digits="2"
+                                    minimum-fraction-digits="2"></lightning-formatted-number>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="4" style="text-align: right!important;font-weight:bold;">Total Tax (0%)</td>
+                              <td style="font-weight:bold;">
+                                 <lightning-formatted-number value="0" format-style="currency"
+                                    minimum-integer-digits="1" maximum-fraction-digits="2"
+                                    minimum-fraction-digits="2"></lightning-formatted-number>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="4" style="text-align: right!important;font-weight:bold;">Total Amount</td>
+                              <td style="font-weight:bold;">
+                                 <lightning-formatted-number value={totalAmount} format-style="currency"
+                                    minimum-integer-digits="1" maximum-fraction-digits="2"
+                                    minimum-fraction-digits="2"></lightning-formatted-number>
+                              </td>
+                           </tr>
+                        </tfoot>
+                     </table>
+                  </div>
+               </lightning-layout-item>
+               
+            </lightning-layout> 
+          </div>
+          <div class="slds-modal__footer">
+            <lightning-button label="Close" title="Non-primary action" onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+            
+          </div>
+        </div>
+    </section>
+    <div class={modelBackgroundClasses} role="presentation"></div>
+     <!-- modal code end   here -->
+   </c-container>
+  </template>

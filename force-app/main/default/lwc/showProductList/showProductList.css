@@ -1,0 +1,54 @@
+.custom-badge{
+    --slds-c-badge-color-background:#6767ea;
+    --slds-c-badge-text-color:white;
+    padding: 10px 20px;
+    color: white;
+    --slds-c-badge-font-size : 11pt;
+}
+
+.custom-badge-active{
+    --slds-c-badge-color-background:#0036ff;  
+}
+
+.custom-badge:hover{
+    --slds-c-badge-color-background:#0036ff;  
+    --slds-c-badge-font-size : 11pt;
+    cursor: pointer;
+}
+
+.pro-title{
+    cursor: pointer;
+}
+
+.slds-truncate{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.product-box {padding: 0; }
+.product-box .pro-img{height: 210px; overflow: hidden;}
+.product-box .pro-img img{height: 100%;width: 100%; object-fit: cover; transition: all 1s ease;}
+.product-box:hover .pro-img img {transform: scale(1.2);}
+ 
+.product-box article.slds-tile {padding: 0; } 
+
+.product-box article.slds-card  .slds-card__header.slds-grid {
+    display: none;
+}
+.product-box .slds-card__header {display: none!important; }
+.product-box .slds-card__body {margin: 0 !important; transition: all 1s ease;}
+.product-box:hover .slds-card__body{box-shadow: 0 0 15px #ccc}
+.product-box .pro-desc {padding: 15px; }
+.product-box .pro-desc h3.pro-title {text-align: center; margin-bottom: 15px; }
+.product-box .pro-desc h3.pro-title:hover {color: #0a32c6;}
+.product-box .pro-desc h4 {font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.product-box .pro-desc h4 span {color: #0a32c6; display: inline-block; }
+.product-box .pro-desc p {font-size: 16px;text-align: left;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;height: 120px;}
+.product-box .pro-btn-box {display: flex; padding-bottom: 15px; }
+.product-box .pro-btn-box button:hover{color: #fff; background: #F44336; border-color: #F44336}
+
+ 
+
+@media (max-width: 1199px){
+     .product-box .pro-btn-box button {padding: 0px 5px; height: 32px; font-size: 13px }
+}

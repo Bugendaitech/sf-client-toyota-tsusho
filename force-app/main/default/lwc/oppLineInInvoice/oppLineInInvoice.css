@@ -1,0 +1,56 @@
+.slds-card {
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 2px 2px rgba(0, 0, 0, 0.04), 0 4px 4px rgba(0, 0, 0, 0.04), 0 8px 8px rgba(0, 0, 0, 0.04), 0 16px 16px rgba(0, 0, 0, 0.04);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.slds-card__header {
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.slds-text-heading_small {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.slds-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 0.5rem;
+}
+
+.slds-table td,
+.slds-table th {
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+}
+
+.slds-table th {
+    background-color: #f2f2f2;
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.slds-table td {
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.slds-text-align_left {
+    text-align: left;
+}
+
+.slds-text-align_right {
+    text-align: right;
+}
+
+.slds-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

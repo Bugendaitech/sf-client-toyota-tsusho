@@ -1,0 +1,19 @@
+.table-responsive{
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.main-table th{
+    background: #b7b9bd;
+    text-align:left;
+    font-size: .8rem;
+    font-weight: 800;
+}
+.main-table td{ 
+    text-align:left; 
+}
+
+.order-table td,.order-table th{
+    text-align:left!important; 
+}

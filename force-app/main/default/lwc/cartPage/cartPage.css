@@ -1,0 +1,66 @@
+.empty-cart{
+    float:right
+}
+
+.my-cus-button{
+     --slds-c-button-brand-color-background: #155c9e;
+     --slds-c-button-brand-color-background-hover: #0f3a63;
+ }
+
+ .top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+ }
+
+ .no-product{
+    font-size: 10pt;
+    font-weight: bold;
+    color: #155c9e;
+    margin-right: 10px;
+ }
+
+.button-grid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.th-background{
+    background: #155c9e;
+    color: white;
+    text-align:center;
+    font-size: .8rem;
+    font-weight: 800;
+}
+.table-style{
+    /* height: 40vh; */
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+.slds-border_right{
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+    text-align:center;
+}
+.align-center{
+    text-align: center;
+}
+.rightsection {
+    float: right !important;
+}
+.rightTable td.first {
+    padding-bottom: 5px;
+    text-align: right;
+    width: 60%;
+}
+.rightTable td.second {
+    float: right;
+    padding-right: 9px;
+}
+
+.product-title {text-align: center; margin-bottom: 15px; }
+.product-title:hover {color: #0a32c6;}
+
+img{
+    width: 100px;
+}

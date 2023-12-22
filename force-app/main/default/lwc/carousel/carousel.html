@@ -1,0 +1,46 @@
+<template>
+
+  <div class="homeslider">
+    <div class="slider">
+      <template if:true={sliderArray}>
+        <template for:each={sliderArray} for:item="newsitem">
+
+          <div class={newsitem.Slide_Class__c} key={newsitem.Id}>
+            <img src={newsitem.Image_URL__c} alt="" key={newsitem.Id}>
+
+            <div class="banner-txt">
+              <span class="banner-pill">{newsitem.Spotlight__c}</span>
+              <div class="">
+                <h2>{newsitem.Title__c}</h2>
+                <p>{newsitem.Body__c}</p>
+                <template if:true={newsitem.Has_Button__c}>
+                  <a href={newsitem.Button_URL__c} target="_blank">{newsitem.Button_Title__c}</a>
+                </template>
+
+              </div>
+            </div>
+          </div>
+
+        </template>
+
+
+        <div class="navigation">
+
+          <lightning-icon icon-name="utility:chevronleft" alternative-text="Left arrow" title="Click here previous"
+            class="btn-class prev-btn">
+          </lightning-icon>
+          <lightning-icon icon-name="utility:chevronright" alternative-text="Right arrow" title="Click here next"
+            class="btn-class next-btn">
+          </lightning-icon>
+
+        </div>
+        <div class="navigation-visibility">
+          <template for:each={sliderArray} for:item="newsitem">
+            <div class={newsitem.Icon_Class__c} key={newsitem.Id}></div>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+
+</template>
