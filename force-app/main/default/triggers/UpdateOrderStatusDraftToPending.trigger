@@ -2,9 +2,9 @@ trigger UpdateOrderStatusDraftToPending on Order (after insert) {
   
     if (Trigger.isAfter) {
         
-        if (Trigger.isInsert || Trigger.isUpdate) {
+        if (Trigger.isInsert) {
             
-            UpdateOrderStatusDraftToPendingHandler.handleOrders(Trigger.new, Trigger.oldMap);
+            UpdateOrderStatusDraftToPendingHandler.handleUpdateOrders(Trigger.new, Trigger.oldMap);
         }
     }
  

@@ -9,3 +9,27 @@ div.fixed {
     margin-right: 5%;
     width: 90%;
 }
+
+
+
+
+
+/* Styles for devices with a maximum width of 767 pixels (e.g., smartphones) */
+@media only screen and (max-width: 767px) {
+/* Your styles for small screens go here */
+}
+
+/* Styles for devices with a minimum width of 768 pixels and a maximum width of 991 pixels (e.g., tablets) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+/* Your styles for medium screens go here */
+}
+
+/* Styles for devices with a minimum width of 992 pixels and a maximum width of 1199 pixels (e.g., small desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+/* Your styles for large screens go here */
+}
+
+/* Styles for devices with a minimum width of 1200 pixels and above (e.g., large desktops) */
+@media only screen and (min-width: 1200px) {
+/* Your styles for extra-large screens go here */
+}

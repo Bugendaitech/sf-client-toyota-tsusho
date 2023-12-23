@@ -31,10 +31,9 @@ export default class ProductGridParent extends LightningElement {
     @wire(getPicklistValuesbyApex, { objectName: 'Product2', fieldName: 'Family' })
     wiredPicklistValues({ data, error }) {
         if (data) {
-            console.log('Picklist Data Apex : ' + JSON.stringify(data));
+            //console.log('Picklist Data Apex : ' + JSON.stringify(data));
             this.proFamiles = [];
             this.catList = [];
-            console.log('Picklist Data Apex: ' + JSON.stringify(data));
             this.proFamiles = data;
             this.catList = data.map(entry => entry.value);
 
@@ -56,7 +55,7 @@ export default class ProductGridParent extends LightningElement {
         const { data, error }   = wireResultMy;
         this._wiredMyData       = wireResultMy;
 
-        console.log('data from getProductsFromStock', data);
+        // console.log('data from getProductsFromStock', data);
 
         if (data) {
 
@@ -105,7 +104,7 @@ export default class ProductGridParent extends LightningElement {
 
         this.records = [];
 
-
+        this.refs.childCmp.cleanProductList([]);
         let listOfCategory  = this.template.querySelectorAll('.custom-badge');
 
         if(ind == -1){
@@ -142,6 +141,7 @@ export default class ProductGridParent extends LightningElement {
 
           //console.log('filterData '+JSON.stringify(afterFilter));
             this.productList = [...afterFilter];
+            //this.refs.childCmp.cleanProductList(afterFilter);
             this.spinnerStatus = true;
 
             // console.log('_buf_productList '+JSON.stringify(this._buf_productList));

@@ -2,7 +2,7 @@
  * @description       : All Cart related functionality (Add,Increase,Decrease,Remove,TotalCount,All Products in Cart)
  * @author            : Anshul Kanaujia
  * @group             : BT Team
- * @last modified on  : 12-22-2023
+ * @last modified on  : 12-23-2023
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class AddToCart_Ctrl {
@@ -21,12 +21,15 @@ public with sharing class AddToCart_Ctrl {
      * @return A JSON string containing the status of the operation, total items in the cart, and cart items details.
      */
     @AuraEnabled
-    public static string addProductToCart(String productId){
+    public static string addProductToCart(String productId, Integer qty){
 
         System.debug('addProductToCart called '+pricebookId);
 
         User userDetails   			  = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
+        if(qty == null){
+            qty = 1;
+        }
 
         Map<String,Object> retMap     = new Map<String,Object>();
 
@@ -50,9 +53,10 @@ public with sharing class AddToCart_Ctrl {
                     Map<String,Object> cartItems  = totalProductsInCart(userDetails.ContactId,userDetails.WarehouseId__c);
 
                     retMap.put('status','success');
+                    retMap.put('label','Success !');
                     retMap.put('totalItems',cartItems.get('count'));
                     retMap.put('allItems',cartItems.get('items'));
-                    retMap.put('msg','Product added Successfully.');
+                    retMap.put('msg','Product Added Successfully.');
 
                 } catch (Exception ex) {
 
@@ -63,21 +67,23 @@ public with sharing class AddToCart_Ctrl {
                     errorMessage += 'Type :' + ex.getTypeName() + '\n';
 
                     retMap.put('status','error');
+                    retMap.put('label','Error !');
                     retMap.put('msg',errorMessage);
-
                     System.debug('Error '+errorMessage);
 
                 }
 
             }else{
 
-                retMap.put('status','error');
+                retMap.put('status','warning');
+                retMap.put('label','Warning !');
                 retMap.put('msg','Product already Exist in your Cart.');
 
             }
 
         }else{
                 retMap.put('status','error');
+                retMap.put('label','Error !');
                 retMap.put('msg','Warehouse Details Not Found.');
         }
 
@@ -94,7 +100,7 @@ public with sharing class AddToCart_Ctrl {
      * @return A JSON string containing the status of the operation, total items in the cart, and cart items details.
      */
     @AuraEnabled
-    public static string actionOnQuantity(String actionType, String cartId , Integer qty){
+    public static string actionOnQuantity(String actionType, String cartId ){
 
         User userDetails   			  = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
@@ -118,11 +124,18 @@ public with sharing class AddToCart_Ctrl {
                     if(actionType == 'Remove'){
 
                         deleteItemFromCart(cartObj);
+                        retMap.put('label','Success !');
                         retMap.put('msg','Product Removed Successfully.');
 
                     }else{
 
-                        updateItemQtyInCart(actionType,cartObj,qty);
+                        if(cartObj.Quantity__c == 1 && actionType == 'Minus'){
+                            deleteItemFromCart(cartObj);
+                        }else{
+                            updateItemQtyInCart(actionType,cartObj);
+                        }
+
+                        retMap.put('label','Success !');
                         retMap.put('msg','Quantity Updated Successfully.');
                     }
 
@@ -130,7 +143,15 @@ public with sharing class AddToCart_Ctrl {
 
                     retMap.put('status','success');
                     retMap.put('totalItems',cartItems.get('count'));
-                    retMap.put('allItems',cartItems.get('items'));
+                    retMap.put('items',cartItems.get('items'));
+                    retMap.put('gstAmt',cartItems.get('gstAmt'));
+                    retMap.put('totalGstAmt',cartItems.get('totalGstAmt'));
+                    retMap.put('totalExeAmt',cartItems.get('totalExeAmt'));
+                    retMap.put('totalIncAmt',cartItems.get('totalIncAmt'));
+
+                    // returnMap.put('totalGstAmt',totalGstAmt);
+                    // returnMap.put('totalExeAmt',totalExeAmt);
+                    // returnMap.put('totalIncAmt',totalIncAmt);
 
 
                 } catch (Exception ex) {
@@ -142,6 +163,7 @@ public with sharing class AddToCart_Ctrl {
                     errorMessage += 'Type :' + ex.getTypeName() + '\n';
 
                     retMap.put('status','error');
+                    retMap.put('label','Error !');
                     retMap.put('msg',errorMessage);
 
                     System.debug('Error '+errorMessage);
@@ -151,7 +173,8 @@ public with sharing class AddToCart_Ctrl {
             }else{
 
                 retMap.put('status','error');
-                retMap.put('msg','Product already Exist in your Cart.');
+                retMap.put('label','Error !');
+                retMap.put('msg','Product not Exist in your Cart.');
 
             }
 
@@ -162,19 +185,98 @@ public with sharing class AddToCart_Ctrl {
     }
 
 
+    @AuraEnabled
+    public static string emptyCart(){
+
+        Map<String,Object> retMap        = new Map<String,Object>();
+
+        try {
+
+            User userDetails   			  = GetLoggedInUserDetails_Ctrl.getUserDetails();
+
+            if(userDetails != null && userDetails.ContactId != null){
+
+                List<Cart__c> cartIds  =    [SELECT
+                                                Id
+                                            FROM
+                                                Cart__c
+                                            WHERE
+                                                Outlet__c =: userDetails.ContactId
+                                            WITH USER_MODE];
+
+                if(!cartIds.isEmpty() && Schema.sObjectType.Cart__c.isDeletable()){
+
+                    delete cartIds;
+
+                    retMap.put('status','success');
+                    retMap.put('label','Success !');
+                    retMap.put('totalItems',0);
+                    retMap.put('allItems',null);
+                    retMap.put('msg','Cart Empty Successfully.');
+                    retMap.put('totalGstAmt',0);
+                    retMap.put('totalExeAmt',0);
+                    retMap.put('totalIncAmt',0);
+                }
+
+            }
+
+
+        } catch (Exception ex) {
+
+                    String errorMessage = 'Cause :' + ex.getCause() + '\n';
+                    errorMessage += 'Line Number :' + ex.getLineNumber() + '\n';
+                    errorMessage += 'Message :' + ex.getMessage() + '\n';
+                    errorMessage += 'Stack Trace :' + ex.getStackTraceString() + '\n';
+                    errorMessage += 'Type :' + ex.getTypeName() + '\n';
+
+                    retMap.put('status','error');
+                    retMap.put('label','Error !');
+                    retMap.put('msg',errorMessage);
+                    System.debug('Error '+errorMessage);
+        }
+
+        System.debug(retMap);
+        return JSON.serialize(retMap);
+    }
+
+
+    @AuraEnabled
+    public static string getAllCartItems(){
+
+        Map<String,Object> retMap      = new Map<String,Object>();
+        try {
+            User userDetails   			  = GetLoggedInUserDetails_Ctrl.getUserDetails();
+            if(userDetails != null && userDetails.ContactId != null && userDetails.WarehouseId__c != null){
+
+                retMap          = totalProductsInCart(userDetails.ContactId,userDetails.WarehouseId__c);
+
+            }
+        } catch (Exception ex) {
+
+            String errorMessage = 'Cause :' + ex.getCause() + '\n';
+            errorMessage += 'Line Number :' + ex.getLineNumber() + '\n';
+            errorMessage += 'Message :' + ex.getMessage() + '\n';
+            errorMessage += 'Stack Trace :' + ex.getStackTraceString() + '\n';
+            errorMessage += 'Type :' + ex.getTypeName() + '\n';
+
+            retMap.put('status','error');
+            retMap.put('label','Error !');
+            retMap.put('msg',errorMessage);
+        }
+        return JSON.serialize(retMap);
+    }
+
     /**
      * Updates the quantity of a cart item based on the specified action type.
      * @param actionType The type of action to be performed ('Plus' for increase, 'Minus' for decrease).
      * @param cartObj The Cart__c object to be updated.
      */
-    private static void updateItemQtyInCart(String actionType,Cart__c cartObj, Integer qty){
+    private static void updateItemQtyInCart(String actionType,Cart__c cartObj){
 
-        if(qty == null){
-            qty = 1;
-        }
+
 
         if(actionType == 'Plus'){
-            cartObj.Quantity__c = cartObj.Quantity__c+qty;
+            cartObj.Quantity__c = cartObj.Quantity__c+1;
         }else{
             cartObj.Quantity__c = cartObj.Quantity__c-1;
         }
@@ -286,6 +388,8 @@ public with sharing class AddToCart_Ctrl {
     private static Map<String,Object> totalProductsInCart(String contactId, String warehouseId){
 
         Map<String,Object>  returnMap          = new Map<String,Object>();
+
+
         Map<Decimal,List<CartItem_Wrapper>>  cartItemMain   = new Map<Decimal,List<CartItem_Wrapper>>();
 
 
@@ -296,7 +400,8 @@ public with sharing class AddToCart_Ctrl {
                                                         Product__r.Name,
                                                         Product__r.Description,
                                                         Product__r.West_Material_Code__c,
-                                                        Product__r.GST__c
+                                                        Product__r.GST__c,
+                                                        Product__r.UOM__c
                                                     FROM
                                                         Cart__c
                                                     WHERE
@@ -313,18 +418,30 @@ public with sharing class AddToCart_Ctrl {
             allCartProductsId.add(cartIte.Product__c);
         }
 
-        Map<Id,Decimal> pricebookMap  = getPriceBookMap(allCartProductsId);
+        Map<Id,Decimal> pricebookMap       = getPriceBookMap(allCartProductsId);
+
+        Decimal gstAmt                     = 0;
+        Decimal totalGstAmt                = 0;
+        Decimal totalExeAmt                = 0;
+        Decimal totalIncAmt                = 0;
+
 
         for(Cart__c  cartItem : cartItems){
 
             if(pricebookMap.containsKey(cartItem.Product__c)){
-                CartItem_Wrapper carWrap                            = new CartItem_Wrapper(cartItem,pricebookMap.get(cartItem.Product__c));
+
+                CartItem_Wrapper cartWrap                            = new CartItem_Wrapper(cartItem,pricebookMap.get(cartItem.Product__c));
+
+                gstAmt      = gstAmt + cartWrap.gstAmt;
+                totalGstAmt = totalGstAmt + cartWrap.totGstAmt;
+                totalExeAmt = totalExeAmt + cartWrap.exeAmt;
+                totalIncAmt = totalIncAmt + cartWrap.incAmt;
 
                 if(cartItemMain.containsKey(cartItem.Product__r.GST__c)){
-                    cartItemMain.get(cartItem.Product__r.GST__c).add(carWrap);
+                    cartItemMain.get(cartItem.Product__r.GST__c).add(cartWrap);
                 }else{
                     List<CartItem_Wrapper> cartItemsList                = new List<CartItem_Wrapper>();
-                    cartItemsList.add(carWrap);
+                    cartItemsList.add(cartWrap);
                     cartItemMain.put(cartItem.Product__r.GST__c,cartItemsList);
                 }
             }
@@ -333,6 +450,10 @@ public with sharing class AddToCart_Ctrl {
 
         returnMap.put('count',cartItems.size());
         returnMap.put('items',cartItemMain);
+        returnMap.put('gstAmt',gstAmt);
+        returnMap.put('totalGstAmt',totalGstAmt);
+        returnMap.put('totalExeAmt',totalExeAmt);
+        returnMap.put('totalIncAmt',totalIncAmt);
 
         return returnMap;
     }
@@ -447,7 +568,9 @@ public Class CartItem_Main{
 public Class CartItem_Wrapper{
 
     @AuraEnabled public String id;
+    @AuraEnabled public String proId;
     @AuraEnabled public String proName;
+    @AuraEnabled public String proUom;
     @AuraEnabled public String description;
     @AuraEnabled public String westCode;
     @AuraEnabled public Decimal qty;
@@ -456,12 +579,15 @@ public Class CartItem_Wrapper{
     @AuraEnabled public Decimal gstAmt;
     @AuraEnabled public Decimal exeAmt;
     @AuraEnabled public Decimal incAmt;
+    @AuraEnabled public Decimal totGstAmt;
 
     public CartItem_Wrapper(Cart__c cartObj , Decimal unitPrice){
 
 
         this.id             = cartObj.id;
+        this.proId          = cartObj.Product__c;
         this.proName        = cartObj.Product__r.Name;
+        this.proUom         = cartObj.Product__r.UOM__c;
         this.description    = cartObj.Product__r.Description;
         this.westCode       = cartObj.Product__r.West_Material_Code__c;
         this.gst            = cartObj.Product__r.GST__c;
@@ -470,6 +596,7 @@ public Class CartItem_Wrapper{
         this.gstAmt         = (unitPrice / 100) * cartObj.Product__r.GST__c;
         this.exeAmt         = unitPrice * cartObj.Quantity__c;
         this.incAmt         = (unitPrice + this.gstAmt ) * cartObj.Quantity__c;
+        this.totGstAmt      = this.gstAmt  * cartObj.Quantity__c;
 
     }
 

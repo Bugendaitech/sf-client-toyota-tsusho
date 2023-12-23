@@ -2,7 +2,7 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-22-2023
+  @last modified on  : 12-23-2023
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -70,7 +70,7 @@
                                             small-device-size="4"
                                             medium-device-size="4"
                                             large-device-size="4" >
-                                            <lightning-input type="number" label="Quantity" variant="label-hidden" value="1" min="1" max="1000" data-field="proQty" class="input input-qty" message-when-range-underflow="Minimum Quantity should be One"></lightning-input>
+                                            <lightning-input type="number" lwc:ref="qty" label="Quantity" variant="label-hidden" value="1" min="1" max="1000" data-field="proQty" class="input input-qty" message-when-range-underflow="Minimum Quantity should be One"></lightning-input>
                                         </lightning-layout-item>
                                         <lightning-layout-item
                                             size="5"

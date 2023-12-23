@@ -1,369 +1,241 @@
 <!--
-  @description       :
-  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
-  @group             :
-  @last modified on  : 12-20-2023
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
-  <lightning-button label="New" slot="actions"></lightning-button>
--->
-<template>
+   @description       :
+   @author            : Anshul,Aamir
+   @group             :
+   @last modified on  : 12-23-2023
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   <lightning-button label="New" slot="actions"></lightning-button>
+   -->
+   <template>
+    <template if:false={loggedInUserId}>
+       <h1 style="text-align: center;font-size: large;">
+          Please login to see this Page
+       </h1>
+    </template>
+    <div class="slds-align_absolute-center">
+        <lightning-spinner
+                if:false={childSpinnerStatus}
+                variant="brand"
+                size="medium"
+                style="position: absolute!important;z-index: 1000 !important;"
+        ></lightning-spinner>
+    </div>
 
-    <c-container>
-        <template if:true={showButton}>
-            <div>
+    <template if:true={loggedInUserId}>
+       <c-container>
+          <template if:true={showButton}>
+             <div>
                 <!-- <button class="slds-button slds-button_brand" onclick={handleDealerOrderFormClick}> Dealer Order Form </button> -->
                 <button type="button" onclick={handleNavigation}
-                    data-type="comm__namedPage"
-                    data-name="shoppingcart"
-                    class="slds-button slds-button_base go-back-btn ">Go To Cart</button>
+                   data-type="comm__namedPage"
+                   data-name="shoppingcart"
+                   class="slds-button slds-button_base go-back-btn ">Go To Cart</button>
                 <!--<button onclick={handle}> </button>	-->
                 <lightning-button
-                    class="slds-float_right"
-                    variant="Brand"
-                    label="Create Order"
-                    title="Create Order"
-                    onclick={handleCreateOrder}>
+                   class="slds-float_right"
+                   variant="Brand"
+                   label="Create Order"
+                   title="Create Order"
+                   onclick={handleCreateOrder}>
                 </lightning-button>
-            </div>
-        </template>
-        <!--
-        <lightning-card  title="Address">
+             </div>
+          </template>
+          <br/>
+          <!--
+             <lightning-card  title="Address">
 
-            <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
-            <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
-            <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
-            <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
-            <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
-            <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p>
-        </lightning-card>
+                 <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
+                 <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
+                 <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
+                 <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
+                 <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
+                 <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p>
+             </lightning-card>
 
-        -->
-        <div class="tableMain" style="padding: 10px; background: #fff">
-        <div class="shipbill-add-sec">
+             -->
+          <div class="tableMain" style="border:1px;border-style:solid;padding: 10px; background: #fff">
+             <h1 style="text-align: center;font-size: 24px;">Dealer Order Form</h1>
+             <div class="shipbill-add-sec">
+                <div class="slds-col-6">
+                   <h5>Bill To</h5>
+                   <div  title="Bill To" class="bg-light">
+                      <!-- <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
+                         <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
 
-                   <div class="slds-col-6">
-                        <h5>Bill To</h5>
-                        <div  title="Bill To" class="bg-light">
+                         <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
 
-                            <!-- <p class="slds-p-horizontal_small">Toyota Tsusho India Pvt. Ltd.</p>
+                         <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
 
-                            <p class="slds-p-horizontal_small">Plot No 33,34 Bidadi industrial Area</p>
+                         <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
 
-                            <p class="slds-p-horizontal_small">Bidadi Ramanagara District</p>
-
-                            <p class="slds-p-horizontal_small">Karnataka India  BIDADI-562109</p>
-
-                            <p class="slds-p-horizontal_small">GSTIN :  29AADCS6230N1ZY</p>
-
-                            <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p> -->
-
-                            <p>
-                                {headOfficeAddress}
-                            </p>
-
-                        </div>
-
-
-                        <h5>Ship To</h5>
-                        <div title="Ship To" class="bg-light">
-
-                            <lightning-combobox
-                            name="accountAddresses"
-                            value={selectedAddress}
-                            options={addressOptions}
-                            onchange={handleAddressChange}>
-                        </lightning-combobox>
-                        <!-- <template if:true={selectedAddress}>
-                            <p>{selectedAddress}</p>
-                        </template> -->
-
-                        </div>
-                        
-
+                         <p class="slds-p-horizontal_small">PAN NO: AADCS6230N</p> -->
+                      <p>
+                         {headOfficeAddress}
+                      </p>
                    </div>
-
-                   <div class="slds-col-6">
-
-                       <table class="slds-table billTable">
-
-                           <tr>
-
-                               <td><strong>P.O. No.:</strong></td>
-
-                               <td>Abc</td>
-
-                           </tr>
-
-                           <tr>
-
-                               <td><strong>Date:</strong></td>
-
-                               <td>{TodayDate}</td>
-
-                           </tr>
-
-                           <tr>
-
-                               <td><strong>Place:</strong></td>
-
-                               <td>This is my Address</td>
-
-                           </tr>
-
-                       </table>
-
+                   <h5>Ship To</h5>
+                   <div title="Ship To" class="bg-light">
+                      <lightning-combobox
+                         name="accountAddresses"
+                         value={selectedAddress}
+                         options={addressOptions}
+                         onchange={handleAddressChange}>
+                      </lightning-combobox>
+                      <!-- <template if:true={selectedAddress}>
+                         <p>{selectedAddress}</p>
+                         </template> -->
                    </div>
-
                 </div>
-
-
-
-            <div class="border-0">
-
+                <div class="slds-col-6">
+                   <table class="slds-table billTable">
+                      <tr>
+                         <td><strong>P.O. No.:</strong></td>
+                         <td>Abc</td>
+                      </tr>
+                      <tr>
+                         <td><strong>Date:</strong></td>
+                         <td>{TodayDate}</td>
+                      </tr>
+                      <tr>
+                         <td><strong>Place:</strong></td>
+                         <td>This is my Address</td>
+                      </tr>
+                   </table>
+                </div>
+             </div>
+             <div class="border-0">
                 <div class="slds-box slds-theme–default cartTable">
+                   <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+                      <thead>
+                         <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                               Part Number
+                            </th>
+                            <!-- <th class="" scope="col">
+                               Colour
 
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+                               </th> -->
+                            <th class="" scope="col">
+                               Part Description
+                            </th>
+                            <th class="" scope="col">
+                               UOM
+                            </th>
+                            <th class="" scope="col">
+                               Order Qty
+                            </th>
+                            <th class="" scope="col">
+                               Price per UOM
+                            </th>
+                            <th class="" scope="col">
+                               Total Price
+                            </th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <template if:true={cartArray}>
+                            <template for:each={cartArray} for:item="index">
+                               <template for:each={index.items} for:item="inner">
+                                <tr class="slds-hint-parent" key={inner}>
+                                    <td data-label="Part number">
+                                       <div class="slds-cell-wrap">{inner.proName}</div>
+                                    </td>
+                                    <!-- <td data-label="Colour">
+                                       <div class="slds-cell-wrap">{it.Product2Id}</div>
 
-                            <thead>
-
-                            <tr class="slds-line-height_reset">
-
-                                <th class="" scope="col">
-
-                                    Part number
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    Colour
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    Part Description
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    UOM
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    Order Qty
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    Price per UOM
-
-                                </th>
-
-                                <th class="" scope="col">
-
-                                    Total Price
-
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <template if:true={cartArray}>
-
-                                <template for:each={cartArray} for:item="index">
-
-                                    <tr class="slds-hint-parent" key={index}>
-
-                                        <td data-label="Part number">
-
-                                            <div class="slds-cell-wrap">{index.itemCode}</div>
-
-                                        </td>
-
-                                        <td data-label="Colour">
-
-                                            <!-- <div class="slds-cell-wrap">{it.Product2Id}</div> -->
-
-                                        </td>
-
-                                        <td data-label= "Part Description">
-
-                                            <div class="slds-cell-wrap">{index.name}</div>
-
-                                        </td>
-
-                                        <td data-label="UOM">
-
-                                            <div class="slds-cell-wrap">{index.proUom}</div>
-
-                                        </td>
-
-                                        <td data-label="Order Qty">
-
-                                            <div class="slds-cell-wrap">{index.qty}</div>
-
-                                        </td>
-
-                                        <td data-label="Price per UOM">
-
-                                            <div class="slds-cell-wrap">
-                                                <lightning-formatted-number value={index.price} format-style="currency"
-                                            minimum-integer-digits="3"></lightning-formatted-number>
-                                            </div>
-
-                                        </td>
-
-                                        <td data-label="Total Price">
-
-                                            <div class="slds-cell-wrap">
-                                            <lightning-formatted-number value={index.subTotal} format-style="currency"
-                                            minimum-integer-digits="3"></lightning-formatted-number>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-
-                                </template>
-
+                                       </td> -->
+                                    <td data-label= "Part Description">
+                                       <div class="slds-cell-wrap">{inner.description}</div>
+                                    </td>
+                                    <td data-label="UOM">
+                                       <div class="slds-cell-wrap">{inner.proUom}</div>
+                                    </td>
+                                    <td data-label="Order Qty">
+                                       <div class="slds-cell-wrap">{inner.qty}</div>
+                                    </td>
+                                    <td data-label="Price per UOM">
+                                       <div class="slds-cell-wrap">
+                                          <lightning-formatted-number value={inner.price} format-style="currency"
+                                             minimum-integer-digits="2"></lightning-formatted-number>
+                                       </div>
+                                    </td>
+                                    <td data-label="Total Price">
+                                       <div class="slds-cell-wrap">
+                                          <lightning-formatted-number value={inner.exeAmt} format-style="currency"
+                                             minimum-integer-digits="2"></lightning-formatted-number>
+                                       </div>
+                                    </td>
+                                 </tr>
+                               </template>
                             </template>
-
-                        </tbody>
-
-                    </table>
-
-                    <!-- <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div> -->
-
+                         </template>
+                      </tbody>
+                   </table>
+                   <!-- <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div> -->
                 </div>
-
-            </div>
-
-            <div class="border-0 termsSec">
+             </div>
+             <div class="border-0 termsSec">
                 <h5><strong>Terms and conditions:</strong></h5>
-                   <div style="padding: 5px 5px">
-
-                    <ol>
-
-                        <li>The parts details with pricing structure (incl. delivery charges, excl. GST%) are mentioned in Annexure I- Accessories Line-up.</li>
-
-                        <li>Payment Terms: 100% advance payment with PO.</li>
-
-                        <li>All orders will be sold in the form of sets of 6 parts only.</li>
-
-                        <li>Single orders will be accepted only in case of serviceability or warranty replacement.</li>
-
-                        <li>Warranty for all products will be valid for 1 year from the date of sale to end customer or 20,000 km or whichever is earlier.</li>
-
-                        <li>Warranty terms will be strictly applicable as per terms and conditions mentioned in Annexure II- User Manual only.</li>
-
-                        <li>For every sales, the dealership is required to collect signed MOU (annexure III) from every end customer. Absence of signed MOU will nullify the warranty extension of the sold parts.</li>
-
-                        <li>Dealer should strictly follow the installation manuals. Any damages to the parts occuring during installation will not be covered under warranty/replacement.</li>
-
-                        <li>The delivery lead times from the date of order are as under for every region. Order cut-off time from Monday to Saturday will be 1600hrs, any orders placed post that will be considered for the next day. Sundays will be weekly off.</li>
-
-                    </ol>   <br>
-
-                            <div class="slds-box slds-theme–default">
-
-                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left"  style="width: 500px;">
-
-                                        <thead>
-
-                                        <tr class="slds-line-height_reset">
-
-                                            <th class="" scope="col">
-
-                                                Region
-
-                                            </th>
-
-                                            <th class="" scope="col">
-
-                                                Mark
-
-                                            </th>
-
-                                            <th class="" scope="col">
-
-                                                Delivery Lead Days
-
-                                            </th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        <template iterator:it={zoneData}>
-
-                                            <tr class="slds-hint-parent" key = {it.value.Region}>
-
-                                                <td data-label="Region">
-
-                                                    <div class="slds-cell-wrap">{it.value.Region}</div>
-
-                                                </td>
-
-                                                <td data-label="Mark">
-
-                                                    <div class="slds-cell-wrap">{it.value.Mark}</div>
-
-                                                </td>
-
-                                                <td data-label= "Days">
-
-                                                    <div class="slds-cell-wrap">{it.value.Days}</div>
-
-                                                </td>
-
-                                            </tr>
-
-                                        </template>
-
-                                    </tbody>
-
-                                </table>
-
-
-
-                                <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div>
-
-                            </div>
-
-                            <p> The above lead times will be valid only in nomal situations. The lead times will not hold good in abnormal situations like bandh, strike, Force Majure etc.</p>
-
-                            <p style="padding-top: 50px;">Grand total in words: <span style="font-weight:bold;color:green">{TotalAmtInWords}</span></p>
+                <div style="padding: 5px 5px">
+                   <ol>
+                      <li>The parts details with pricing structure (incl. delivery charges, excl. GST%) are mentioned in Annexure I- Accessories Line-up.</li>
+                      <li>Payment Terms: 100% advance payment with PO.</li>
+                      <li>All orders will be sold in the form of sets of 6 parts only.</li>
+                      <li>Single orders will be accepted only in case of serviceability or warranty replacement.</li>
+                      <li>Warranty for all products will be valid for 1 year from the date of sale to end customer or 20,000 km or whichever is earlier.</li>
+                      <li>Warranty terms will be strictly applicable as per terms and conditions mentioned in Annexure II- User Manual only.</li>
+                      <li>For every sales, the dealership is required to collect signed MOU (annexure III) from every end customer. Absence of signed MOU will nullify the warranty extension of the sold parts.</li>
+                      <li>Dealer should strictly follow the installation manuals. Any damages to the parts occuring during installation will not be covered under warranty/replacement.</li>
+                      <li>The delivery lead times from the date of order are as under for every region. Order cut-off time from Monday to Saturday will be 1600hrs, any orders placed post that will be considered for the next day. Sundays will be weekly off.</li>
+                   </ol>
+                   <br>
+                   <div class="slds-box slds-theme–default">
+                      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left"  style="width: 500px;">
+                         <thead>
+                            <tr class="slds-line-height_reset">
+                               <th class="" scope="col">
+                                  Region
+                               </th>
+                               <th class="" scope="col">
+                                  Mark
+                               </th>
+                               <th class="" scope="col">
+                                  Delivery Lead Days
+                               </th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <template iterator:it={zoneData}>
+                               <tr class="slds-hint-parent" key = {it.value.Region}>
+                                  <td data-label="Region">
+                                     <div class="slds-cell-wrap">{it.value.Region}</div>
+                                  </td>
+                                  <td data-label="Mark">
+                                     <div class="slds-cell-wrap">{it.value.Mark}</div>
+                                  </td>
+                                  <td data-label= "Days">
+                                     <div class="slds-cell-wrap">{it.value.Days}</div>
+                                  </td>
+                               </tr>
+                            </template>
+                         </tbody>
+                      </table>
+                      <div class="slds-p-top_x-small">Note : All files are scheduled for SFTP upload</div>
                    </div>
+                   <p> The above lead times will be valid only in nomal situations. The lead times will not hold good in abnormal situations like bandh, strike, Force Majure etc.</p>
+                   <p style="padding-top: 50px;">Grand total in words: <span style="font-weight:bold;color:rgb(0, 0, 255)">&nbsp;&nbsp;{TotalAmtInWords}</span></p>
                 </div>
-
-            <div >
-
-               <div class="forSign" style="padding: 5px 100px;">
-
+             </div>
+             <div >
+                <div class="forSign" style="padding: 5px 100px;">
                    <strong>For Toyota Tusho India Pvt Ltd</strong>
-
-                <p style="padding-top: 100px;">AUTHORISED SIGNATORY</p>
-
-               </div>
-
-            </div>
-
-            <div >
-
+                   <p style="padding-top: 100px;">AUTHORISED SIGNATORY</p>
+                </div>
+             </div>
+             <div >
                 <p style="margin: 0; text-align: center; padding: 10px;"><strong>NOTE : Terms & Conditions of this Order Form should be strictly followed</strong></p>
-
-            </div>
-        </div>
-    </c-container>
-
-</template>
+             </div>
+          </div>
+       </c-container>
+    </template>
+ </template>

@@ -118,10 +118,12 @@ public with sharing class CreateOrdersfromCart {
             orderData.ShippingState       = accForAddr.BillingState;
             orderData.ShippingCity        = accForAddr.BillingCity;
 
-            orderData.BillingCity         = 'Bidadi Ramanagara District';
-            orderData.BillingStreet       = 'Plot No 33,34 Bidadi industrial Area';
-            orderData.BillingState        = 'Karnataka';
-            orderData.BillingPostalCode   = '562109';
+            List<String> HOAddress        = getHeadOfficeAddress();
+            system.debug('ho Addrrr---->>'+HOAddress);
+            orderData.BillingCity         = HOAddress[1];
+            orderData.BillingStreet       = HOAddress[0];
+            orderData.BillingState        = HOAddress[2];
+            orderData.BillingPostalCode   = HOAddress[3];
 
             insert orderData;
 

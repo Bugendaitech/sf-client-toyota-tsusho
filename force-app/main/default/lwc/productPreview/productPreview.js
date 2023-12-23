@@ -1,9 +1,10 @@
+import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { LightningElement, track, wire } from 'lwc';
 
 
 import getProductDetails from '@salesforce/apex/StockProducts_Ctrl.getProductDetails';
+import addProductToCart from '@salesforce/apex/AddToCart_Ctrl.addProductToCart';
 
 export default class ProductPreview extends NavigationMixin(LightningElement) {
 
@@ -83,8 +84,46 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
 
     // }
 
-
     addToCart() {
+
+        console.log('called add to cart');
+
+        let productCode       = this.recId;
+        let qty               = this.template.querySelector("[data-field='proQty']").value;
+
+        console.log('this '+qty);
+
+        if(qty < 1){
+            this.notificationHandler('Warning', 'Minimum Quantity should be One.', 'warning');
+            return;
+          }
+
+        if(productCode != null){
+
+            addProductToCart({
+                productId : productCode,
+                qty       : qty
+            })
+            .then((res)=>{
+                console.log('in then '+res);
+                let result    = JSON.parse(res);
+                this.notificationHandler(result?.label, result?.msg, result?.status);
+            })
+            .catch((error)=>{
+                console.log('in catch '+JSON.stringify(error));
+                let result    = JSON.parse(error);
+                this.notificationHandler(result?.label, result?.msg, result?.status);
+            })
+            .finally(()=>{
+                console.log('finally');
+
+            })
+        }
+
+    }
+
+
+    oldAddToCart() {
 
       //console.log('called add to cart');
 
