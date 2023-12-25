@@ -28,7 +28,6 @@ export default class CartPage extends NavigationMixin(LightningElement) {
     @track totalIncAmt          = 0;
 
     @track totalTax             = 0;
-
     @track taxPercentage        = 0;
 
 
@@ -130,8 +129,8 @@ export default class CartPage extends NavigationMixin(LightningElement) {
 
     removeProduct(event){
         // this.notificationHandler('Warning', 'In Progress.', 'warning');
-        //         return;
-    //   console.log('removeProduct called');
+        // return;
+        // console.log('removeProduct called');
       this.childSpinnerStatus  = false;
       //console.log('event key '+event.target.dataset.key);
 
