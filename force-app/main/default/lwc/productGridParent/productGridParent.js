@@ -29,20 +29,26 @@ export default class ProductGridParent extends LightningElement {
     }
 
     @wire(getPicklistValuesbyApex, { objectName: 'Product2', fieldName: 'Family' })
-    wiredPicklistValues({ data, error }) {
+    wiredPicklistValuesForFamily({ data, error }) {
         if (data) {
             //console.log('Picklist Data Apex : ' + JSON.stringify(data));
             this.proFamiles = [];
-            this.catList = [];
+            this.catList    = [];
             this.proFamiles = data;
-            this.catList = data.map(entry => entry.value);
+            this.catList    = data.map(entry => entry.value);
+        } else if (error) {
+            console.error('Picklist Error : ' + error);
+        }
+    }
 
-            // data.values.forEach(ele =>{
-            //                 console.log('yes '+ele.value);
-            //                 this.catList = [...this.catList,ele.value];
-            //             })
-
-            //          this.proFamiles  = data.value;
+    @wire(getPicklistValuesbyApex, { objectName: 'Product2', fieldName: 'Model__c' })
+    wiredPicklistValuesForModel({ data, error }) {
+        if (data) {
+               console.log('Picklist Options for Model__c Apex : ' + JSON.stringify(data));
+            // this.proFamiles = [];
+            // this.catList    = [];
+            // this.proFamiles = data;
+            // this.catList    = data.map(entry => entry.value);
         } else if (error) {
             console.error('Picklist Error : ' + error);
         }

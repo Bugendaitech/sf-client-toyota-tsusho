@@ -49,7 +49,7 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
                 productId : recordId
             })
             .then((result)=>{
-              console.log('result '+result);
+                //console.log('result '+result);
                 this.productDetails         = JSON.parse(result);
                 this.proCode                = this.productDetails.proCode;
                 this.proUom                 = this.productDetails.proUom;
@@ -62,7 +62,10 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
                 this.proGst                 = this.productDetails.gst;
             })
             .catch((error)=>{
-              //console.log('error '+error);
+                //console.log('error '+error);
+                console.log('in catch '+JSON.stringify(error));
+                let result    = JSON.parse(error);
+                this.notificationHandler(result?.label, result?.msg, result?.status);
             })
             .finally(()=>{
               //console.log('finally ');
@@ -123,124 +126,125 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
     }
 
 
-    oldAddToCart() {
+    // oldAddToCart() {
 
-      //console.log('called add to cart');
+    //   //console.log('called add to cart');
 
-        let productCode       = this.recId;
+    //     let productCode       = this.recId;
 
-        // let selectedProduct   = this.records.filter(function (el) {
-        //                             return el.Id == productCode;
-        //                         });
+    //     // let selectedProduct   = this.records.filter(function (el) {
+    //     //                             return el.Id == productCode;
+    //     //                         });
 
-        // console.log('selectedProduct '+JSON.stringify(selectedProduct));
+    //     // console.log('selectedProduct '+JSON.stringify(selectedProduct));
 
-        let productQty        = this.template.querySelector("[data-field='proQty']").value;
-        let productTitle      = this.proFullDesc;
-        let productPrice      = this.proUnitPrice;
-        let productImg        = this.proImg;
-        let productUom        = this.proUom;
-        let productItemCode   = this.proCode;
-        let productGST        = this.proGst;
-
-
-        if(productQty < 1){
-          this.notificationHandler('Warning', 'Minimum Quantity should be One.', 'warning');
-          return;
-        }
-      //console.log('values '+productCode+' && '+productQty);
-
-      //console.log('localStorage '+JSON.stringify(localStorage.getItem('LSKey[c]products')));
-
-        let products 	    = localStorage.getItem('LSKey[c]products');
+    //     let productQty        = this.template.querySelector("[data-field='proQty']").value;
+    //     let productTitle      = this.proFullDesc;
+    //     let productPrice      = this.proUnitPrice;
+    //     let productImg        = this.proImg;
+    //     let productUom        = this.proUom;
+    //     let productItemCode   = this.proCode;
+    //     let productGST        = this.proGst;
 
 
-        // check
-        if(products == null){
+    //     if(productQty < 1){
+    //       this.notificationHandler('Warning', 'Minimum Quantity should be One.', 'warning');
+    //       return;
+    //     }
+    //   //console.log('values '+productCode+' && '+productQty);
 
-            let productsArray = [];
+    //   //console.log('localStorage '+JSON.stringify(localStorage.getItem('LSKey[c]products')));
 
-
-
-            let productObj              = {};
-            productObj.code             = productCode;
-            productObj.qty              = productQty;
-            productObj.name             = productTitle;
-            productObj.price            = productPrice;
-            productObj.proImg           = productImg;
-            productObj.itemCode         = productItemCode;
-            productObj.prodGST          = (productGST/100);
-            productObj.proUom           = productUom;
-            productObj.productGSTPrice  = this.handlePriceIncludingGST(productPrice,productGST);
+    //     let products 	    = localStorage.getItem('LSKey[c]products');
 
 
-            productsArray.push(productObj);
-            localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
+    //     // check
+    //     if(products == null){
 
-
-          //console.log('localStorage '+JSON.stringify(localStorage.getItem('LSKey[c]products')));
-
-            let response = true; //document.querySelector('#response');
-
-            localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
-
-                if(response != null){
-                    this.notificationHandler('Success', 'Product added successfully.', 'success');
-                }
-
-        }else{
-
-            // if some in list
-            //c
-
-            let productsArray = JSON.parse(localStorage.getItem('LSKey[c]products'));
-            let isExist       = productsArray.findIndex( pro => pro.code == productCode);
-
-            if(isExist === -1){
-
-                let productObj      = {};
-                productObj.code     = productCode;
-                productObj.qty      = productQty;
-                productObj.name     = productTitle;
-                productObj.price    = productPrice;
-                productObj.proImg   = productImg;
-                productObj.itemCode         = productItemCode;
-                productObj.prodGST          = (productGST/100);
-                productObj.proUom           = productUom;
-                productObj.productGSTPrice  = this.handlePriceIncludingGST(productPrice,productGST);
+    //         let productsArray = [];
 
 
 
-                productsArray.push(productObj);
-                localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
-
-                let response = true; //document.querySelector('#response');
-
-
-                localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
-
-                if(response != null){
-
-                    this.notificationHandler('Success', 'Product added successfully.', 'success');
-
-                }
-            }else{
-                let response = true; //document.querySelector('#response');
-
-                if(response != null){
-                    this.notificationHandler('Warning', 'Product already exist in your cart.', 'warning');
-                }
-
-            }
+    //         let productObj              = {};
+    //         productObj.code             = productCode;
+    //         productObj.qty              = productQty;
+    //         productObj.name             = productTitle;
+    //         productObj.price            = productPrice;
+    //         productObj.proImg           = productImg;
+    //         productObj.itemCode         = productItemCode;
+    //         productObj.prodGST          = (productGST/100);
+    //         productObj.proUom           = productUom;
+    //         productObj.productGSTPrice  = this.handlePriceIncludingGST(productPrice,productGST);
 
 
-        }
-    }
+    //         productsArray.push(productObj);
+    //         localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
 
 
-    handlePriceIncludingGST(price,gstRate) {
-        return  ((price/100)*(1*gstRate))
-    }
+    //       //console.log('localStorage '+JSON.stringify(localStorage.getItem('LSKey[c]products')));
+
+    //         let response = true; //document.querySelector('#response');
+
+    //         localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
+
+    //             if(response != null){
+    //                 this.notificationHandler('Success', 'Product added successfully.', 'success');
+    //             }
+
+    //     }else{
+
+    //         // if some in list
+    //         //c
+
+    //         let productsArray = JSON.parse(localStorage.getItem('LSKey[c]products'));
+    //         let isExist       = productsArray.findIndex( pro => pro.code == productCode);
+
+    //         if(isExist === -1){
+
+    //             let productObj      = {};
+    //             productObj.code     = productCode;
+    //             productObj.qty      = productQty;
+    //             productObj.name     = productTitle;
+    //             productObj.price    = productPrice;
+    //             productObj.proImg   = productImg;
+    //             productObj.itemCode         = productItemCode;
+    //             productObj.prodGST          = (productGST/100);
+    //             productObj.proUom           = productUom;
+    //             productObj.productGSTPrice  = this.handlePriceIncludingGST(productPrice,productGST);
+
+
+
+    //             productsArray.push(productObj);
+    //             localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
+
+    //             let response = true; //document.querySelector('#response');
+
+
+    //             localStorage.setItem('LSKey[c]products', JSON.stringify(productsArray));
+
+    //             if(response != null){
+
+    //                 this.notificationHandler('Success', 'Product added successfully.', 'success');
+
+    //             }
+    //         }else{
+    //             let response = true; //document.querySelector('#response');
+
+    //             if(response != null){
+    //                 this.notificationHandler('Warning', 'Product already exist in your cart.', 'warning');
+    //             }
+
+    //         }
+
+
+    //     }
+    // }
+
+
+    // handlePriceIncludingGST(price,gstRate) {
+    //     return  ((price/100)*(1*gstRate))
+    // }
+
 
 
     // ===================== handle Navigation handler ===============================

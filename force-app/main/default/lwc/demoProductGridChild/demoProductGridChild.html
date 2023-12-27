@@ -1,0 +1,22 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-27-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+  <br>
+  <h3 style="font-size:1.5rem;font-weight:bold; text-align:center;text-transform: capitalize;" >Products</h3>
+  <br>
+  <div class="list-item-grid">
+    <template for:each={productItems} for:item="item">
+      <div class="list-item" key={item} data-item="product" onclick={handleClick} >
+          <h1 data-item="product" onclick={handleClick}>{item.proName} ( {item.inStock} )</h1>
+          <p>{item.proWestCode} || {item.proUom} || {item.proDesc} || {item.proPrice} || {item.proGst} || {item.proFamily}</p>
+      </div>
+  </template>
+  </div>
+
+</template>

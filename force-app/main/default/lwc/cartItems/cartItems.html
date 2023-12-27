@@ -1,0 +1,23 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-25-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <!-- <i class="fa badge" style="font-size:24px" value=5>&#xf07a;</i> -->
+    <!-- <lightning-icon icon-name="utility:cart" alternative-text="Cart" title="Cart" value="5" class="badge"></lightning-icon> -->
+    <lightning-layout multiple-rows>
+      <lightning-layout-item size="11"></lightning-layout-item>
+      <lightning-layout-item size="1">
+        <div class="cart-container">
+          <lightning-icon icon-name="utility:cart" alternative-text="Cart" title="Cart" value=5 class="badge" onclick={handleNavigate}></lightning-icon>
+          <template if:true={iscartEmpty}>
+            <span class="item-number">{cartItems}</span>
+          </template>
+        </div>
+      </lightning-layout-item>
+      <!-- <lightning-layout-item size="1"></lightning-layout-item> -->
+    </lightning-layout>
+</template>

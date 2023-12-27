@@ -1,4 +1,4 @@
-public with sharing class CreateOrdersfromCart {
+public without sharing class CreateOrdersfromCart {
     
     @AuraEnabled(cacheable=true)
     public static List<String> getHeadOfficeAddress(){
@@ -7,15 +7,18 @@ public with sharing class CreateOrdersfromCart {
 
             List<String> addressList = new List<String>();
             if(currentUser.isDealer__c == false){
-                Account parentAcc =[SELECT Id,BillingStreet,BillingCity,BillingState,BillingPostalCode
-                                    FROM Account
-                                    WHERE Id =: currentUser.account.ParentId LIMIT 1
-                                    ];
+                // Account parentAcc =[SELECT Id,BillingStreet,BillingCity,BillingState,BillingPostalCode
+                //                     FROM Account
+                //                     WHERE Id =: currentUser.accountId LIMIT 1
+                //                     ];
+                Contact parentCont = [SELECT Id, MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+                                      FROM Contact WHERE Id =: currentUser.contact.ReportsToId LIMIT 1
+                                        ];
                 String addressString = '';
-                addressString += parentAcc.BillingStreet;
-                addressString += '\n'+parentAcc.BillingCity;
-                addressString += '\n'+parentAcc.BillingState;
-                addressString += '\n'+parentAcc.BillingPostalCode;
+                addressString += parentCont.MailingStreet;
+                addressString += '\n'+parentCont.MailingCity;
+                addressString += '\n'+parentCont.MailingState;
+                addressString += '\n'+parentCont.MailingPostalCode;
 
                 addressList = addressString.split('\n');
 
@@ -23,15 +26,15 @@ public with sharing class CreateOrdersfromCart {
                 
             }
             else if(currentUser.isDealer__c == true){
-                Account parentAcc =[SELECT Id,BillingStreet,BillingCity,BillingState,BillingPostalCode
-                                    FROM Account
-                                    WHERE Id =: currentUser.accountId LIMIT 1
+                Contact parentCont =[SELECT Id,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+                                    FROM Contact
+                                    WHERE Id =: currentUser.contactId LIMIT 1
                                     ];
                 String addressString = '';
-                addressString += parentAcc.BillingStreet;
-                addressString += '\n'+parentAcc.BillingCity;
-                addressString += '\n'+parentAcc.BillingState;
-                addressString += '\n'+parentAcc.BillingPostalCode;
+                addressString += parentCont.MailingStreet;
+                addressString += '\n'+parentCont.MailingCity;
+                addressString += '\n'+parentCont.MailingState;
+                addressString += '\n'+parentCont.MailingPostalCode;
 
                 addressList = addressString.split('\n');
 
@@ -47,28 +50,30 @@ public with sharing class CreateOrdersfromCart {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Account> getShipToAddress(){
+    public static List<Contact> getShipToAddress(){
         try {
-            List<String> addresses = new List<String>();
+            //List<String> addresses = new List<String>();
 
             User currentUser = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
-            List<Account> allOutlets =new List<Account>();
+            List<Contact> allOutlets =new List<Contact>();
              if(currentUser.isDealer__c == false){
-                allOutlets = [SELECT Id,BillingStreet,BillingState,BillingPostalCode
-                                            FROM Account
-                                            WHERE ParentId =: currentUser.account.ParentId
+                allOutlets = [SELECT Id,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+                              FROM Contact
+                              WHERE ReportsToId =: currentUser.contact.ReportsToId
                  ];
 
                 //  for(Account accRec: allOutlets){
                 //     String address= accRec.BillingStreet+'\n'+accRec.BillingState+'\n'+accRec.BillingPostalCode;
                 //     addresses.add(address);
                 //  }
+                system.debug('outlets address '+allOutlets);
              }
              else if(currentUser.isDealer__c == true){
-                allOutlets = [SELECT Id,BillingStreet,BillingState,BillingPostalCode
-                                            FROM Account
-                                            WHERE ParentId =: currentUser.AccountId];
+                allOutlets = [SELECT Id,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+                                            FROM Contact
+                                            WHERE ReportsToId =: currentUser.ContactId];
+                system.debug('dealer outlets address '+allOutlets);
              }
                return allOutlets;                 
 
@@ -83,7 +88,9 @@ public with sharing class CreateOrdersfromCart {
         try {
             User currentUser = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
-            Account accForAddr = [SELECT Id, BillingStreet,BillingPostalCode,BillingState,BillingCity FROM Account WHERE Id=:address];
+            Contact accForAddr = [SELECT Id,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+                                  FROM Contact 
+                                  WHERE Id =: address];
             //Map<String, Object> orderData = (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
             
             Order  orderData                = (Order) JSON.deserialize(orderDetails, Order.class);
@@ -113,10 +120,10 @@ public with sharing class CreateOrdersfromCart {
             orderData.Status             = 'Draft';
             orderData.AccountId          = accId;
             orderData.BillToContactId    = currentUser.contactId;
-            orderData.ShippingPostalCode  = accForAddr.BillingPostalCode;
-            orderData.ShippingStreet      = accForAddr.BillingStreet;
-            orderData.ShippingState       = accForAddr.BillingState;
-            orderData.ShippingCity        = accForAddr.BillingCity;
+            orderData.ShippingPostalCode  = accForAddr.MailingPostalCode;
+            orderData.ShippingStreet      = accForAddr.MailingStreet;
+            orderData.ShippingState       = accForAddr.MailingState;
+            orderData.ShippingCity        = accForAddr.MailingCity;
 
             List<String> HOAddress        = getHeadOfficeAddress();
             system.debug('ho Addrrr---->>'+HOAddress);
@@ -179,7 +186,21 @@ public with sharing class CreateOrdersfromCart {
             if(!proListForUpdate.isEmpty()){
                 update proListForUpdate;
             }
+            
+            //Push Notification
+            // List<CustomNotificationType > notification1 = [SELECT Id, DeveloperName FROM CustomNotificationType
+            //                                                     WHERE DeveloperName= 'Order_Submitted_For_Approval' ];
 
+            // Messaging.CustomNotification currNotification = new Messaging.CustomNotification();
+            // currNotification.setTitle('Order Approval needed! '+orderData.Name);
+            // currNotification.setBody('Review the order from '+currentUser.contact.Name);
+            // currNotification.setNotificationTypeId(notification1[0].Id);
+            // currNotification.setTargetId(currentUser.contact.ReportsToId);
+            // set<String> recepients = new Set<String>();
+            // User u = GetLoggedInUserDetails_Ctrl.getDealerUserInfo(currentUser.contact.ReportsToId);
+            // recepients.add(u.Id);
+            // currNotification.send(recepients);
+            
 
 
             return 'success';
@@ -189,9 +210,29 @@ public with sharing class CreateOrdersfromCart {
             ////System.debug('error log ::'+JSON.serialize(e.getMessage()));
             // return JSON.serialize(e.getMessage());
         }
+    }
 
+    @AuraEnabled(cacheable=true)
+    public static String getToyotaLogoId() {
+        ContentDocument cd = [SELECT Id FROM ContentDocument WHERE Title = 'ToyotaLogo' LIMIT 1];
+        return cd.Id;
+    }
 
+    @AuraEnabled(cacheable=true)
+    public static Account getTTIPLinfo() {
+        Account acc = [SELECT Id, BillingStreet,BillingCity,BillingState,BillingPostalCode,PAN_Number__c,GST_Number__c,logo__c
+                      FROM Account WHERE PAN_Number__c = 'AADCS6230N'
+                      LIMIT 1];
+                      system.debug('accInfo '+acc);
+        return acc;
+    }
 
+    @AuraEnabled(cacheable=true)
+    public static Account getCurrentContactinfo() {
 
+        User currentUser = GetLoggedInUserDetails_Ctrl.getUserDetails();
+
+        Account conRecord =[SELECT Id,Customer_ID__c FROM Account WHERE Id =: currentUser.contact.AccountId LIMIT 1];
+        return conRecord;
     }
 }

@@ -2,12 +2,12 @@
  * @description       : All Cart related functionality (Add,Increase,Decrease,Remove,TotalCount,All Products in Cart)
  * @author            : Anshul Kanaujia
  * @group             : BT Team
- * @last modified on  : 12-23-2023
+ * @last modified on  : 12-26-2023
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class AddToCart_Ctrl {
 
-    public static Id pricebookId = getPricebookIdByName('Toyota_Price_Book');
+    public static Id pricebookId = AddToCart_Ctrl.getPricebookIdByName('Toyota_Price_Book');
 
 
     public AddToCart_Ctrl() {
@@ -44,7 +44,7 @@ public with sharing class AddToCart_Ctrl {
                     cartObj.Outlet__c       = userDetails.ContactId;
                     cartObj.Product__c      = productId;
                     cartObj.Warehouse__c    = userDetails.WarehouseId__c;
-                    cartObj.Quantity__c     = 1;
+                    cartObj.Quantity__c     = qty;
 
                     System.debug('cartObj details for insert '+cartObj);
 
@@ -54,7 +54,7 @@ public with sharing class AddToCart_Ctrl {
 
                     retMap.put('status','success');
                     retMap.put('label','Success !');
-                    retMap.put('totalItems',cartItems.get('count'));
+                    retMap.put('totalItems',cartItems.get('totalItems'));
                     retMap.put('allItems',cartItems.get('items'));
                     retMap.put('msg','Product Added Successfully.');
 
@@ -100,7 +100,7 @@ public with sharing class AddToCart_Ctrl {
      * @return A JSON string containing the status of the operation, total items in the cart, and cart items details.
      */
     @AuraEnabled
-    public static string actionOnQuantity(String actionType, String cartId ){
+    public static string actionOnQuantity(String actionType, String cartId ,Integer qty){
 
         User userDetails   			  = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
@@ -121,7 +121,7 @@ public with sharing class AddToCart_Ctrl {
                 try {
 
 
-                    if(actionType == 'Remove'){
+                    if(actionType == 'remove' || (cartObj.Quantity__c == 1 && actionType == 'decrease')){
 
                         deleteItemFromCart(cartObj);
                         retMap.put('label','Success !');
@@ -129,20 +129,16 @@ public with sharing class AddToCart_Ctrl {
 
                     }else{
 
-                        if(cartObj.Quantity__c == 1 && actionType == 'Minus'){
-                            deleteItemFromCart(cartObj);
-                        }else{
-                            updateItemQtyInCart(actionType,cartObj);
-                        }
-
+                        updateItemQtyInCart(actionType,cartObj,qty);
                         retMap.put('label','Success !');
                         retMap.put('msg','Quantity Updated Successfully.');
+
                     }
 
                     Map<String,Object> cartItems  = totalProductsInCart(userDetails.ContactId,userDetails.WarehouseId__c);
 
                     retMap.put('status','success');
-                    retMap.put('totalItems',cartItems.get('count'));
+                    retMap.put('totalItems',cartItems.get('totalItems'));
                     retMap.put('items',cartItems.get('items'));
                     retMap.put('gstAmt',cartItems.get('gstAmt'));
                     retMap.put('totalGstAmt',cartItems.get('totalGstAmt'));
@@ -271,14 +267,22 @@ public with sharing class AddToCart_Ctrl {
      * @param actionType The type of action to be performed ('Plus' for increase, 'Minus' for decrease).
      * @param cartObj The Cart__c object to be updated.
      */
-    private static void updateItemQtyInCart(String actionType,Cart__c cartObj){
+    private static void updateItemQtyInCart(String actionType,Cart__c cartObj,Integer qty){
 
+        if(qty == null){
+            qty = 1;
+        }
 
+        if(actionType == 'manual'){
+            cartObj.Quantity__c = qty;
+        }
 
-        if(actionType == 'Plus'){
-            cartObj.Quantity__c = cartObj.Quantity__c+1;
-        }else{
-            cartObj.Quantity__c = cartObj.Quantity__c-1;
+        if(actionType == 'increase'){
+            cartObj.Quantity__c = cartObj.Quantity__c+qty;
+        }
+
+        if(actionType == 'decrease'){
+            cartObj.Quantity__c = cartObj.Quantity__c-qty;
         }
 
         if (Schema.sObjectType.Cart__c.isUpdateable()) {
@@ -400,8 +404,9 @@ public with sharing class AddToCart_Ctrl {
                                                         Product__r.Name,
                                                         Product__r.Description,
                                                         Product__r.West_Material_Code__c,
-                                                        Product__r.GST__c,
-                                                        Product__r.UOM__c
+                                                        // Product__r.GST__c,
+                                                        Product__r.UOM__c,
+                                                        Product__r.HSN_Code__c
                                                     FROM
                                                         Cart__c
                                                     WHERE
@@ -437,18 +442,18 @@ public with sharing class AddToCart_Ctrl {
                 totalExeAmt = totalExeAmt + cartWrap.exeAmt;
                 totalIncAmt = totalIncAmt + cartWrap.incAmt;
 
-                if(cartItemMain.containsKey(cartItem.Product__r.GST__c)){
-                    cartItemMain.get(cartItem.Product__r.GST__c).add(cartWrap);
-                }else{
-                    List<CartItem_Wrapper> cartItemsList                = new List<CartItem_Wrapper>();
-                    cartItemsList.add(cartWrap);
-                    cartItemMain.put(cartItem.Product__r.GST__c,cartItemsList);
-                }
+                // if(cartItemMain.containsKey(cartItem.Product__r.GST__c)){
+                //     cartItemMain.get(cartItem.Product__r.GST__c).add(cartWrap);
+                // }else{
+                //     List<CartItem_Wrapper> cartItemsList                = new List<CartItem_Wrapper>();
+                //     cartItemsList.add(cartWrap);
+                //     cartItemMain.put(cartItem.Product__r.GST__c,cartItemsList);
+                // }
             }
 
         }
 
-        returnMap.put('count',cartItems.size());
+        returnMap.put('totalItems',cartItems.size());
         returnMap.put('items',cartItemMain);
         returnMap.put('gstAmt',gstAmt);
         returnMap.put('totalGstAmt',totalGstAmt);
@@ -507,7 +512,7 @@ public with sharing class AddToCart_Ctrl {
      * @param pricebookName The name of the pricebook.
      * @return The ID of the pricebook, or null if not found.
      */
-    private static Id getPricebookIdByName(String pricebookName) {
+    public static Id getPricebookIdByName(String pricebookName) {
         Id pricebookId;
 
         // Query for the PricebookId using the Pricebook2 object
@@ -571,6 +576,7 @@ public Class CartItem_Wrapper{
     @AuraEnabled public String proId;
     @AuraEnabled public String proName;
     @AuraEnabled public String proUom;
+    @AuraEnabled public String proHsn;
     @AuraEnabled public String description;
     @AuraEnabled public String westCode;
     @AuraEnabled public Decimal qty;
@@ -587,13 +593,14 @@ public Class CartItem_Wrapper{
         this.id             = cartObj.id;
         this.proId          = cartObj.Product__c;
         this.proName        = cartObj.Product__r.Name;
+        this.proHsn         = cartObj.Product__r.HSN_Code__c;
         this.proUom         = cartObj.Product__r.UOM__c;
         this.description    = cartObj.Product__r.Description;
         this.westCode       = cartObj.Product__r.West_Material_Code__c;
-        this.gst            = cartObj.Product__r.GST__c;
+        // this.gst            = cartObj.Product__r.GST__c;
         this.qty            = cartObj.Quantity__c;
         this.price          = unitPrice;
-        this.gstAmt         = (unitPrice / 100) * cartObj.Product__r.GST__c;
+        // this.gstAmt         = (unitPrice / 100) * cartObj.Product__r.GST__c;
         this.exeAmt         = unitPrice * cartObj.Quantity__c;
         this.incAmt         = (unitPrice + this.gstAmt ) * cartObj.Quantity__c;
         this.totGstAmt      = this.gstAmt  * cartObj.Quantity__c;

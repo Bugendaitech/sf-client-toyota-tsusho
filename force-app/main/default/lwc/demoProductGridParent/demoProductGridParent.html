@@ -1,0 +1,130 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-28-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+    <c-container>
+
+        <div class="parent-div">
+
+            <div class="main-div">
+                <div class="slds-align_absolute-center">
+                    <lightning-spinner
+                            if:false={spinnerStatus}
+                            variant="brand"
+                            size="medium"
+                            style="position: absolute!important;z-index: 1000 !important;"
+                    ></lightning-spinner>
+                </div>
+
+
+
+                <div class="grid slds-p-around_medium">
+
+                    <template lwc:if={needToShowBreadcurmb}>
+                        <div class="breadcumb-box breadcumb">
+                            <ul>
+                                <li>
+                                    <span>
+                                        <lightning-icon
+                                            size="x-small"
+                                            icon-name="utility:home"
+                                            alternative-text="Home"
+                                            title="Home"
+                                            onclick={handleBack}
+                                            data-item="home"
+                                        ></lightning-icon>
+                                    </span>
+                                </li>
+
+                                <template for:each={breadcurmbs} for:item="crumb">
+                                    <template lwc:if={crumb.isActive}>
+                                       <li key={crumb.id}><span onclick={handleBack} data-item={crumb.name}>{crumb.label}</span></li>
+                                    </template>
+
+                                    <template lwc:else>
+                                       <li key={crumb.id}><a href="#" onclick={handleBack} data-item={crumb.name}>{crumb.label}</a></li>
+                                    </template>
+                                 </template>
+                            </ul>
+                         </div>
+                    </template>
+
+
+                    <template lwc:if={isModelLoaded}>
+                        <c-demo-list-item-grid
+                            lwc:ref="childModelCmp"
+                            lwc:spread={childData}
+                            oncustomclick={handleCustomClick}
+                        ></c-demo-list-item-grid>
+                    </template>
+
+
+
+                    <template lwc:if={isProductLoaded}>
+
+                            <c-demo-product-grid-child
+                                lwc:ref="childProductCmp"
+                                product-items={productList}
+                            ></c-demo-product-grid-child>
+
+                            <template lwc:if={_needPagination}>
+                                <div class="pagination">
+                                    <div class="page-options">
+                                        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-m-top_small">
+
+                                            <!--RECORDS PER PAGE-->
+                                            <div class="slds-col">
+                                                <div class="slds-list_inline slds-p-bottom_xx-small">
+                                                    <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
+
+                                                        <lightning-combobox
+                                                            variant="label-hidden"
+                                                            value={_defaultPageSize}
+                                                            options={_pageSizeOptions}
+                                                            onchange={handleRecordSizeChange}>
+                                                        </lightning-combobox>
+                                                    <!-- </div>   -->
+                                                </div>
+                                            </div>
+                                            <!--PAGE NAVIGATION-->
+
+
+                                            <div class="slds-align_absolute-left">
+                                                <!-- <lightning-button label="First" disabled={disablePreviousButtons} icon-name="utility:jump_to_left" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={handleNavigation}></lightning-button>         -->
+                                                <lightning-button  variant="label-hidden" icon-name="utility:chevronleft" disabled={disablePreviousButtons} label="Previous" alternative-text="Previous"  onclick={handleNavigation}></lightning-button>
+                                                &nbsp;
+                                                <span class="slds-badge"> &nbsp;&nbsp; {_curPageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;</span>
+                                                &nbsp;
+                                                <lightning-button  variant="label-hidden" icon-name="utility:chevronright" disabled={disableNextButtons} label="Next" alternative-text="Next"  class="slds-p-horizontal_x-small" icon-position="right" onclick={handleNavigation}></lightning-button>
+                                                <!-- <lightning-button disabled={disableNextButtons} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={handleNavigation} icon-position="right"></lightning-button> -->
+                                            </div>
+
+                                            <!--TOTAL RECORDS-->
+                                            <div class="slds-clearfix">
+                                                <div class="slds-float_right">
+                                                    <span class="slds-badge"> Total Products: {totalRecords}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                    </template>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </c-container>
+
+
+</template>

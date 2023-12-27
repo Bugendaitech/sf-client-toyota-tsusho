@@ -18,6 +18,9 @@ public without sharing class GetLoggedInUserDetails_Ctrl {
                             Account.ParentId,
                             isDealer__c,
                             ContactId,
+                            contact.name,
+                            contact.accountId,
+                            contact.ReportsToId,
                             Profile_Name__c,
                             Email,
                             WarehouseId__c,
@@ -37,4 +40,34 @@ public without sharing class GetLoggedInUserDetails_Ctrl {
             return null;
         }
     }
+
+    public static User getDealerUserInfo(String uid) {
+        User userInfo = [SELECT
+                            Id,
+                            AccountId,
+                            Account.ParentId,
+                            isDealer__c,
+                            ContactId,
+                            contact.name,
+                            contact.ReportsToId,
+                            Profile_Name__c,
+                            Email,
+                            WarehouseId__c,
+                            Warehouse_Name__c
+                        FROM
+                            User
+                        WHERE
+                        ContactId = :uid
+                        WITH
+                            USER_MODE];
+        if (userInfo != null) {
+            system.debug('User details found in getDealerUserInfo of GetLoggedInUserDetails_Ctrl');
+            system.debug('User details: ' + userInfo);
+            return userInfo;
+        } else {
+            system.debug('User details not found in getDealerUserInfo of GetLoggedInUserDetails_Ctrl');
+            return null;
+        }
+    }
+
 }

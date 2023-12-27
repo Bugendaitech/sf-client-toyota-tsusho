@@ -1,0 +1,25 @@
+.list-item-grid{
+    margin-top: 3%;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 -15px;
+}
+
+.list-item{
+    border: 1px solid lightgray;
+    width: calc(20% - 30px);
+    margin: 0 15px 25px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+h3{
+    font-size:1.5rem;
+    font-weight:bold;
+    text-align:center;
+    text-transform: capitalize;
+}
+ 
+span{
+    color: #59d8fd;
+}

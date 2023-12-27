@@ -11,6 +11,125 @@ div.fixed {
 }
 
 
+.custom-badge{
+    --slds-c-badge-color-background:#155c9e;
+    --slds-c-badge-text-color:white;
+    --slds-c-badge-font-size : 11pt;
+    padding: 10px 20px;
+    color: white;
+}
+
+.my-cus-button{
+   --slds-c-button-brand-color-background: #155c9e;
+    --slds-c-button-brand-color-background-hover: #0f3a63;
+}
+
+.custom-badge-active{
+    --slds-c-badge-color-background:#0f3a63;
+}
+.custom-badge:hover{
+    --slds-c-badge-color-background:#0f3a63;
+    --slds-c-badge-font-size : 11pt;
+    cursor: pointer;
+}
+
+.product-box {
+   padding: 0;
+   --slds-c-card-shadow : 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+.demo-only{
+   /* border: 1px solid lightgray; */
+   border-radius: 10px;
+   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.demo-only:hover{
+   /* border: 1px solid lightgray; */
+   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.pro-title{
+    cursor: pointer;
+}
+.slds-truncate{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.product-box .pro-img{
+   height: 210px;
+    overflow: hidden;
+}
+.product-box .pro-img img{
+   margin-top: 25%;
+   width: 100%;
+    object-fit: cover;
+    transition: all 1s ease;
+}
+.product-box:hover .pro-img img {
+   transform: scale(1.2);
+}
+.product-box article.slds-tile {
+   padding: 0;
+}
+.product-box article.slds-card .slds-card__header.slds-grid {
+    display: none;
+}
+.product-box .slds-card__header {
+   display: none!important;
+}
+.product-box .slds-card__body {
+   margin: 0 !important;
+    transition: all 1s ease;
+}
+.product-box:hover .slds-card__body{
+   box-shadow: 0 0 15px #ccc
+}
+.product-box .pro-desc {
+   padding: 15px;
+   text-align: center;
+}
+.product-box .pro-desc h3.pro-title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.product-box .pro-desc h3.pro-title:hover {
+   color: #0a32c6;
+}
+.product-box .pro-desc h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.product-box .pro-desc h4 {
+    text-align: center;
+    display: inline-block;
+}
+.price-box h4 {
+   color:#0a32c6;
+   text-align: center;
+   display: inline-block;
+}
+.product-box .pro-desc p {
+   font-size: 0.9rem;
+   text-align: left;
+   display: -webkit-box;
+   -webkit-line-clamp: 5;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   height: 120px;
+}
+.product-box .pro-btn-box {
+   display: flex;
+}
+.product-box .pro-btn-box button:hover{
+   color: #fff;
+    background: #F44336;
+    border-color: #F44336
+}
 
 
 

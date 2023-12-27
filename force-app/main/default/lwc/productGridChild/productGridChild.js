@@ -1,20 +1,26 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import addProductToCart from '@salesforce/apex/AddToCart_Ctrl.addProductToCart';
 
+import msgService from '@salesforce/messageChannel/demoMessageChannel__c';
+import { MessageContext, publish } from 'lightning/messageService';
+
 export default class ProductGridChild extends NavigationMixin(LightningElement) {
 
     @api productItems;
     @track childSpinnerStatus = false;
-
+    @track payload;
 
     connectedCallback(){
         console.log('called ProductGridChild');
         // console.log('data ProductGridChild '+JSON.stringify(this.productItems));
     }
+
+    @wire(MessageContext)
+    messageContext
 
     addToCart(event) {
         this.childSpinnerStatus = true;
@@ -31,9 +37,20 @@ export default class ProductGridChild extends NavigationMixin(LightningElement) 
             .then((res)=>{
                 console.log('in then '+JSON.stringify(res));
                 let result    = JSON.parse(res);
+                let cartItems = result.totalItems;
+                this.payload = {cartItems : cartItems};
+                console.log('Total Items : '+JSON.stringify(this.payload));
+                if(result.status != 'warning'){
+
+                    publish(this.messageContext, msgService, this.payload);
+                    console.log('Message Published');
+                }
                 this.notificationHandler(result?.label, result?.msg, result?.status);
             })
             .catch((error)=>{
+                console.log('payload : '+this.payload);
+               // this.payload = {cartItems : cartItems};
+                publish(this.messageContext, msgService, this.payload);
                 console.log('in catch '+JSON.stringify(error));
                 let result    = JSON.parse(error);
                 this.notificationHandler('Error !', result?.body?.message, 'error');
@@ -59,7 +76,7 @@ export default class ProductGridChild extends NavigationMixin(LightningElement) 
 
         if(event.target.dataset.id != null && event.target.dataset.id != undefined){
             proId    = event.target.dataset.id;
-            toReturn = 'home';
+            toReturn = 'Shop';
         }
 
         console.log('proId '+proId);

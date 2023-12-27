@@ -1,0 +1,17 @@
+.item-number{
+    content: attr(value);
+    font-size: 12px;
+    background: #155c9e;
+    font-weight: 600;
+    border-radius: 50%;
+    padding: 4px 8px;
+    position: relative;
+    left: -8px;
+    top: -12px;
+    opacity: 0.9;
+    color: white;
+}
+
+.cart-container{
+    cursor: pointer;
+}

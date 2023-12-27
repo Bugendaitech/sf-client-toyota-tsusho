@@ -7,8 +7,9 @@
 }
 
 .my-cus-button{
-   --slds-c-button-brand-color-background: #155c9e;
+    --slds-c-button-brand-color-background: #155c9e;
     --slds-c-button-brand-color-background-hover: #0f3a63;
+    margin: 0px!important;
 }
 
 .custom-badge-active{
@@ -110,7 +111,7 @@
    height: 120px;
 }
 .product-box .pro-btn-box {
-   display: flex;
+   /* display: flex; */
 }
 .product-box .pro-btn-box button:hover{
    color: #fff;

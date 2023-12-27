@@ -1,0 +1,20 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-27-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+    <br>
+    <h3 style="font-size:1.5rem;font-weight:bold; text-align:center;" >Search By Model</h3>
+    <div class="modal-item-grid">
+      <template for:each={listItems} for:item="item">
+          <div class="modal-item" key={item} data-item="model" data-key={item.value} onclick={handleClick} >
+              <h1 data-item="model" data-key={item.value} onclick={handleClick}>{item.label}</h1>
+          </div>
+      </template>
+    </div>
+
+</template>

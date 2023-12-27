@@ -1,0 +1,637 @@
+<template>
+    <div class="page-border">
+       <div>
+          <div>
+             <lightning-layout >
+                <lightning-layout-item size="3"></lightning-layout-item>
+                <lightning-layout-item size="6">
+                   <table  class="slds-align_absolute-center">
+                      <tr>
+                         <td>
+                            <img src="https://i.pinimg.com/originals/c7/f8/35/c7f835ec91ec48dae97a0cb8c95a426b.png" style="height: 10vh;"/>
+                         </td>
+                         <td>
+                            <p><b>Shortage Miss-packing Quantity REport(SMQR)</b></p>
+                            <p class="slds-align_absolute-center"> Toyota Tsusho India Pvt.LTD</p>
+                         </td>
+                      </tr>
+                   </table>
+                </lightning-layout-item>
+                <lightning-layout-item size="3"></lightning-layout-item>
+             </lightning-layout>
+          </div>
+          <div class="page-border">
+             <div style="padding: 20px;">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="5">
+                      <table>
+                         <tr>
+                            <td class="td-style"><b>To:</b> </td>
+                            <td class="dashed-border"><b>Toyota Tsusho Thailand</b></td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Attn:</b> </td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Tel:</b> </td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Fax:</b> </td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Email: </b></td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="td-style">&nbsp;</td>
+                            <td class=""></td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="2"></lightning-layout-item>
+                   <lightning-layout-item size="5">
+                      <table>
+                         <tr>
+                            <td class="td-style"><b>From:</b> </td>
+                            <td class="dashed-border">TOYOTA TSUOSHO INDIA PVT.LTD.</td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"> </td>
+                            <td class="dashed-border"><b>Mr. Anantha</b></td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Ref No: </b></td>
+                            <td class="dashed-border"> <input type="text" class="target-input" value="SMQR-IN-TBI-TH-TRT-2023-01-02"/></td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>Date:</b> </td>
+                            <td class="dashed-border">
+                              <input type="date" class="target-input"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="td-style"><b>QPR No:</b> </td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input" value="QPR-TTI-230124-286"/>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+             <div class="border-top">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="3">
+                      <table>
+                         <tr>
+                            <td><b>Part No:</b></td>
+                            <td></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input" value="84921-0K110"/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td><b>Back No:</b></td>
+                            <td></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td class="dashed-border"><input type="text" class="target-input" value="84921-0K"/></td>
+                         </tr>
+                         <tr>
+                            <td>&nbsp;</td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="2"></lightning-layout-item>
+                   <lightning-layout-item size="3">
+                      <table>
+                         <tr>
+                            <td><b>Part Name:</b></td>
+                            <td></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input" value="Knob, Power Seat Switch LH"/>
+                           </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="1"></lightning-layout-item>
+                   <lightning-layout-item size="3" class="border-left">
+                      <table>
+                         <tr>
+                            <td><b>Date Found:</b></td>
+                            <td></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td class="dashed-border"><input type="date" class="target-input" value="23-01-2023"/></td>
+                         </tr>
+                         <tr>
+                            <td><b>Place Found:</b></td>
+                            <td></td>
+                         </tr>
+                         <tr>
+                            <td></td>
+                            <td class="dashed-border"><b style="color:red;">
+                              <input type="text" class="target-input" value="LINE FEEDBACK"/>
+                            </b></td>
+                         </tr>
+                         <tr>
+                            <td>&nbsp;</td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+             <div class="border-top">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="4">
+                      <table>
+                         <tr>
+                            <td class="sub-tr-td"><b>Company Name:</b> </td>
+                            <td class="dashed-border"><b style="color:red;">
+                              <input type="text" class="target-input" value="TBI"/>
+                            </b></td>
+                         </tr>
+                         <tr>
+                            <td class="sub-tr-td"><b>Attn:</b> </td>
+                            <td class="dashed-border"><b style="color:blue;">
+                              <input type="text" class="target-input" value="Mr. Raju Pawar"/></b>
+                           </td>
+                         </tr>
+                         <tr>
+                            <td class="sub-tr-td"><b>Tel:</b> </td>
+                            <td class="dashed-border">
+                              <input type="text" class="target-input" value=""/>
+                           </td>
+                         </tr>
+                         <tr>
+                            <td class="sub-tr-td"><b>Fax:</b> </td>
+                            <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="sub-tr-td"><b>Email: </b></td>
+                            <td class="dashed-border">
+                              <input type="email" class="target-input" value=""/>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="1"></lightning-layout-item>
+                   <lightning-layout-item size="7" style="border-left-style: solid;">
+                      <div class="slds-align_absolute-center border-bottom">
+                         <p>BATCH IDENTIFICATION</p>
+                      </div>
+                      <table>
+                         <tr>
+                            <td class="" style="padding: 0px 10px;">
+                               <table>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>Date Goods Received</b> </td>
+                                     <td></td>
+                                  </tr>
+                                  <tr>
+                                     <td class=""></td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>P/O No.</b> </td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
+                                  </tr>
+                                  <tr>
+                                     <td></td>
+                                     <td class="dashed-border">  
+                                         <input type="text" class="target-input" value=""/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                     <td>&nbsp;</td>
+                                  </tr>
+                               </table>
+                            </td>
+                            <td style="padding: 0px 10px;border-left-style: solid;">
+                               <table>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>Inner Box No.</b> </td>
+                                     <td></td>
+                                  </tr>
+                                  <tr>
+                                     <td class=""></td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>Delivery Order No.</b> </td>
+                                     <td></td>
+                                  </tr>
+                                  <tr>
+                                     <td class=""></td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
+                                  </tr>
+                                  <tr>
+                                     <td>&nbsp;</td>
+                                  </tr>
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+             <div class="border-top">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="4">
+                      <table style="margin-top:10px;">
+                         <tr>
+                            <td>
+                               <table>
+                                  <tr>
+                                     <td class="td-style"><b>Issuer:</b> </td>
+                                     <td class="dashed-border"><b>
+                                       <input type="text" class="target-input" value="Toyota"/>
+                                     </b></td>
+                                  </tr>
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="1"></lightning-layout-item>
+                   <lightning-layout-item size="3" style="border-left-style: solid;">
+                      <table style="margin-top:10px;">
+                         <tr>
+                            <td stye="padding-left: 10px;">
+                               <table>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>TTC Inv. No. </b> </td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
+                                     <td class="">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                     <td class="">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                     <td class="">&nbsp;</td>
+                                     <td class="">&nbsp;</td>
+                                  </tr>
+                                  <!-- <tr>
+                                     <td class=""></td>
+                                     <td class="dashed-border">text</td>
+                                     </tr> -->
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="1"></lightning-layout-item>
+                   <lightning-layout-item size="3" style="border-left-style: solid;">
+                      <table style="margin-top:10px;">
+                         <tr>
+                            <td stye="padding-left: 10px;">
+                               <table>
+                                  <tr>
+                                     <td class="sub-tr-td-style"><b>Model</b> </td>
+                                     <td></td>
+                                  </tr>
+                                  <tr>
+                                     <td class=""></td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
+                                  </tr>
+                                  <tr>
+                                     <td class="">&nbsp;</td>
+                                     <td class="">&nbsp;</td>
+                                  </tr>
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+             <div class="border-top-head">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="3">
+                      <div class="border-bottom">
+                         <p><b>Information</b></p>
+                      </div>
+                      <div style="padding-left: 10px;">
+                         <p>
+                            <lightning-input class="" type="checkbox" label="Attachment Sheet" onchange={handleChange} ></lightning-input>
+                         </p>
+                         <p>
+                            <lightning-input class="" type="checkbox" label="Send Photo" onchange={handleChange} ></lightning-input>
+                         </p>
+                         <p>
+                            <lightning-input class="" type="checkbox" label="Send Defective Sample" onchange={handleChange} ></lightning-input>
+                         </p>
+                         <p>
+                           &nbsp;
+                        </p>
+                         <p style="">Sample Sending Date: DD/MM/YY</p>
+                      </div>
+                      <!-- <table>
+                         <tr>
+                             <td class="td-style"><lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input> </td>
+                             <td><b>Attachment Sheet</b></td>
+                         </tr>
+                         </table> -->
+                   </lightning-layout-item>
+                   <lightning-layout-item size="5"  style="border-left-style: solid;     padding: 10px;">
+                      <p><b>Problem, Detected at : </b></p>
+                      <table style="margin-top:10px;">
+                         <tr>
+                            <td>
+                               <table>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Appearance</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Dimentional/functional</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Rust</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Box damage</b></td>
+                                  </tr>
+                               </table>
+                            </td>
+                            <td>
+                               <table>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Shortage</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Excess</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Wrong</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="td-style">
+                                        <lightning-input class="" type="checkbox" variant="label-hidden" label=">Attachment Sheet" onchange={handleChange} ></lightning-input>
+                                     </td>
+                                     <td><b>Others</b></td>
+                                  </tr>
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="4"  style="border-left-style: solid;">
+                      <table style="margin-top:10px;">
+                         <tr>
+                            <td>
+                               <table>
+                                  <tr>
+                                     <td class="sub-td"><b>Inspected qty :</b> </td>
+                                     <td class="dashed-border"><b>
+                                       <input type="text" class="target-input" value="Toyota"/>
+                                     </b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-td"><b>&nbsp;</b> </td>
+                                     <td><b>&nbsp;</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-td"><b>NG qty :</b> </td>
+                                     <td class="dashed-border"><b>
+                                       <input type="text" class="target-input" value="Toyota"/>
+                                     </b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-td"><b>&nbsp;</b> </td>
+                                     <td><b>&nbsp;</b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-td"><b>&nbsp;</b> </td>
+                                     <td><b>&nbsp;</b></td>
+                                  </tr>
+                               </table>
+                            </td>
+                         </tr>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+             <div class="border-top">
+                <div style="padding-top:10px;padding-bottom:20px;">
+                   <p  style="text-decoration:underline;"><b>PROBLEM DESCRIPTION AND SKETCH</b></p>
+                </div>
+                <div style="padding: 0px 50px;margin-bottom: 2%;">
+                   <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+                      <thead>
+                         <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                               PART NO.
+                            </th>
+                            <th class="" scope="col">
+                               PROBLEM
+                            </th>
+                            <th class="" scope="col">
+                               QTY
+                            </th>
+                            <th class="" scope="col">
+                               PRODN. DATE
+                            </th>
+                            <th class="" scope="col">
+                               REMARKS
+                            </th>
+                            <th class="" scope="col">
+                               DDP
+                            </th>
+                            <th class="" scope="col">
+                               TOTAL INR
+                            </th>
+                            <th class="" scope="col">
+                               TOTALJPY
+                            </th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <!-- <template iterator:it={zoneData}> -->
+                         <tr class="slds-hint-parent">
+                            <td data-label="Region">
+                               <div class="slds-cell-wrap">84921-OK110</div>
+                            </td>
+                            <td data-label="Mark">
+                               <div class="slds-cell-wrap">Wrong part</div>
+                            </td>
+                            <td data-label= "Days">
+                               <div class="slds-cell-wrap">168</div>
+                            </td>
+                            <td data-label="Region">
+                               <div class="slds-cell-wrap"></div>
+                            </td>
+                            <td data-label="Mark">
+                               <div class="slds-cell-wrap"></div>
+                            </td>
+                            <td data-label= "Days">
+                               <div class="slds-cell-wrap"></div>
+                            </td>
+                            <td data-label="Mark">
+                               <div class="slds-cell-wrap">0.00</div>
+                            </td>
+                            <td data-label= "Days">
+                               <div class="slds-cell-wrap"></div>
+                            </td>
+                         </tr>
+                         <!-- </template> -->
+                      </tbody>
+                   </table>
+                </div>
+             </div>
+             <div class="border-top">
+                <lightning-layout multiple-rows>
+                   <lightning-layout-item size="6">
+                      <div style="padding-top:10px;">
+                         <p style="text-decoration:underline;"><b>Root Cause of  Problem</b></p>
+                      </div>
+                   </lightning-layout-item>
+                   <lightning-layout-item size="6" style="border-left-style: solid;">
+                      <div class="slds-align_absolute-center" style="text-decoration:underline;padding-top:10px;padding-bottom:10px;">
+                         <p><b>Action & Countermeasure</b></p>
+                      </div>
+                      <div style="padding:0px 20px;margin-bottom: 10px;">
+                         <table>
+                            <tr>
+                               <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                              </td>
+                            </tr>
+                            <tr>
+                               <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td class="dashed-border">
+                                 <input type="text" class="target-input" value=""/>
+                               </td>
+                            </tr>
+                         </table>
+                      </div>
+                      <div style="border-top-style: solid;border-bottom-style: solid;">
+                         <table>
+                            <tr>
+                               <td>&nbsp;</td>
+                               <td class="slds-align_absolute-center">Responsibility  Div. Signature</td>
+                               <td>&nbsp;</td>
+                            </tr>
+                         </table>
+                      </div>
+                      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+                         <thead>
+                            <tr class="slds-line-height_reset">
+                               <th class="" scope="col">
+                                  Dept　Manger
+                               </th>
+                               <th class="" scope="col">
+                                  Sect Mgr
+                               </th>
+                               <th class="" scope="col">
+                                  Admin
+                               </th>
+                               <th class="" scope="col">
+                                  Issued by
+                               </th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <!-- <template iterator:it={zoneData}> -->
+                            <tr class="slds-hint-parent">
+                               <td data-label="Region">
+                                  <div class="slds-cell-wrap">84921-OK110</div>
+                               </td>
+                               <td data-label="Mark">
+                                  <div class="slds-cell-wrap">Wrong part</div>
+                               </td>
+                               <td data-label= "Days">
+                                  <div class="slds-cell-wrap">168</div>
+                               </td>
+                               <td data-label="Region">
+                                  <div class="slds-cell-wrap"></div>
+                               </td>
+                            </tr>
+                            <!-- </template> -->
+                         </tbody>
+                      </table>
+                   </lightning-layout-item>
+                </lightning-layout>
+             </div>
+          </div>
+       </div>
+       <div style="margin:0px 10px;margin-bottom:5px;">
+          <lightning-layout>
+             <lightning-layout-item size="1"></lightning-layout-item>
+             <lightning-layout-item size="5">
+                <p>*Defective Parts Sample</p>
+             </lightning-layout-item>
+             <lightning-layout-item size="6">
+                <p>Please send with this SMQR</p>
+             </lightning-layout-item>
+          </lightning-layout>
+       </div>
+    </div>
+ </template>

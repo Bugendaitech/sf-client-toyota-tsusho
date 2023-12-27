@@ -2,7 +2,7 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-23-2023
+  @last modified on  : 12-25-2023
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -36,69 +36,106 @@
                     <tr class="slds-hint-parent" for:each={cartArray} for:item="item" key={item}
                     style="cursor: pointer; border-bottom: 1px solid lightgray;">
 
-                            <td class="slds-cell-wrap slds-border_right" colspan="7">
+                            <td class="slds-cell-wrap slds-border_right" colspan="9">
 
                                 <table>
 
                                     <thead >
                                         <tr>
-                                            <th colspan="7">
+                                            <th colspan="9">
                                                 <b>GST {item.gst}%</b>
                                             </th>
                                         </tr>
                                         <tr class="slds-line-height_reset">
-                                           <th class="th-background slds-border_right">Action</th>
-                                           <th class="th-background slds-border_right">Product Code</th>
-                                           <th class="th-background slds-border_right">Description</th>
-                                           <th class="th-background slds-border_right">Unit Price</th>
-                                           <th class="th-background slds-border_right">Quantity</th>
-                                           <th class="th-background slds-border_right">GST Amount</th>
-                                           <th class="th-background slds-border_right">Exe Amount</th>
+                                           <th class="th-background slds-border_right col-width additional-low">Action</th>
+                                           <th class="th-background slds-border_right col-width">Product Code</th>
+                                           <th class="th-background slds-border_right col-width additional-ex">Description</th>
+                                           <th class="th-background slds-border_right col-width">HSN Code</th>
+                                           <th class="th-background slds-border_right col-width">UOM</th>
+                                           <th class="th-background slds-border_right col-width">Unit Price</th>
+                                           <th class="th-background slds-border_right col-width">Quantity</th>
+                                           <th class="th-background slds-border_right col-width">GST Amount</th>
+                                           <th class="th-background slds-border_right col-width">Amount</th>
                                            <!-- <th class="th-background slds-border_right">Inc Amount</th> -->
                                         </tr>
                                      </thead>
                                     <template for:each={item.items} for:item="inner" for:index="index">
                                         <tr key={inner}>
 
-                                            <td class="slds-cell-wrap slds-border_right">
+                                            <td class="slds-cell-wrap slds-border_right col-width additional-low">
                                                 <lightning-icon
                                                     icon-name="action:close"
                                                     size="xx-small"
                                                     variant="inverse"
                                                     alternative-text="Remove Products"
-                                                    onclick={removeProduct}
-                                                    data-item={inner.id}
+                                                    onclick={actionOnQuantity}
+                                                    data-key={inner.id}
+                                                    data-type="remove"
                                                     >
                                                 </lightning-icon>
                                             </td>
-                                            <td class="slds-cell-wrap slds-border_right">{inner.proName}</td>
-                                            <td class="slds-cell-wrap slds-border_right">{inner.description}</td>
-                                            <td class="slds-cell-wrap slds-border_right"><lightning-formatted-number value={inner.price} format-style="currency"
+                                            <td class="slds-cell-wrap slds-border_right col-width">{inner.proName}</td>
+                                            <td class="slds-cell-wrap slds-border_right col-width additional-ex">{inner.description}</td>
+                                            <td class="slds-cell-wrap slds-border_right col-width">{inner.proHsn}</td>
+                                            <td class="slds-cell-wrap slds-border_right col-width">{inner.proUom}</td>
+                                            <td class="slds-cell-wrap slds-border_right col-width"><lightning-formatted-number value={inner.price} format-style="currency"
                                                 minimum-integer-digits="2"></lightning-formatted-number></td>
-                                            <td class="slds-cell-wrap slds-border_right">
-                                                <lightning-button-icon
-                                                    icon-name="utility:dash"
-                                                    variant="bare"
-                                                    size="small"
-                                                    alternative-text="Decrease Quantity"
-                                                    onclick={updateQty}
-                                                    data-type="Minus"
-                                                    data-key={inner.id} >
-                                                </lightning-button-icon>
-                                                    <span class="slds-m-horizontal_medium">{inner.qty} </span>
+
+                                            <td  class="slds-cell-wrap slds-border_right slds-align_absolute-center">
+
+                                                <div class="qty-utilies">
                                                     <lightning-button-icon
-                                                    icon-name="utility:add"
-                                                    variant="bare"
-                                                    size="small"
-                                                    alternative-text="Increase Quantity"
-                                                    onclick={updateQty}
-                                                    data-type="Plus"
-                                                    data-key={inner.id}>
-                                                </lightning-button-icon>
+                                                        class="my-cus-button"
+                                                        icon-name="utility:dash"
+                                                        variant="brand"
+                                                        size="small"
+                                                        alternative-text="Decrease Quantity"
+                                                        onclick={actionOnQuantity}
+                                                        data-type="decrease"
+                                                        data-key={inner.id} >
+                                                    </lightning-button-icon>
+
+
+                                                    <!-- <span class="slds-m-horizontal_medium">{inner.qty} </span> -->
+
+                                                    <!-- <lightning-input-field
+                                                        type="number"
+                                                        label="Quantity"
+                                                        data-key={inner.id}
+                                                        variant="label-hidden"
+                                                        value={inner.qty}
+                                                        min="1"
+                                                        max="1000"
+                                                        data-type="quantity"
+                                                        onchange={actionOnQuantity}
+                                                        message-when-range-underflow="Minimum Quantity should be One">
+                                                    </lightning-input-field> -->
+                                                    <input
+                                                        type="number"
+                                                        class="show-qty-input"
+                                                        data-key={inner.id}
+                                                        value={inner.qty}
+                                                        min="1"
+                                                        max="1000"
+                                                        onchange={actionOnQuantity}
+                                                        data-type="manual"
+                                                        >
+                                                    <lightning-button-icon
+                                                        class="my-cus-button"
+                                                        icon-name="utility:add"
+                                                        variant="brand"
+                                                        size="small"
+                                                        alternative-text="Increase Quantity"
+                                                        onclick={actionOnQuantity}
+                                                        data-type="increase"
+                                                        data-key={inner.id}>
+                                                    </lightning-button-icon>
+                                                </div>
+
                                             </td>
-                                            <td class="slds-cell-wrap slds-border_right"><lightning-formatted-number value={inner.totGstAmt} format-style="currency"
+                                            <td class="slds-cell-wrap slds-border_right col-width"><lightning-formatted-number value={inner.totGstAmt} format-style="currency"
                                                 minimum-integer-digits="2"></lightning-formatted-number></td>
-                                            <td class="slds-cell-wrap slds-border_right"><lightning-formatted-number value={inner.exeAmt} format-style="currency"
+                                            <td class="slds-cell-wrap slds-border_right col-width"><lightning-formatted-number value={inner.exeAmt} format-style="currency"
                                                 minimum-integer-digits="2"></lightning-formatted-number></td>
                                             <!-- <td class="slds-cell-wrap slds-border_right"><lightning-formatted-number value={inner.incAmt} format-style="currency"
                                                 minimum-integer-digits="2"></lightning-formatted-number></td> -->
@@ -114,7 +151,7 @@
                 <template lwc:else>
                     <tr class="slds-hint-parent" style="cursor: pointer; border-bottom: 1px solid lightgray;">
 
-                            <td class="slds-cell-wrap slds-border_right" colspan="7">
+                            <td class="slds-cell-wrap slds-border_right" colspan="9">
 
                                 <table>
 
@@ -132,7 +169,7 @@
                                      </thead>
                                      <tbody>
                                         <tr>
-                                            <td colspan="7" class="slds-cell-wrap slds-border_right">
+                                            <td colspan="9" class="slds-cell-wrap slds-border_right">
                                                 <h4><span class="no-product" onclick={handleNavigation} data-type="standard__namedPage" data-name="home">Continue Shopping ! </span>No Product in your cart.</h4>
                                             </td>
                                         </tr>
@@ -152,8 +189,10 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 12.5%;">Total Exculsive Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 13%;">
+                    <td ></td>
+                    <td ></td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">Gross Amount</td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 11%;">
                         <lightning-formatted-number value={totalExeAmt} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -164,8 +203,10 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 12.5%;">Total GST Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 13%">
+                    <td ></td>
+                    <td ></td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">GST Amount</td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 11%">
                         <lightning-formatted-number value={totalGstAmount} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -176,8 +217,10 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 12.5%;">Total Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 13%;">
+                    <td ></td>
+                    <td ></td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">Total Amount</td>
+                    <td class="slds-cell-wrap slds-border_right" style="width: 11%;">
                         <lightning-formatted-number value={totalIncAmt} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -192,18 +235,20 @@
 
 
     <div class="button-grid slds-m-top_x-large">
-        <lightning-button onclick={handleNavigation}
-        variant="brand"
-        icon-name="utility:add"
-        data-type="standard__namedPage"
-        class="my-cus-button"
-        data-name="home" label="Add More">
+        <lightning-button
+            onclick={handleNavigation}
+            variant="brand"
+            icon-name="utility:add"
+            data-type="standard__namedPage"
+            class="my-cus-button"
+            data-name="Shop" label="Add More">
         </lightning-button>
-        <lightning-button onclick={handleNavigation}
-        icon-name="utility:checkout"
-        variant="brand" data-type="comm__namedPage"
-        class="my-cus-button"
-        data-name="checkout" label="Checkout">
+        <lightning-button
+            onclick={handleNavigation}
+            icon-name="utility:checkout"
+            variant="brand" data-type="comm__namedPage"
+            class="my-cus-button"
+            data-name="checkout" label="Checkout">
         </lightning-button>
     </div>
 

@@ -40,15 +40,16 @@ public with sharing class showOrdersCtrl {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+   @AuraEnabled(cacheable=true)
     public static String getOrderItemDetails(String orderId){
         List<OrderItem> orderItemList = [SELECT Id,OrderId,UnitPrice,TotalPrice,Quantity,Product2.Name,
-        Product2.Description,Product2.GST__c,Product2.Family, Order.Account.Name,Order.Account.BillingStreet,
+        Product2.Description,Product2.Family, Order.Account.Name,Order.Account.BillingStreet, Product2.GST__c,
         Order.Account.BillingCity, Order.Account.BillingState,Order.Account.Phone,Order.OrderNumber,
-        Order.BillingStreet,Order.BillingCity, Order.BillingState,Order.BillingPostalCode, Order.BillingCountry,
+        Order.BillingStreet,Order.BillingCity,Order.BillingState,Order.BillingPostalCode, Order.BillingCountry,
         Order.Account.BillingPostalCode, Order.Account.BillingCountry,Order.EffectiveDate,Product2.Product_Image__c
         FROM OrderItem WHERE OrderId =:orderId];
         return JSON.serialize(orderItemList);
+        //
     }
 
 }

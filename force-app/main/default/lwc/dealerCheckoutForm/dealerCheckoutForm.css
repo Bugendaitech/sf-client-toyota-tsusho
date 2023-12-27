@@ -1,3 +1,16 @@
+.header {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    padding: 10px;
+}
+
+img {
+    height: 150px; /* Set the height as needed */
+    width: auto;
+}
+
+
 .border-0{border: 0;}
 
          .shipbill-add-sec{padding: 30px 10px; display: block;}

@@ -53,7 +53,20 @@
              </lightning-card>
 
              -->
-          <div class="tableMain" style="border:1px;border-style:solid;padding: 10px; background: #fff">
+          <div class="tableMain" style="border:1px;border-style:solid;padding: 5px; background: #fff">
+            <div class="header">
+               <img if:true={toyotaLogoId} src={toyotaLogoId} />&nbsp;&nbsp;
+               <p><br/>
+                  <span style="font-size: 18px;">Toyota Tsusho India Pvt ltd.</span><br/>
+                  Plot No. 33,34 Bidadi Industrial Area<br/>
+                  Bidadi Ramanagara District<br/>
+                  Karnataka India BIDADI-562109<br/>
+                  GSTIN : 29AADCS6230N1ZY<br/>
+                  PAN NO : AADCS6230N
+               </p>
+               
+            </div>
+
              <h1 style="text-align: center;font-size: 24px;">Dealer Order Form</h1>
              <div class="shipbill-add-sec">
                 <div class="slds-col-6">
@@ -97,8 +110,8 @@
                          <td>{TodayDate}</td>
                       </tr>
                       <tr>
-                         <td><strong>Place:</strong></td>
-                         <td>This is my Address</td>
+                         <td><strong>Customer Code:</strong></td>
+                         <td>{customerCode}</td>
                       </tr>
                    </table>
                 </div>

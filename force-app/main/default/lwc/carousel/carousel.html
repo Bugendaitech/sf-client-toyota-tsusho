@@ -1,5 +1,5 @@
 <template>
-
+  <!-- <c-global-search></c-global-search> -->
   <div class="homeslider">
     <div class="slider">
       <template if:true={sliderArray}>
@@ -11,6 +11,7 @@
             <div class="banner-txt">
               <span class="banner-pill">{newsitem.Spotlight__c}</span>
               <div class="">
+                <!-- <c-global-search></c-global-search> -->
                 <h2>{newsitem.Title__c}</h2>
                 <p>{newsitem.Body__c}</p>
                 <template if:true={newsitem.Has_Button__c}>

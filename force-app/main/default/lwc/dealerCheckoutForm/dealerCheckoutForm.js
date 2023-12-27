@@ -4,13 +4,18 @@ import { getRecord } from 'lightning/uiRecordApi';
 import IdOfLoggedInUser from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import getOrderDetails from '@salesforce/apex/DealerOrderFormController.getOrderDetails';
+//import getOrderDetails from '@salesforce/apex/DealerOrderFormController.getOrderDetails';
 import getShipToAddress from '@salesforce/apex/CreateOrdersfromCart.getShipToAddress';
 import getHeadOfficeAddress from '@salesforce/apex/CreateOrdersfromCart.getHeadOfficeAddress';
 import createOrders from '@salesforce/apex/CreateOrdersfromCart.createOrders';
+import getToyotaLogoId from '@salesforce/apex/CreateOrdersfromCart.getToyotaLogoId';
+import getTTIPLinfo from '@salesforce/apex/CreateOrdersfromCart.getTTIPLinfo';
+import getCurrentContactinfo from '@salesforce/apex/CreateOrdersfromCart.getCurrentContactinfo';
+
 
 import getAllCartItems from '@salesforce/apex/AddToCart_Ctrl.getAllCartItems';
 import emptyCart from '@salesforce/apex/AddToCart_Ctrl.emptyCart';
+
 
 export default class DealerCheckoutForm extends NavigationMixin(LightningElement) {
 
@@ -31,6 +36,9 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
     @track TotalAmtInWords = '';
     TodayDate;
     loggedInUserId = IdOfLoggedInUser;
+    @api toyotaLogoId='';
+    @track TTIPLaddress;
+    customerCode;
 
     @track showButton = true;
     @track showForm = false;
@@ -86,6 +94,43 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
         })
 
     }
+
+    //LOGO..
+   
+    @wire(getTTIPLinfo)
+    wiredgetTTIPLinfo({ data, error }) {
+        if (data) {
+
+            this.TTIPLaddress = data;
+            let htmlString = data.logo__c;
+
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(htmlString, 'text/html');
+
+            let imgElement = doc.querySelector('img');
+
+            let srcValue = imgElement.getAttribute('src');
+            this.toyotaLogoId = srcValue;
+            console.log('ttipl info'+JSON.stringify(this.TTIPLaddress));
+            console.log('ttipl logo'+JSON.stringify(this.toyotaLogoId));
+            
+        } else if (error) {
+            console.error('Error fetching TTIPL INFO', error);
+        }
+    }
+
+
+    @wire(getCurrentContactinfo)
+    wiredgetCurrentContactinfo({ data, error }) {
+        if(data){
+           this.customerCode = data.Customer_ID__c;
+           console.log('contact detaiLs '+JSON.stringify(data.Customer_ID__c));
+        }
+        else if(error){
+            console.error('Error fetching current contact INFO', error);
+        }
+    }
+
 
 
     formatCartArray(result){
@@ -215,9 +260,10 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
     @wire(getShipToAddress)
     wiredAddresses({ error, data }) {
         if (data) {
-            this.addressOptions = data.map(account => ({
-                label: account.BillingStreet + ', ' + account.BillingCity + ', ' + account.BillingState + ' ' + account.BillingPostalCode,
-                value: account.Id
+            console.log('ship to address '+JSON.stringify(data));
+            this.addressOptions = data.map(contact => ({
+                label: contact.MailingStreet + ', ' + contact.MailingCity + ', ' + contact.MailingState + ' ' + contact.MailingPostalCode,
+                value: contact.Id
             }));
         } else if (error) {
             // Handle error
@@ -350,5 +396,7 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
         return words;
 
     }
+
+    
 
 }

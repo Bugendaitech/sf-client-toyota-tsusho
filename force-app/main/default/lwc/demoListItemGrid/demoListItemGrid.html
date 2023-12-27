@@ -1,0 +1,23 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-27-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+    <br>
+    <!-- <h3 style="font-size:1.5rem;font-weight:bold; text-align:center;text-transform: capitalize;" >Search By {title}</h3> -->
+  
+<h3>Search By a <span>{title}</span></h3>
+    <br>
+    <div class="list-item-grid">
+      <template for:each={listItems} for:item="item">
+          <div class="list-item" key={item} data-item={title} data-key={item.value} onclick={handleClick} >
+              <h1 data-item={title} data-key={item.value} onclick={handleClick}>{item.label} <template lwc:if={showCount}> ( {item.count} ) </template></h1>
+          </div>
+      </template>
+    </div>
+
+</template>

@@ -1,0 +1,102 @@
+<!--
+  @description       :
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             :
+  @last modified on  : 12-27-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <c-container>
+
+        <div class="slds-grid slds-wrap">
+            <!-- Your template logic here -->
+            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            </div>
+            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            </div>
+            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            </div>
+            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            </div>
+            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            </div>
+        </div>
+
+        <div class="modal-item-grid slds-m-top_medium">
+            <h1>Products Family</h1>
+            <!-- <template lwc:if={needToShowFamily}>
+                <hr>
+                <template for:each={familyList} for:item="item">
+                    <div class="modal-item" key={item} data-item="family"  onclick={handleClick} >
+                        <h1 data-item="family" data-key={item.value} onclick={handleClick}>{item.label} ( {item.count} )</h1>
+                    </div>
+                </template>
+            </template> -->
+
+            <div class="modal-item"  data-item="family"   >
+                <h1 data-item="family" >item.label</h1>
+            </div>
+            <div class="modal-item"  data-item="family"   >
+                <h1 data-item="family" >item.count</h1>
+            </div>
+            <div class="modal-item"  data-item="family"   >
+                <h1 data-item="family" >item.label</h1>
+            </div>
+            <div class="modal-item"  data-item="family"   >
+                <h1 data-item="family" >item.count</h1>
+            </div>
+            <div class="modal-item"  data-item="family"   >
+                <h1 data-item="family" >item.count</h1>
+            </div>
+        </div>
+
+
+        <div class="modal-item-grid slds-m-top_medium">
+            <h1>Products </h1>
+            <!-- <template lwc:if={needToShowProducts}>
+                <hr>
+                <template for:each={productList} for:item="item">
+                    <div class="modal-item" key={item} data-item="product" onclick={handleClick} >
+                        <h1 data-item="product" onclick={handleClick}>{item.proName} ( {item.inStock} )</h1>
+                        <p>{item.proWestCode} || {item.proUom} || {item.proDesc} || {item.proPrice} || {item.proGst} || {item.proFamily}</p>
+                    </div>
+                </template>
+            </template> -->
+            <div class="modal-item">
+                <img src="https://i.pinimg.com/originals/c7/f8/35/c7f835ec91ec48dae97a0cb8c95a426b.png" alt="Car Engine"/>
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+            <div class="modal-item">
+                <h1 data-item="product">item.inStock</h1>
+                <p>item.proFamily</p>
+            </div>
+        </div>
+
+    </c-container>
+</template>
