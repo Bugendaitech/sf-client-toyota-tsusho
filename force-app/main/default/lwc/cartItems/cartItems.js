@@ -52,8 +52,9 @@ export default class CartItems extends NavigationMixin(LightningElement) {
     cartItemHandler(message){
         console.log('In Cart Item Handler');
         this.iscartEmpty  = true;
-        if(message.cartItems == 0 ||  this.cartItems == undefined){
+        if(message.cartItems == 0 ||  this.cartItems == undefined || this.cartItems == '' ||message.cartItems == '0' ||  this.cartItems == null ){
             this.cartItems    = '';
+            this.iscartEmpty  = false;
         }else{
             this.cartItems    = message.cartItems;
 

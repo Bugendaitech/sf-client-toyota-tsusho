@@ -1,19 +1,28 @@
+import { LightningElement, track, wire } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
+
+import { MessageContext, subscribe, unsubscribe } from 'lightning/messageService';
+import msgService from '@salesforce/messageChannel/messageChannelForSlider__c';
+
 // import getAllProducts from '@salesforce/apex/globalSearch.getAllProducts';
 import getFilteredProduct from '@salesforce/apex/globalSearch.getFilteredProduct';
 import getProductsFromStock from '@salesforce/apex/StockProducts_Ctrl.getProductsFromStock';
-
-import { NavigationMixin } from 'lightning/navigation';
-import { LightningElement, track, wire } from 'lwc';
 
 import getNewsdata from "@salesforce/apex/CarouselCtrl.getNewsdata";
 
 
 export default class GlobalSearch extends NavigationMixin(LightningElement) {
- 
- 
+
+    @wire(MessageContext)
+    messageContext
+
+    globalSearchLayout;
+
+
+    @track needToShowFull       = true;
     @track isProductListVisible = false;
-    @track productData  = [];
-    @track productDataBuffer  = [];
+    @track productData          = [];
+    @track productDataBuffer    = [];
     @track searchKey;
 
     @track slider           = null;
@@ -35,7 +44,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
 
         // Start the interval when the component is connected
         this.intervalId = setInterval(() => {
-            // Your code here 
+            // Your code here
             // console.log('inside 1');
 
                 if(this.slider != null || this.slider != undefined){
@@ -49,23 +58,43 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                     // console.log('repeater 3');
                     this.slideNumber++;
                     // console.log('repeater 4');
-        
+
                     if(this.slideNumber > (this.numberOfSlides - 1)){
                         this.slideNumber = 0;
                     }
-        
+
                     // console.log('repeater 5');
-        
+
                     this.slides[this.slideNumber].classList.add("active");
                     this.slideIcons[this.slideNumber].classList.add("active");
                     // console.log('repeater 6');
                 }
-                
-            
+
+
         }, 5000); // Run every 1 second (1000ms)
- 
+
+
+        this.subscription = subscribe(this.messageContext, msgService, (message) => {
+            this.sliderHandler(message);
+            console.log('Message Items : '+JSON.stringify(message)); // Add this line to log the message to the console
+        });
+
     }
-    
+
+
+    sliderHandler(message){
+        console.log('In sliderHandler Handler '+this.globalSearchLayout);
+
+        if(message.globalSearchLayout == false ||  this.globalSearchLayout == undefined ){
+            this.needToShowFull    = false;
+        }else{
+            this.needToShowFull    = true;
+
+        }
+        console.log('Item sliderHandler callback : '+this.needToShowFull);
+    }
+
+
     renderedCallback() {
         if (this.isProductListVisible) {
             // Adding event listener after rendering dropdown
@@ -79,8 +108,8 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
         .then((data)=>{
             // console.log(data, 'inside then');
             let fullArray          = data;
-            this.sliderArray       = fullArray; 
-            this.numberOfSlides    = fullArray.length;         
+            this.sliderArray       = fullArray;
+            this.numberOfSlides    = fullArray.length;
             // console.log(fullArray, 'inside then');
 
         })
@@ -96,7 +125,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                 this.slides           = this.template.querySelectorAll(".slide");
                 this.slideIcons       = this.template.querySelectorAll(".slide-icon");
                 this.numberOfSlides   = this.slides.length;
-                
+
                 // console.log('this.slider '+JSON.stringify(this.slider));
 
                 // foractivate 1 slide and icon
@@ -104,26 +133,26 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                 // this.slideIcons[0].classList.add("active");
 
                 //image slider next button
-                this.nextBtn.addEventListener("click", () => { 
+                this.nextBtn.addEventListener("click", () => {
                     //// console.log('slide clicked');
-                    this.slides.forEach((slide) => { 
+                    this.slides.forEach((slide) => {
                         //// console.log('slide cliced '+slide.classList);
                         slide.classList.remove("active");
                     });
                     this.slideIcons.forEach((slideIcon) => {
                         slideIcon.classList.remove("active");
                     });
-            
+
                     this.slideNumber++;
-            
+
                     if(this.slideNumber > (this.numberOfSlides - 1)){
                         this.slideNumber = 0;
-                    } 
+                    }
 
                     this.slides[this.slideNumber].classList.add("active");
                     this.slideIcons[this.slideNumber].classList.add("active");
                 });
-            
+
 
                 //image slider previous button
                 this.prevBtn.addEventListener("click", () => {
@@ -134,23 +163,23 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                         this.slideIcons.forEach((slideIcon) => {
                         slideIcon.classList.remove("active");
                     });
-            
+
                     this.slideNumber--;
-            
+
                     if(this.slideNumber < 0){
                         this.slideNumber = this.numberOfSlides - 1;
                     }
-            
+
                     this.slides[this.slideNumber].classList.add("active");
                     this.slideIcons[this.slideNumber].classList.add("active");
                 });
-                
+
                 //// console.log('playSlider before');
 
                 //image slider autoplay
                 var playSlider;
                 var playSlider2;
-                 
+
 
                 //// console.log('playSlider after');
                 //stop the image slider autoplay on mouseover
@@ -161,7 +190,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                     clearInterval(this.intervalId)
                     //// console.log('mouseover aft');
                 });
-            
+
                 //start the image slider autoplay again on mouseout
                 this.slider.addEventListener("mouseout", () => {
                     //// console.log('mouseout bef');
@@ -179,22 +208,22 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                             //// console.log('repeater 3');
                             this.slideNumber++;
                             //// console.log('repeater 4');
-                
+
                             if(this.slideNumber > (this.numberOfSlides - 1)){
                                 this.slideNumber = 0;
                             }
-                
+
                             //// console.log('repeater 5');
-                
+
                             this.slides[this.slideNumber].classList.add("active");
                             this.slideIcons[this.slideNumber].classList.add("active");
                             //// console.log('repeater 6');
                         }, 4000);
                     //clearInterval(playSlider);
                     //// console.log('mouseout aft');
-                }); 
+                });
                 //// console.log('mouseout 1');
-                
+
                 this.renderLoaded = false;
            }
         })
@@ -218,7 +247,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
 
                 this.productData   = res.data;
                 this.productDataBuffer = res.data;
-                this.productData = JSON.parse(JSON.stringify(this.productData).slice(0, 5));
+                // this.productData = JSON.parse(JSON.stringify(this.productData).slice(0, 5));
 
                 // this._buf_totalProducts = res.totalProducts;
                 // this._haveError         = false;
@@ -252,11 +281,36 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
     // }
 
     handleProductSearch(event) {
-        let proId = event.currentTarget.dataset.id;
+
+        if(event.currentTarget.dataset.id == null || event.currentTarget.dataset.id == undefined){
+            return;
+        }
+
+        let proId   = event.currentTarget.dataset.id;
+        let proName = event.currentTarget.dataset.name;
+
         console.log('Prod Id : '+proId);
         console.log('Navigate Page : '+event.currentTarget.dataset.label);
-        let pageName =  event.currentTarget.dataset.label;
+
+
+        let pageName = event.currentTarget.dataset.label;
         let pageType = event.currentTarget.dataset.type;
+
+        proId        = btoa(proId);
+
+        let breadcurmbsItemsLocal = [];
+        let toReturn = null;
+
+        let breadCurmbObj        =  {
+            label    : proName,
+            name     : proName,
+            type     : 'self',
+            isActive : true
+        };
+
+        breadcurmbsItemsLocal.push(breadCurmbObj);
+        toReturn = btoa(JSON.stringify(breadcurmbsItemsLocal));
+
         if(proId != undefined || proId != null){
             this[NavigationMixin.Navigate]({
                 type: pageType,
@@ -264,8 +318,8 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                     pageName: pageName,
                 },
                 state: {
-                  productCode: proId
-                //   return     : toReturn
+                  productCode: proId,
+                  return     : toReturn
                 }
             });
         }else{
@@ -276,7 +330,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
                 }
             });
         }
-    
+
     }
 
     handleClickOutside = (event) => {
@@ -285,10 +339,15 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
             this.isProductListVisible = false;
         }
     }
-    
+
     handleOnChange(event) {
+
+        if (event.key === "Enter") {
+            this.getFilteredData();
+            this.isProductListVisible = true;
+        }
         this.searchKey = event.target.value;
-        this.getFilteredData();
+
     }
 
     handleSearch(event) {
@@ -299,10 +358,12 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
 
     getFilteredData(event) {
         console.log('Search Key : '+this.searchKey);
+        let key = this.searchKey;
+        console.log('Search Key Length : '+key.length);
         this.spinnerStatus = false;
-       
 
-        if(this.serachKey.length>=3){
+
+        if(key.length >= 3){
             getFilteredProduct({ prodName: this.searchKey })
                 .then(res => {
                     console.log('Filtered Data: ' + JSON.stringify(res));
@@ -330,7 +391,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
             this.spinnerStatus = true;
         }
     }
-    
+
     handleNavigate(){
         this[NavigationMixin.Navigate]({
             type: 'comm__namedPage',
@@ -342,7 +403,7 @@ export default class GlobalSearch extends NavigationMixin(LightningElement) {
 
     repeater(){
         //// console.log('repeater 1');
- 
+
 
         playSlider = setInterval(function(){
 

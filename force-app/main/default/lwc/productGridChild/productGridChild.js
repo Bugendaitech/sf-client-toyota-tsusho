@@ -10,23 +10,31 @@ import { MessageContext, publish } from 'lightning/messageService';
 
 export default class ProductGridChild extends NavigationMixin(LightningElement) {
 
-    @api productItems;
+    //@api productItems;
+
+    @api productItems         = [];
+    @api breadcurmbsItems     = [];
     @track childSpinnerStatus = false;
     @track payload;
 
-    connectedCallback(){
-        console.log('called ProductGridChild');
-        // console.log('data ProductGridChild '+JSON.stringify(this.productItems));
-    }
 
     @wire(MessageContext)
     messageContext
+
+
+
+    connectedCallback(){
+        console.log('DemoProductGridChild');
+        console.log('productList '+JSON.stringify(this.productItems));
+    }
+
 
     addToCart(event) {
         this.childSpinnerStatus = true;
         console.log('called add to cart');
 
         let productCode       = event.target.dataset.proCode;
+        console.log('called add to cart '+productCode);
 
         if(productCode != null){
 
@@ -69,23 +77,65 @@ export default class ProductGridChild extends NavigationMixin(LightningElement) 
 
     handleNavigation(event){
 
+        event.preventDefault();
+        console.log('called');
+
+
         let pageName = event.target.dataset.name;
         let pageType = event.target.dataset.type;
-        let proId    = null;
-        let toReturn = null;
+        let proName  = event.target.dataset.proname;
+        let proId    = event.target.dataset.id;
+        let breadcurmbsItemsLocal = JSON.parse(JSON.stringify(this.breadcurmbsItems));
 
-        if(event.target.dataset.id != null && event.target.dataset.id != undefined){
-            proId    = event.target.dataset.id;
-            toReturn = 'Shop';
+        // let proId    = null;
+        let toReturn = null;
+        console.log('called 2');
+        if(event.target.dataset.id == null || event.target.dataset.id == undefined){
+            return;
         }
 
         console.log('proId '+proId);
+        console.log('bread '+JSON.stringify(breadcurmbsItemsLocal));
+
+
+
+        // console.log('proId '+proId);
+        // console.log('pageName '+pageName);
+        // console.log('pageType '+pageType);
+
+        const objIdToFind            = proName;
+        const indexOfObj             = breadcurmbsItemsLocal.findIndex(p => p.label === objIdToFind);
+        console.log('indexOfObj '+indexOfObj);
+
+
+        if (indexOfObj == -1) {            // As find return object else undefined
+        console.log('called 3');
+
+            let breadCurmbObj        =  {
+                label    : proName,
+                name     : proName,
+                type     : 'self',
+                isActive : true
+            };
+        console.log('called 3.0');
+
+                breadcurmbsItemsLocal.forEach(obj => {
+                    console.log('obj '+JSON.stringify(obj));
+                    obj.isActive = false;
+                });
+              console.log('called 3.11');
+              breadcurmbsItemsLocal.push(breadCurmbObj);
+        console.log('called 3.1 bread '+JSON.stringify(breadcurmbsItemsLocal));
+
+        }
+        console.log('called 4');
 
         proId    = btoa(proId);
+        console.log('called 5');
 
-        console.log('proId '+proId);
-        console.log('pageName '+pageName);
-        console.log('pageType '+pageType);
+        toReturn = btoa(JSON.stringify(breadcurmbsItemsLocal));
+
+        console.log('bread '+JSON.stringify(breadcurmbsItemsLocal));
 
         if(proId != null){
             this[NavigationMixin.Navigate]({

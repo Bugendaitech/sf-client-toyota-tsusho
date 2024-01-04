@@ -68,7 +68,9 @@
                          </tr>
                          <tr>
                             <td class="td-style"> </td>
-                            <td class="dashed-border"><b>Mr. Anantha</b></td>
+                            <td class="dashed-border"><b>
+                                 <input type="text" class="target-input" value="Mr. Anantha"/>
+                            </b></td>
                          </tr>
                          <tr>
                             <td class="td-style"><b>Ref No: </b></td>
@@ -76,9 +78,7 @@
                          </tr>
                          <tr>
                             <td class="td-style"><b>Date:</b> </td>
-                            <td class="dashed-border">
-                              <input type="date" class="target-input"/>
-                            </td>
+                            <input type="date" class="target-input"/>
                          </tr>
                          <tr>
                             <td class="td-style"><b>QPR No:</b> </td>
@@ -128,7 +128,7 @@
                             <td></td>
                             <td class="dashed-border">
                               <input type="text" class="target-input" value="Knob, Power Seat Switch LH"/>
-                           </td>
+                            </td>
                          </tr>
                       </table>
                    </lightning-layout-item>
@@ -163,7 +163,7 @@
              <div class="border-top">
                 <lightning-layout multiple-rows>
                    <lightning-layout-item size="4">
-                      <table>
+                      <table style="margin-top:10px;">
                          <tr>
                             <td class="sub-tr-td"><b>Company Name:</b> </td>
                             <td class="dashed-border"><b style="color:red;">
@@ -185,8 +185,8 @@
                          <tr>
                             <td class="sub-tr-td"><b>Fax:</b> </td>
                             <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
-                            </td>
+                              <input type="text" class="target-input" value=""/>
+                         </td>
                          </tr>
                          <tr>
                             <td class="sub-tr-td"><b>Email: </b></td>
@@ -211,21 +211,19 @@
                                   </tr>
                                   <tr>
                                      <td class=""></td>
-                                     <td class="dashed-border">
-                                       <input type="text" class="target-input" value=""/>
-                                    </td>
+                                     <td class="dashed-border">text</td>
                                   </tr>
                                   <tr>
                                      <td class="sub-tr-td-style"><b>P/O No.</b> </td>
                                      <td class="dashed-border">
                                        <input type="text" class="target-input" value=""/>
-                                     </td>
+                                    </td>
                                   </tr>
                                   <tr>
                                      <td></td>
-                                     <td class="dashed-border">  
-                                         <input type="text" class="target-input" value=""/>
-                                    </td>
+                                     <td class="dashed-border">
+                                       <input type="text" class="target-input" value=""/>
+                                     </td>
                                   </tr>
                                   <tr>
                                      <td>&nbsp;</td>
@@ -344,7 +342,7 @@
                       <div class="border-bottom">
                          <p><b>Information</b></p>
                       </div>
-                      <div style="padding-left: 10px;">
+                      <div style="padding-left:10px;">
                          <p>
                             <lightning-input class="" type="checkbox" label="Attachment Sheet" onchange={handleChange} ></lightning-input>
                          </p>
@@ -354,10 +352,7 @@
                          <p>
                             <lightning-input class="" type="checkbox" label="Send Defective Sample" onchange={handleChange} ></lightning-input>
                          </p>
-                         <p>
-                           &nbsp;
-                        </p>
-                         <p style="">Sample Sending Date: DD/MM/YY</p>
+                         <p>Sample Sending Date: DD/MM/YY</p>
                       </div>
                       <!-- <table>
                          <tr>
@@ -445,10 +440,14 @@
                                      <td><b>&nbsp;</b></td>
                                   </tr>
                                   <tr>
-                                     <td class="sub-td"><b>NG qty :</b> </td>
-                                     <td class="dashed-border"><b>
-                                       <input type="text" class="target-input" value="Toyota"/>
-                                     </b></td>
+                                    <td class="sub-td"><b>NG qty :</b> </td>
+                                    <td class="dashed-border"><b>
+                                      <input type="text" class="target-input" value="Toyota"/>
+                                    </b></td>
+                                  </tr>
+                                  <tr>
+                                     <td class="sub-td"><b>&nbsp;</b> </td>
+                                     <td><b>&nbsp;</b></td>
                                   </tr>
                                   <tr>
                                      <td class="sub-td"><b>&nbsp;</b> </td>
@@ -544,33 +543,33 @@
                          <p><b>Action & Countermeasure</b></p>
                       </div>
                       <div style="padding:0px 20px;margin-bottom: 10px;">
-                         <table>
-                            <tr>
-                               <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
+                        <table>
+                           <tr>
+                              <td class="dashed-border">
+                                <input type="text" class="target-input" value=""/>
+                             </td>
+                           </tr>
+                           <tr>
+                              <td class="dashed-border">
+                                <input type="text" class="target-input" value=""/>
                               </td>
-                            </tr>
-                            <tr>
-                               <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
-                               </td>
-                            </tr>
-                            <tr>
-                               <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
-                               </td>
-                            </tr>
-                            <tr>
-                               <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
-                               </td>
-                            </tr>
-                            <tr>
-                               <td class="dashed-border">
-                                 <input type="text" class="target-input" value=""/>
-                               </td>
-                            </tr>
-                         </table>
+                           </tr>
+                           <tr>
+                              <td class="dashed-border">
+                                <input type="text" class="target-input" value=""/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="dashed-border">
+                                <input type="text" class="target-input" value=""/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="dashed-border">
+                                <input type="text" class="target-input" value=""/>
+                              </td>
+                           </tr>
+                        </table>
                       </div>
                       <div style="border-top-style: solid;border-bottom-style: solid;">
                          <table>

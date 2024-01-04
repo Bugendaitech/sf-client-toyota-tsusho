@@ -1,0 +1,46 @@
+<!--
+  @description       :
+  @author            : Anshul Kanaujia
+  @group             : BT Team
+  @last modified on  : 01-03-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <h3>Search By a <span>{title}</span></h3>
+    <br>
+        <div class="modal-item-grid slds-m-top_medium">
+
+            <!-- <template lwc:if={needToShowFamily}>
+                <hr>
+                <template for:each={familyList} for:item="item">
+                    <div class="modal-item" key={item} data-item="family"  onclick={handleClick} >
+                        <h1 data-item="family" data-key={item.value} onclick={handleClick}>{item.label} ( {item.count} )</h1>
+                    </div>
+                </template>
+            </template> -->
+
+            <template for:each={listItems} for:item="item">
+                <div class="modal-item" key={item} data-item={title} data-key={item.value} onclick={handleClick} >
+                    <!-- <img src="https://cdn5.vectorstock.com/i/1000x1000/19/84/settings-icon-vector-801984.jpg" alt={item.label}> -->
+                    <h1 data-item={title} data-key={item.value} onclick={handleClick}>{item.label} <template lwc:if={showCount}> ( {item.count} ) </template></h1>
+                </div>
+            </template>
+
+            <!-- <div class="modal-item"  data-item="family">
+                <h1 data-item="family" >item.label</h1>
+            </div>
+            <div class="modal-item"  data-item="family">
+                <h1 data-item="family" >item.count</h1>
+            </div>
+            <div class="modal-item"  data-item="family">
+                <h1 data-item="family" >item.label</h1>
+            </div>
+            <div class="modal-item"  data-item="family">
+                <h1 data-item="family" >item.count</h1>
+            </div>
+            <div class="modal-item"  data-item="family">
+                <h1 data-item="family" >item.count</h1>
+            </div> -->
+
+        </div>
+</template>

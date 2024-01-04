@@ -2,7 +2,7 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-25-2023
+  @last modified on  : 01-03-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -10,13 +10,17 @@
     <c-container>
 
     <div class="top">
-        <h1>Shopping Cart</h1>
-        <lightning-button
-        icon-name="utility:clear"
+        <h1 class="h1-section"><span style="color:#12477a;">My</span> <span style="color:#59d8fd;"> Cart</span></h1>
+        <!-- <lightning-button
+        icon-name="utility:delete"
         class="empty-cart slds-m-bottom_x-large"
         onclick={handleConfirmClick}
         label="Empty Cart">
-        </lightning-button>
+        </lightning-button> -->
+        <button onclick={handleConfirmClick} class="my-cus-button btn-icon-border">
+            <lightning-icon class="slds-m-right_medium" size="x-small" icon-name="utility:delete"></lightning-icon>
+            Empty Cart
+        </button>
     </div>
 
     <div class="slds-align_absolute-center">
@@ -29,7 +33,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="slds-table table slds-scrollable_y ownTable table-style">
+        <table class="slds-table_cell-buffe table slds-scrollable_y ownTable table-style slds-p-around_large">
 
             <tbody>
                 <template lwc:if={productsInCart}>
@@ -38,7 +42,7 @@
 
                             <td class="slds-cell-wrap slds-border_right" colspan="9">
 
-                                <table>
+                                <table class="slds-table">
 
                                     <thead >
                                         <tr>
@@ -71,6 +75,7 @@
                                                     onclick={actionOnQuantity}
                                                     data-key={inner.id}
                                                     data-type="remove"
+                                                    style="--slds-c-icon-color-background: #59d8fd;"
                                                     >
                                                 </lightning-icon>
                                             </td>
@@ -85,10 +90,11 @@
 
                                                 <div class="qty-utilies">
                                                     <lightning-button-icon
-                                                        class="my-cus-button"
+                                                        class="my-cus-button btn"
                                                         icon-name="utility:dash"
                                                         variant="brand"
                                                         size="small"
+                                                        align="middle"
                                                         alternative-text="Decrease Quantity"
                                                         onclick={actionOnQuantity}
                                                         data-type="decrease"
@@ -110,8 +116,10 @@
                                                         onchange={actionOnQuantity}
                                                         message-when-range-underflow="Minimum Quantity should be One">
                                                     </lightning-input-field> -->
-                                                    <input
-                                                        type="number"
+
+
+                                                    <!-- <input
+                                                        type="text"
                                                         class="show-qty-input"
                                                         data-key={inner.id}
                                                         value={inner.qty}
@@ -119,12 +127,28 @@
                                                         max="1000"
                                                         onchange={actionOnQuantity}
                                                         data-type="manual"
-                                                        >
+                                                        > -->
+                                                        <div class="input-wrapper">
+                                                            <lightning-input
+                                                                align="middle"
+                                                                type="number"
+                                                                class="show-qty-input"
+                                                                data-key={inner.id}
+                                                                value={inner.qty}
+                                                                min="1"
+                                                                variant="label-hidden"
+                                                                max="1000"
+                                                                onchange={actionOnQuantity}
+                                                                data-type="manual">
+                                                            </lightning-input>
+                                                        </div>
+
                                                     <lightning-button-icon
-                                                        class="my-cus-button"
+                                                        class="my-cus-button btn"
                                                         icon-name="utility:add"
                                                         variant="brand"
                                                         size="small"
+                                                        align="middle"
                                                         alternative-text="Increase Quantity"
                                                         onclick={actionOnQuantity}
                                                         data-type="increase"
@@ -153,7 +177,7 @@
 
                             <td class="slds-cell-wrap slds-border_right" colspan="9">
 
-                                <table>
+                                <table class="slds-table">
 
                                     <thead >
                                         <tr class="slds-line-height_reset">
@@ -170,7 +194,7 @@
                                      <tbody>
                                         <tr>
                                             <td colspan="9" class="slds-cell-wrap slds-border_right">
-                                                <h4><span class="no-product" onclick={handleNavigation} data-type="standard__namedPage" data-name="home">Continue Shopping ! </span>No Product in your cart.</h4>
+                                                <h4><span class="no-product" onclick={handleNavigation} data-type="comm__namedPage" data-name="Shop">Continue Shopping ! </span>No Product in your cart.</h4>
                                             </td>
                                         </tr>
                                      </tbody>
@@ -191,8 +215,8 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">Gross Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 11%;">
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 10.5%;height: 40px;">Gross Amount</td>
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 11%;">
                         <lightning-formatted-number value={totalExeAmt} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -205,8 +229,8 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">GST Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 11%">
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 10.5%;height: 40px;">GST Amount</td>
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 11%">
                         <lightning-formatted-number value={totalGstAmount} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -219,8 +243,8 @@
                     <td ></td>
                     <td ></td>
                     <td ></td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 10.5%;">Total Amount</td>
-                    <td class="slds-cell-wrap slds-border_right" style="width: 11%;">
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 10.5%;height: 40px;">Total Amount</td>
+                    <td class="slds-cell-wrap slds-border_right footer-td" style="width: 11%;">
                         <lightning-formatted-number value={totalIncAmt} format-style="currency"
                         minimum-integer-digits="2"></lightning-formatted-number>
                     </td>
@@ -235,21 +259,29 @@
 
 
     <div class="button-grid slds-m-top_x-large">
-        <lightning-button
+        <!-- <lightning-button
             onclick={handleNavigation}
             variant="brand"
             icon-name="utility:add"
             data-type="standard__namedPage"
             class="my-cus-button"
             data-name="Shop" label="Add More">
-        </lightning-button>
-        <lightning-button
+        </lightning-button> -->
+        <button onclick={handleNavigation} class="my-cus-button btn-icon" data-type="standard__namedPage" data-name="Shop">
+            <lightning-icon class="slds-m-right_medium" size="x-small" icon-name="utility:add"></lightning-icon>
+            Add More
+        </button>
+        <!-- <lightning-button
             onclick={handleNavigation}
             icon-name="utility:checkout"
             variant="brand" data-type="comm__namedPage"
             class="my-cus-button"
             data-name="checkout" label="Checkout">
-        </lightning-button>
+        </lightning-button> -->
+        <button onclick={handleNavigation} class="my-cus-button btn-icon" data-name="checkout" data-type="comm__namedPage">
+            <lightning-icon class="slds-m-right_medium" size="x-small" icon-name="utility:checkout"></lightning-icon>
+            Checkout
+        </button>
     </div>
 
 </c-container>

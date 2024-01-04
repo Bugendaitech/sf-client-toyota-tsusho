@@ -66,7 +66,7 @@ public with sharing class globalSearch {
                                                     Product2.West_Material_Code__c,
                                                     Product2.Description,
                                                     Product2.ProductCode,
-                                                    // Product2.GST__c,
+                                                    Product2.GST__c,
                                                     Product2.UOM__c,
                                                     UnitPrice,
                                                     Product2.Product_Image__c

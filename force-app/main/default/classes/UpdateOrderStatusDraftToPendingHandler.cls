@@ -29,17 +29,34 @@ public class UpdateOrderStatusDraftToPendingHandler {
 
     @future
     public static void handleOrdersUpdate(List<String> orderIds) {
-
+        
         List<Order> ordersToUpdate = new List<Order>();
-
-        List<Order> newOrders = [SELECT Id, Status FROM Order WHERE Id IN :orderIds];
-
+        List<Contract> contractsToUpdate = new List<Contract>();
+        
+        List<Order> newOrders = [SELECT Id, Status, ContractId FROM Order WHERE Id IN :orderIds];
+        
         for (Order ordersItr : newOrders) {
-
+            
             ordersItr.Status = PENDING_STATUS;
             ordersToUpdate.add(ordersItr);
+            
+            // Assuming there is a Contract object with a field ContractId
+            if (ordersItr.ContractId != null) {
+                Contract relatedContract = new Contract(Id = ordersItr.ContractId, Status = 'Activated', ContractTerm = 1);
+                contractsToUpdate.add(relatedContract);
+            }
         }
-
-        update ordersToUpdate;
+        
+        if (!ordersToUpdate.isEmpty()) {
+            update ordersToUpdate;
+        }
+        
+        if (!contractsToUpdate.isEmpty()) {
+            update contractsToUpdate;
+        }
     }
+    
+    
+    
+    
 }

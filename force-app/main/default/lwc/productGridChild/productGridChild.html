@@ -2,22 +2,101 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-25-2023
+  @last modified on  : 01-04-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
-  <lightning-layout multiple-rows>
-   <!-- <div class="slds-align_absolute-center"> -->
-      <lightning-spinner
-              if:true={childSpinnerStatus}
-              variant="brand"
-              size="medium"
-              style="position: absolute!important;z-index: 1000 !important;"
-      ></lightning-spinner>
-  <!-- </div> -->
+   <h3 style="font-size:1.5rem;color:#155c9e;font-weight:bold; text-align:center;text-transform: capitalize;" >Products</h3>
+   <br>
+   <div class="modal-item-grid slds-m-top_medium products">
 
-    <template for:each={productItems} for:item="index">
-       <lightning-layout-item key={index}
+      <!-- <template lwc:if={needToShowProducts}>
+          <hr>
+          <template for:each={productList} for:item="item">
+              <div class="modal-item" key={item} data-item="product" onclick={handleClick} >
+                  <h1 data-item="product" onclick={handleClick}>{item.proName} ( {item.inStock} )</h1>
+                  <p>{item.proWestCode} || {item.proUom} || {item.proDesc} || {item.proPrice} || {item.proGst} || {item.proFamily}</p>
+              </div>
+          </template>
+      </template> -->
+
+      <template for:each={productItems} for:item="item">
+         <!-- <div class="list-item" key={item} data-item="product" onclick={handleClick} >
+             <h1 data-item="product" onclick={handleClick}>{item.proName} ( {item.inStock} )</h1>
+             <p>{item.proWestCode} || {item.proUom} || {item.proDesc} || {item.proPrice} || {item.proGst} || {item.proFamily}</p>
+         </div> -->
+
+
+         <div class="modal-item" key={item} data-item="product" onclick={handleClick} >
+            <div class="grid-box">
+               <div class="pro-image">
+                  <img src="https://toyotahf--bugendai.sandbox.my.site.com/ToyotaDealerPortal/resource/ToyotaResources/ToyotaResources/Trunk-Spoiler.jpg"/>
+               </div>
+               <div class="product_info">
+                     <h1 data-item="product">{item.proDesc}</h1>
+                     <p>{item.proName}</p>
+                     <p></p>
+                     <div class="price-stock">
+                        <span class="price"><lightning-formatted-number value={item.proPrice} format-style="currency"
+                           minimum-integer-digits="2" ></lightning-formatted-number></span>
+                        <span class={item.badgeClass}>In Stock &nbsp;  {item.inStock}</span>
+                     </div>
+                     <!-- <span>
+
+                     </span> -->
+
+                     <div class="product_cta">
+                        <!-- <lightning-button label="Add to Cart" class="slds-button my-cus-button slds-align_absolute-center"
+                           icon-name="utility:cart"
+                           data-pro-code={item.proId}
+                           data-pro-qty="1"
+                           variant="brand"
+                           onclick={addToCart}>
+                        </lightning-button>
+                        <lightning-button label="View Product" class="slds-button my-cus-button slds-align_absolute-center"
+                           icon-name="utility:preview"
+                           variant="brand"
+                           onclick={handleNavigation}
+                           data-type="comm__namedPage"
+                           data-id={index.Product2Id}
+                           data-name="product-details" >
+                        </lightning-button> -->
+                        <div class="item">
+                           <!-- <a href="#" target="_blank">Add To Cart</a> -->
+                           <lightning-button
+                              label="Add to Cart"
+                              class="slds-button my-cus-button slds-align_absolute-center"
+                              icon-name="utility:cart"
+                              data-pro-code={item.proId}
+                              data-pro-qty="1"
+                              variant="brand"
+                              onclick={addToCart}>
+                           </lightning-button>
+                        </div>
+                        <div class="item">
+                           <!-- <a href="#" target="_blank">View Product</a> -->
+                           <lightning-button
+                              label="View Product"
+                              class="slds-button my-cus-button slds-align_absolute-center"
+                              icon-name="utility:preview"
+                              variant="brand"
+                              onclick={handleNavigation}
+                              data-type="comm__namedPage"
+                              data-id={item.proId}
+                              data-proname={item.proDesc}
+                              data-name="product-details" >
+                           </lightning-button>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+         </div>
+      </template>
+
+
+      <!--
+      <template for:each={productItems} for:item="index">
+         <lightning-layout-item key={index}
           size="12"
           small-device-size="6"
           medium-device-size="4"
@@ -92,6 +171,7 @@
              </div>
             </div>
        </lightning-layout-item>
-    </template>
- </lightning-layout>
+    </template> -->
+
+  </div>
 </template>

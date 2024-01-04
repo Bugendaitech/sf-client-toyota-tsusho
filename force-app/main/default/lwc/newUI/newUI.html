@@ -2,33 +2,44 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-27-2023
+  @last modified on  : 01-04-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
     <c-container>
 
-        <div class="slds-grid slds-wrap">
-            <!-- Your template logic here -->
-            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+        <div class="modal-item-grid modals">
+            <!-- <template lwc:if={_haveError}>
+                <center>Something went wrong</center>
+            </template>
+            <template lwc:else>
+                <template for:each={modalList} for:item="item">
+                    <div class="modal-item" key={item} data-item="modal" data-key={item.value} onclick={handleClick} >
+                        <h1 data-item="modal" data-key={item.value} onclick={handleClick}>{item.label}</h1>
+                    </div>
+                </template>
+            </template> -->
+            <div class="modal-item"  data-item="modal"  >
+                <img src="https://cdn5.vectorstock.com/i/1000x1000/19/84/settings-icon-vector-801984.jpg" alt="">
+                <h1 data-item="modal"  onclick={handleClick}>item.label</h1>
+            </div>
+            <div class="modal-item"  data-item="modal"  >
                 <h1 data-item="modal" onclick={handleClick}>item.label</h1>
             </div>
-            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+            <div class="modal-item"  data-item="modal" >
                 <h1 data-item="modal" onclick={handleClick}>item.label</h1>
             </div>
-            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
+            <div class="modal-item"  data-item="modal" >
                 <h1 data-item="modal" onclick={handleClick}>item.label</h1>
             </div>
-            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
-                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
-            </div>
-            <div class="slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4 modal-item" data-item="modal">
-                <h1 data-item="modal" onclick={handleClick}>item.label</h1>
+            <div class="modal-item"  data-item="modal" >
+                <h1 data-item="modal"  onclick={handleClick}>item.label</h1>
             </div>
         </div>
 
-        <div class="modal-item-grid slds-m-top_medium">
-            <h1>Products Family</h1>
+        <h1>Products Family</h1>
+        <div class="modal-item-grid slds-m-top_medium category">
+
             <!-- <template lwc:if={needToShowFamily}>
                 <hr>
                 <template for:each={familyList} for:item="item">
@@ -55,9 +66,9 @@
             </div>
         </div>
 
+        <h1>Products </h1>
+        <div class="modal-item-grid slds-m-top_medium products">
 
-        <div class="modal-item-grid slds-m-top_medium">
-            <h1>Products </h1>
             <!-- <template lwc:if={needToShowProducts}>
                 <hr>
                 <template for:each={productList} for:item="item">
@@ -67,35 +78,97 @@
                     </div>
                 </template>
             </template> -->
+
             <div class="modal-item">
-                <img src="https://i.pinimg.com/originals/c7/f8/35/c7f835ec91ec48dae97a0cb8c95a426b.png" alt="Car Engine"/>
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
+                <div class="grid-box">
+                    <img src="https://toyotahf--bugendai.sandbox.my.site.com/ToyotaDealerPortal/resource/ToyotaResources/ToyotaResources/Trunk-Spoiler.jpg"/>
+                    <div class="product_info">
+                        <h1 data-item="product">FRONT SPOILER LOGO</h1>
+                        <p>FRONT SPOILER LOGO</p>
+                        <div class="price-stock">
+                            <span class="price">₹333.02</span>
+                            <span class="slds-badge cus-badge-success">In Stock 100</span>
+                        </div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="product_cta">
+                            <div class="item">
+                                <a href="" target="_blank">Add To Cart</a>
+                            </div>
+                            <div class="item">
+                                <a href="" target="_blank">View Product</a>
+                            </div>
+                        </div>
+                     </div>
+                </div>
             </div>
             <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
+                <div class="grid-box">
+                    <img src="https://toyotahf--bugendai.sandbox.my.site.com/ToyotaDealerPortal/resource/ToyotaResources/ToyotaResources/Trunk-Spoiler.jpg"/>
+                    <div class="product_info">
+                        <h1 data-item="product">FRONT SPOILER LOGO</h1>
+                        <p>FRONT SPOILER LOGO</p>
+                        <div class="price-stock">
+                            <span class="price">₹333.02</span>
+                            <span class="slds-badge cus-badge-danger">In Stock 100</span>
+                        </div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="product_cta">
+                            <div class="item">
+                                <a href="" target="_blank">Add To Cart</a>
+                            </div>
+                            <div class="item">
+                                <a href="" target="_blank">View Product</a>
+                            </div>
+                        </div>
+                     </div>
+                </div>
             </div>
             <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
+                <div class="grid-box">
+                    <img src="https://toyotahf--bugendai.sandbox.my.site.com/ToyotaDealerPortal/resource/ToyotaResources/ToyotaResources/Rear-Spoiler.jpg"/>
+                    <div class="product_info">
+                        <h1 data-item="product">FRONT SPOILER LOGO</h1>
+                        <p>FRONT SPOILER LOGO</p>
+                        <div class="price-stock">
+                            <span class="price">₹333.02</span>
+                            <span class="slds-badge cus-badge-success">In Stock 100</span>
+                        </div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="product_cta">
+                            <div class="item">
+                                <a href="" target="_blank">Add To Cart</a>
+                            </div>
+                            <div class="item">
+                                <a href="" target="_blank">View Product</a>
+                            </div>
+                        </div>
+                     </div>
+                </div>
             </div>
             <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
+                <div class="grid-box">
+                    <img src="https://toyotahf--bugendai.sandbox.my.site.com/ToyotaDealerPortal/resource/ToyotaResources/ToyotaResources/Side-Spoiler-RH.jpg"/>
+                    <div class="product_info">
+                        <h1 data-item="product">FRONT SPOILER LOGO</h1>
+                        <p>FRONT SPOILER LOGO</p>
+                        <div class="price-stock">
+                            <span class="price">₹333.02</span>
+                            <span class="slds-badge cus-badge-danger">In Stock 100</span>
+                        </div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="product_cta">
+                            <div class="item">
+                                <a href="" target="_blank">Add To Cart</a>
+                            </div>
+                            <div class="item">
+                                <a href="" target="_blank">View Product</a>
+                            </div>
+                        </div>
+                     </div>
+                </div>
             </div>
-            <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
-            </div>
-            <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
-            </div>
-            <div class="modal-item">
-                <h1 data-item="product">item.inStock</h1>
-                <p>item.proFamily</p>
-            </div>
+
+
         </div>
 
     </c-container>

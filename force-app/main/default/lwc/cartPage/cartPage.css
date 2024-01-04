@@ -7,10 +7,15 @@
      --slds-c-button-brand-color-background-hover: #0f3a63;
  }
 
+ .slds-table:hover{
+    background-color: none;
+ }
+
  .top{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 20px;
  }
 
  /* lightning-input{
@@ -25,6 +30,9 @@
  } */
 .qty-utilies{
     width: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px
 }
 .show-qty-input{
     width: 70px;
@@ -33,6 +41,9 @@
     line-height: 1.5rem;
     text-align: center;
     margin: 0px 5px;
+ }
+ .btn{
+    --slds-c-button-radius-border: 20px;
  }
 
  .no-product{
@@ -51,8 +62,10 @@
     background: #155c9e;
     color: white;
     text-align:center;
-    font-size: .8rem;
-    font-weight: 800;
+    /* font-size: .8rem; */
+    font-size: 1rem;
+    /* font-weight: 800; */
+    height: 40px;
 }
 .table-style{
     /* height: 40vh; */
@@ -96,4 +109,61 @@ img{
 }
 .additional-ex{
     width: 20%;
+}
+
+.h1-section{
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.table-class thead th{
+    height: 50px;
+}
+.footer-td{
+    color: #12477a;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.btn-icon{
+    min-width: 8%;
+    min-height: 40px;
+    background-color: #155c9e;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    user-select: none;
+    line-height: 1.2;
+    transition: all .3s;
+    text-align: center;
+    --slds-c-icon-color-foreground-default: white;
+}
+.btn-icon-border{
+    min-width: 8%;
+    min-height: 40px;
+    border: 1px solid #155c9e;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #fff;
+    color:#155c9e;
+    user-select: none;
+    line-height: 1.2;
+    transition: all .3s;
+    text-align: center;
+    --slds-c-icon-color-foreground-default: #155c9e;
+}
+
+.btn-icon-border:hover{
+    background-color: #155c9e;
+    --slds-c-icon-color-foreground-default: #fff;
+    color: #fff;
+}
+.btn-icon:hover{
+    background-color: #fff;;
+    --slds-c-icon-color-foreground-default: #155c9e;;
+    color: #155c9e;
+    border: 1px solid #155c9e;
 }

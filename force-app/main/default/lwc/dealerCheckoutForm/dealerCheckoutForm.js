@@ -274,6 +274,7 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
     handleAddressChange(event) {
         this.selectedAddress = event.detail.value;
         console.log('selected Addr '+this.selectedAddress );
+        console.log('Total Amount? '+this.totalExeAmt+'-- '+this.totalIncAmt);
     }
 
     handleCreateOrder(){
@@ -315,7 +316,8 @@ export default class DealerCheckoutForm extends NavigationMixin(LightningElement
             createOrders({
                 orderDetails   : JSON.stringify(orderDetails),
                 lineItems      : JSON.stringify(lineItemDataList),
-                address        : this.selectedAddress
+                address        : this.selectedAddress,
+                orderType      : 'Regular'
             })
             .then(result=>{
                  console.log('result '+JSON.stringify(result));

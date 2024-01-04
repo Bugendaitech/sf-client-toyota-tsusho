@@ -1,9 +1,15 @@
+.my-icon{
+  /* --slds-c-icon-color-background:#155c9e;
+   --slds-c-icon-color-foreground:#155c9e;
+   */
+   --slds-c-icon-color-foreground: #155c9e;
+}
 .custom-badge{
-    --slds-c-badge-color-background:#155c9e;
-    --slds-c-badge-text-color:white;
-    --slds-c-badge-font-size : 11pt;
-    padding: 10px 20px;
-    color: white;
+   --slds-c-badge-color-background:#155c9e;
+   --slds-c-badge-text-color:white;
+   --slds-c-badge-font-size : 11pt;
+   padding: 10px 20px;
+   color: white;
 }
 .custom-badge-active{
    --slds-c-badge-color-background:#0f3a63;
@@ -14,17 +20,52 @@
    cursor: pointer;
    transition: 0.5s;
 }
-
-
 .my-icon{
-    margin-right: 10px;
+   margin-right: 10px;
 }
-
 .main-div{
-    width: 90%;
-    margin: 0% 5%;
+   width: 90%;
+   margin: 0% 5%;
 }
-
 .parent-div{
-    background-color: white;
+   background-color: white;
+}
+/* css for breadcrumbs */
+.breadcumb-box{
+   margin-bottom: 15px
+}
+.breadcumb-box ul{
+   padding:0;
+   margin: 0;
+   list-style: none;
+}
+.breadcumb-box ul li{
+   display: inline-block;
+   padding-right: 5px;
+   font-size: 16px;
+}
+.breadcumb-box ul li a{
+   color:#909090
+}
+.breadcumb-box ul li a:hover{
+   color: #0f3a63;
+   text-decoration: none;
+}
+.breadcumb-box ul li span{
+   color: #0f3a63;
+}
+.breadcumb-box ul li:after{
+   content: "";
+   border-color: #909090;
+   border-style: solid solid none none;
+   border-width: 2px;
+   display: inline-block;
+   flex: none;
+   height: 8px;
+   margin: 3px 10px 0px 6px;
+   transform: rotate(45deg);
+   width: 8px;
+}
+.breadcumb-box ul li:last-child:after{
+   display:none;
 }

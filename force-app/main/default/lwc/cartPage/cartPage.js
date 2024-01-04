@@ -96,6 +96,8 @@ export default class CartPage extends NavigationMixin(LightningElement) {
 
     }
 
+    
+
 
     async handleConfirmClick() {
         const result = await LightningConfirm.open({
@@ -120,7 +122,9 @@ export default class CartPage extends NavigationMixin(LightningElement) {
                 this.totalIncAmt        = 0;
                 let cartItems           = 0;
                 this.notificationHandler(result?.label, result?.msg, result?.status);
-                let payload = {cartItems : cartItems}
+                let payload   = {cartItems : cartItems}
+                console.log('Total Items : '+JSON.stringify(payload));
+
                 publish(this.messageContext, msgService, payload);
             })
             .catch((err)=>{

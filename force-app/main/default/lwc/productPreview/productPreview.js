@@ -11,6 +11,7 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
     @wire(CurrentPageReference) pageRef;
     @track recId    = null;
     @track toReturn = null;
+    @track breadcurmbs = [];
 
     //============== product variable
 
@@ -33,48 +34,53 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
 
         if(this.pageRef.state && this.pageRef.state.return){
             let retPage = this.pageRef.state.return;
-             console.log('retPage '+retPage);
+            console.log('retPage '+retPage);
+            console.log('retPage '+JSON.stringify(JSON.parse(atob(retPage))));
             this.toReturn  = retPage;
+            this.breadcurmbs = JSON.parse(atob(retPage));
         }
 
 
         if (this.pageRef.state && this.pageRef.state.productCode) {
             let recordId = this.pageRef.state.productCode;
-          //console.log('recordId '+recordId);
+            //console.log('recordId '+recordId);
             // Do something with the record ID
             recordId    = atob(recordId);
             this.recId  = recordId;
+            this.fetchProductDetails(recordId);
 
-            getProductDetails({
-                productId : recordId
-            })
-            .then((result)=>{
-                //console.log('result '+result);
-                this.productDetails         = JSON.parse(result);
-                this.proCode                = this.productDetails.proCode;
-                this.proUom                 = this.productDetails.proUom;
-                this.proFamily              = this.productDetails.family;
-                this.proName                = this.productDetails.name;
-                this.proUnitPrice           = this.productDetails.unitPrice;
-                this.proWestCode            = this.productDetails.westCode;
-                this.proFullDesc            = this.productDetails.fullDesc;
-                this.proImg                 = this.productDetails.imgSrc;
-                this.proGst                 = this.productDetails.gst;
-            })
-            .catch((error)=>{
-                //console.log('error '+error);
-                console.log('in catch '+JSON.stringify(error));
-                let result    = JSON.parse(error);
-                this.notificationHandler(result?.label, result?.msg, result?.status);
-            })
-            .finally(()=>{
-              //console.log('finally ');
-            })
         }
 
     }
 
 
+    fetchProductDetails(recordId){
+        getProductDetails({
+            productId : recordId
+        })
+        .then((result)=>{
+            //console.log('result '+result);
+            this.productDetails         = JSON.parse(result);
+            this.proCode                = this.productDetails.proCode;
+            this.proUom                 = this.productDetails.proUom;
+            this.proFamily              = this.productDetails.family;
+            this.proName                = this.productDetails.name;
+            this.proUnitPrice           = this.productDetails.unitPrice;
+            this.proWestCode            = this.productDetails.westCode;
+            this.proFullDesc            = this.productDetails.fullDesc;
+            this.proImg                 = this.productDetails.imgSrc;
+            this.proGst                 = this.productDetails.gst;
+        })
+        .catch((error)=>{
+            //console.log('error '+error);
+            console.log('in catch '+JSON.stringify(error));
+            let result    = JSON.parse(error);
+            this.notificationHandler(result?.label, result?.msg, result?.status);
+        })
+        .finally(()=>{
+          //console.log('finally ');
+        })
+    }
     // addToCart(){
 
     //     let proQty      = this.template.querySelector("[data-field='proQty']").value;
@@ -246,6 +252,124 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
     // }
 
 
+    handleBack(event){
+        console.log('inside back');
+        event.preventDefault();
+
+        let item   = event.target.dataset.item;
+        let type   = event.target.dataset.type;
+        let breadItems = JSON.parse(JSON.stringify(this.breadcurmbs));
+        console.log('e '+item);
+        console.log('e '+type);
+
+        // this.spinnerStatus           = false;
+        // this.isModelLoaded           = false;
+        let pageName = 'Shop';
+        let pageType = 'comm__namedPage';
+        let curObj   = {};
+
+        if(type == 'home'){
+            console.log('inside home');
+            this.handleGoBack({},pageName,pageType);
+
+        }else if(type == 'model'){
+            // this.isProductLoaded  = false;
+            // this.productList      = [];
+            // this.currentModel     = item;
+            console.log('bef '+JSON.stringify(breadItems));
+            breadItems = this.setBreadCrumb(item,breadItems);
+            console.log('aft '+JSON.stringify(breadItems));
+            curObj.returnUrl         = btoa(JSON.stringify(breadItems));
+            curObj.returnBy          = 'model';
+            curObj.returnKey         = item;
+            this.handleGoBack(curObj,pageName,pageType);
+
+
+        }else if(type == 'category'){
+            // this.isProductLoaded  = false;
+            // this.productList      = [];
+            // this.currentCategory  = item;
+            console.log('bef '+JSON.stringify(breadItems));
+            breadItems = this.setBreadCrumb(item,breadItems);
+            console.log('aft '+JSON.stringify(breadItems));
+            curObj.returnUrl         = btoa(JSON.stringify(breadItems));
+            curObj.returnKey         = item;
+            curObj.returnBy          = 'category';
+            this.handleGoBack(curObj,pageName,pageType);
+
+
+        }else if(type == 'self'){
+            this.fetchProductDetails(this.recId);
+        }
+    }
+
+    handleGoBack(obj,pageName,pageType){
+
+        let objVal   = JSON.stringify(obj);
+        console.log('called '+objVal);
+        let loadBy      = obj?.returnBy;
+        let returnUrl   = obj?.returnUrl;
+        console.log('called '+loadBy);
+        console.log('called '+returnUrl);
+
+
+        if(objVal === '{}'){
+            console.log('inside blank');
+            this[NavigationMixin.Navigate]({
+                type: pageType,
+                attributes: {
+                    pageName: pageName,
+                }
+            });
+
+        }else{
+            console.log('inside not blank');
+
+            this[NavigationMixin.Navigate]({
+                type: pageType,
+                attributes: {
+                    pageName: pageName,
+                },
+                state: obj
+            });
+        }
+    }
+
+
+    setBreadCrumb(val,breadItems){
+
+        const objIdToFind            = val;
+        const indexOfObj             = breadItems.findIndex(p => p.label === objIdToFind);
+
+
+        // if (indexOfObj == -1) {            // As find return object else undefined
+        //     let breadCurmbObj        =  {
+        //         label    : val,
+        //         name     : val,
+        //         type     : type,
+        //         isActive : true
+        //     };
+
+        //     this.breadcurmbs.forEach(obj => {
+        //         obj.isActive = false;
+        //       });
+        //     this.breadcurmbs.push(breadCurmbObj);
+
+        // }else
+        if(indexOfObj != -1){
+            // console.log('in index '+index);
+            breadItems.splice(indexOfObj+1);
+            breadItems[indexOfObj].isActive = true;
+        }
+
+
+        // console.log('array '+objIdToFind);
+        // console.log('this.breadcurmbs '+JSON.stringify(breadItems));
+
+        //this.breadcurmbs  = breadItems;
+        return breadItems;
+
+    }
 
     // ===================== handle Navigation handler ===============================
     handleNavigation(event){
@@ -279,6 +403,9 @@ export default class ProductPreview extends NavigationMixin(LightningElement) {
         });
 
     }
+
+
+
 
 
     // ===================== toast notification handler ===============================

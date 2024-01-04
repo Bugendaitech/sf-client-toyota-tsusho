@@ -2,7 +2,7 @@
  * @description       :
  * @author            : Anshul Kanaujia
  * @group             : BT Team
- * @last modified on  : 12-27-2023
+ * @last modified on  : 01-05-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public without sharing class StockProducts_Ctrl {
@@ -72,6 +72,8 @@ public without sharing class StockProducts_Ctrl {
                                                     Product2Id IN : warehouseProducts
                                                 AND
                                                     Pricebook2Id =: pricebookId
+                                                AND
+                                                    Product2.IsActive = true
                                                 WITH
                                                     USER_MODE];
             System.debug('pbeList  ' + pbeList);
@@ -129,6 +131,8 @@ public without sharing class StockProducts_Ctrl {
                                                     Product2Id IN : mapOfStock.keySet()
                                                 AND
                                                     Pricebook2Id =: pricebookId
+                                                AND
+                                                    Product2.IsActive = true
                                                 WITH
                                                     USER_MODE];
 
@@ -360,6 +364,8 @@ public without sharing class StockProducts_Ctrl {
         public String proImage;
         @AuraEnabled
         public Decimal inStock;
+        @AuraEnabled
+        public String badgeClass;
 
         public StockProducts_Wrapper(PricebookEntry priceBookObj, Decimal inStock){
 
@@ -375,6 +381,7 @@ public without sharing class StockProducts_Ctrl {
             this.proPrice     = priceBookObj.UnitPrice;
             this.proImage     = priceBookObj.Product2.Product_Image__c;
             this.inStock      = inStock;
+            this.badgeClass   = inStock > 0 ? 'slds-badge cus-badge-success' : 'slds-badge cus-badge-danger';
 
         }
     }

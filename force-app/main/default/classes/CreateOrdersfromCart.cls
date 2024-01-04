@@ -84,11 +84,11 @@ public without sharing class CreateOrdersfromCart {
 
 
     @AuraEnabled
-    public static String createOrders(String orderDetails, String lineItems, String address){
+    public static String createOrders(String orderDetails, String lineItems, String address,String orderType){
         try {
             User currentUser = GetLoggedInUserDetails_Ctrl.getUserDetails();
 
-            Contact accForAddr = [SELECT Id,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
+            Contact accForAddr = [SELECT Id,AccountId,MailingStreet, MailingCity, MailingState, MailingPostalCode,MailingCountry
                                   FROM Contact 
                                   WHERE Id =: address];
             //Map<String, Object> orderData = (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
@@ -97,7 +97,7 @@ public without sharing class CreateOrdersfromCart {
             List<OrderItem>  lineItemData   = (List<OrderItem>) JSON.deserialize(lineItems, List<OrderItem>.class);
             System.debug('lineItemsData ::'+lineItemData);
 
-            String accId                    = currentUser.accountId;
+            String accId                    = orderType == 'Regular'? currentUser.accountId : accForAddr.AccountId;
             
             Set<Id> proIds         = new Set<Id>();
             for(OrderItem ordItem : lineItemData){
@@ -114,17 +114,18 @@ public without sharing class CreateOrdersfromCart {
             Id contractId = conData.id;
 
 
-            orderData.Type               =  'Regular';
+            orderData.Type               =  orderType == 'Regular' ? 'Regular' : 'Back Order' ;
             orderData.EffectiveDate      =  Date.today(); 
             orderData.ContractId         =  conData.Id;
             orderData.Status             = 'Draft';
             orderData.AccountId          = accId;
-            orderData.BillToContactId    = currentUser.contactId;
-            orderData.ShippingPostalCode  = accForAddr.MailingPostalCode;
-            orderData.ShippingStreet      = accForAddr.MailingStreet;
-            orderData.ShippingState       = accForAddr.MailingState;
-            orderData.ShippingCity        = accForAddr.MailingCity;
-
+            orderData.BillToContactId    = orderType == 'Regular'? currentUser.contactId: accForAddr.Id;
+            if(orderType == 'Regular'){
+                orderData.ShippingPostalCode  = accForAddr.MailingPostalCode;
+                orderData.ShippingStreet      = accForAddr.MailingStreet;
+                orderData.ShippingState       = accForAddr.MailingState;
+                orderData.ShippingCity        = accForAddr.MailingCity;
+            }
             List<String> HOAddress        = getHeadOfficeAddress();
             system.debug('ho Addrrr---->>'+HOAddress);
             orderData.BillingCity         = HOAddress[1];
@@ -202,8 +203,12 @@ public without sharing class CreateOrdersfromCart {
             // currNotification.send(recepients);
             
 
-
-            return 'success';
+            if(orderType == 'backorder'){
+                return orderId;
+            }
+            else{
+                return 'success';
+            }
         }
         catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

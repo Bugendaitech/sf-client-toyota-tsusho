@@ -2,7 +2,7 @@
  * @description       : All Cart related functionality (Add,Increase,Decrease,Remove,TotalCount,All Products in Cart)
  * @author            : Anshul Kanaujia
  * @group             : BT Team
- * @last modified on  : 12-26-2023
+ * @last modified on  : 01-03-2024
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class AddToCart_Ctrl {
@@ -404,13 +404,13 @@ public with sharing class AddToCart_Ctrl {
                                                         Product__r.Name,
                                                         Product__r.Description,
                                                         Product__r.West_Material_Code__c,
-                                                        // Product__r.GST__c,
+                                                        Product__r.GST__c,
                                                         Product__r.UOM__c,
                                                         Product__r.HSN_Code__c
                                                     FROM
                                                         Cart__c
                                                     WHERE
-                                                        Outlet__c =: contactId
+                                                        Outlet__c    =: contactId
                                                     AND
                                                         Warehouse__c =: warehouseId
                                                     WITH
@@ -425,6 +425,7 @@ public with sharing class AddToCart_Ctrl {
 
         Map<Id,Decimal> pricebookMap       = getPriceBookMap(allCartProductsId);
 
+        Decimal gstVal                     = 0;
         Decimal gstAmt                     = 0;
         Decimal totalGstAmt                = 0;
         Decimal totalExeAmt                = 0;
@@ -435,20 +436,27 @@ public with sharing class AddToCart_Ctrl {
 
             if(pricebookMap.containsKey(cartItem.Product__c)){
 
-                CartItem_Wrapper cartWrap                            = new CartItem_Wrapper(cartItem,pricebookMap.get(cartItem.Product__c));
+                CartItem_Wrapper cartWrap   = new CartItem_Wrapper(cartItem,pricebookMap.get(cartItem.Product__c));
 
                 gstAmt      = gstAmt + cartWrap.gstAmt;
                 totalGstAmt = totalGstAmt + cartWrap.totGstAmt;
                 totalExeAmt = totalExeAmt + cartWrap.exeAmt;
                 totalIncAmt = totalIncAmt + cartWrap.incAmt;
 
-                // if(cartItemMain.containsKey(cartItem.Product__r.GST__c)){
-                //     cartItemMain.get(cartItem.Product__r.GST__c).add(cartWrap);
-                // }else{
-                //     List<CartItem_Wrapper> cartItemsList                = new List<CartItem_Wrapper>();
-                //     cartItemsList.add(cartWrap);
-                //     cartItemMain.put(cartItem.Product__r.GST__c,cartItemsList);
-                // }
+                if(String.isBlank(cartItem.Product__r.GST__c)){
+                    gstVal  = 0.0;
+                }else{
+                    gstVal  = Decimal.valueOf(cartItem.Product__r.GST__c).setScale(2);
+                }
+
+
+                if(cartItemMain.containsKey(gstVal)){
+                    cartItemMain.get(gstVal).add(cartWrap);
+                }else{
+                    List<CartItem_Wrapper> cartItemsList                = new List<CartItem_Wrapper>();
+                    cartItemsList.add(cartWrap);
+                    cartItemMain.put(gstVal,cartItemsList);
+                }
             }
 
         }
@@ -534,18 +542,18 @@ public with sharing class AddToCart_Ctrl {
      */
     private static Map<Id,Decimal> getPriceBookMap(Set<Id> allCartProductsId){
 
-        Map<Id,Decimal> pricebookMap     = new Map<Id,Decimal>();
-        List<PricebookEntry> pbeList     =       [SELECT
-                                                    Product2Id,
-                                                    UnitPrice
-                                                FROM
-                                                    PricebookEntry
-                                                WHERE
-                                                    Product2Id IN : allCartProductsId
-                                                AND
-                                                    Pricebook2Id =: pricebookId
-                                                WITH
-                                                    USER_MODE];
+        Map<Id,Decimal> pricebookMap     =  new Map<Id,Decimal>();
+        List<PricebookEntry> pbeList     =  [SELECT
+                                                Product2Id,
+                                                UnitPrice
+                                            FROM
+                                                PricebookEntry
+                                            WHERE
+                                                Product2Id IN : allCartProductsId
+                                            AND
+                                                Pricebook2Id =: pricebookId
+                                            WITH
+                                                USER_MODE];
 
 
         if(!pbeList.isEmpty()){
@@ -597,10 +605,17 @@ public Class CartItem_Wrapper{
         this.proUom         = cartObj.Product__r.UOM__c;
         this.description    = cartObj.Product__r.Description;
         this.westCode       = cartObj.Product__r.West_Material_Code__c;
-        // this.gst            = cartObj.Product__r.GST__c;
+
+        // cast value of gst from string to decimal
+        if(String.isBlank(cartObj.Product__r.GST__c)){
+            this.gst  = 0.0;
+        }else{
+            this.gst  = Decimal.valueOf(cartObj.Product__r.GST__c).setScale(2);
+        }
+
         this.qty            = cartObj.Quantity__c;
         this.price          = unitPrice;
-        // this.gstAmt         = (unitPrice / 100) * cartObj.Product__r.GST__c;
+        this.gstAmt         = (unitPrice / 100) * this.gst;
         this.exeAmt         = unitPrice * cartObj.Quantity__c;
         this.incAmt         = (unitPrice + this.gstAmt ) * cartObj.Quantity__c;
         this.totGstAmt      = this.gstAmt  * cartObj.Quantity__c;

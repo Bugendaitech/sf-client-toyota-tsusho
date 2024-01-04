@@ -2,7 +2,7 @@
   @description       :
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             :
-  @last modified on  : 12-23-2023
+  @last modified on  : 01-03-2024
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -18,11 +18,39 @@
                     padding="around-small">
                         <div class="card">
                             <!-- <h4>Product Image</h4> -->
-                            <lightning-button onclick={handleNavigation} class="slds-button"
+                            <div class="breadcumb-box breadcumb">
+                                <ul>
+                                    <li>
+                                        <span>
+                                            <lightning-icon
+                                                size="x-small"
+                                                icon-name="utility:home"
+                                                alternative-text="Home"
+                                                title="Home"
+                                                onclick={handleBack}
+                                                data-item="home"
+                                                data-type="home"
+                                            ></lightning-icon>
+                                        </span>
+                                    </li>
+
+                                    <template for:each={breadcurmbs} for:item="crumb">
+                                        <template lwc:if={crumb.isActive}>
+                                           <li key={crumb.id}><span onclick={handleBack} data-type={crumb.type} data-item={crumb.name}>{crumb.label}</span></li>
+                                        </template>
+
+                                        <template lwc:else>
+                                           <li key={crumb.id}><a href="#" onclick={handleBack} data-type={crumb.type} data-item={crumb.name}>{crumb.label}</a></li>
+                                        </template>
+                                     </template>
+                                </ul>
+                             </div>
+
+                            <!-- <lightning-button onclick={handleNavigation} class="slds-button"
                                 data-type="standard__namedPage"
                                 data-name="home"
                                 label="Go Back">
-                            </lightning-button>
+                            </lightning-button> -->
 
                             <div class="pro-img slds-text-align_center">
                                 <img src={proImg} alt={proFullDesc}>

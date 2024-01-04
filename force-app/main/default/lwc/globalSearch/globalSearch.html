@@ -1,61 +1,106 @@
 <!--
-  @description       :
-  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
-  @group             :
-  @last modified on  : 12-28-2023
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
--->
-<template>
-    <!-- <div class="container"> -->
-    <!-- <div class="search-container-box"> -->
-    <div class="homeslider">
-       <div class="slider">
-          <template if:true={sliderArray}>
-             <template for:each={sliderArray} for:item="newsitem">
-                <div class={newsitem.Slide_Class__c} key={newsitem.Id}>
-                   <img src={newsitem.Image_URL__c} alt="" key={newsitem.Id}>
+   @description       :
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             :
+   @last modified on  : 01-04-2024
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   -->
+   <template>
+      <!-- <div class="container"> -->
+      <!-- <div class="search-container-box"> -->
 
-                   <!-- Global Search -->
-                   <div class="slds-align_absolute-center search-container">
-                      <input type="text" placeholder="Search here..." class="search-input" onclick={showProductList} onkeyup={handleOnChange}/>
-                      <button class="search-button" onclick={handleSearch}>
-                         <lightning-icon size="xx-large" class="slds-icon sds-icon" icon-name="utility:search"></lightning-icon>
-                         Search
-                      </button>
-                      <template if:true={isProductListVisible}>
-                         <div class="dropdown">
-                            <table>
-                               <template for:each={productData} for:item="it">
-                                  <tr key={it.Product2.Id} onclick={handleProductSearch} data-label="view-product" data-id={it.Product2.Id} data-type="comm__namedPage">
-                                     <td><div class="sug-img"><img src={it.Product2.Product_Image__c} style="width:inherit;"/></div></td>
-                                     <td>{it.Product2.Name}</td>
-                                     <td>{it.Product2.Product_Price__c}</td>
-                                  </tr>
-                               </template>
-                            </table>
-                            <!-- <br> -->
-                            <!-- <p class="slds-align_absolute-center" onclick={handleNavigate}>Show All Products</p> -->
-                         </div>
-                      </template>
-                   </div>
-                     <!-- Global Search Ends-->
-                </div>
-       </div>
-       </template>
-       <div class="navigation">
-       <lightning-icon icon-name="utility:chevronleft" alternative-text="Left arrow" title="Click here previous"
-          class="btn-class prev-btn">
-       </lightning-icon>
-       <lightning-icon icon-name="utility:chevronright" alternative-text="Right arrow" title="Click here next"
-          class="btn-class next-btn">
-       </lightning-icon>
-       </div>
-       <div class="navigation-visibility">
-       <template for:each={sliderArray} for:item="newsitem">
-       <div class={newsitem.Icon_Class__c} key={newsitem.Id}></div>
-       </template>
-       </div>
-       </template>
-    </div>
-    </div>
- </template>
+      <c-container>
+         <template lwc:if={needToShowFull}>
+            <div class="homeslider">
+               <div class="slider">
+                  <template if:true={sliderArray}>
+                     <template for:each={sliderArray} for:item="newsitem">
+
+                        <div class={newsitem.Slide_Class__c} key={newsitem.Id}>
+                           <img src={newsitem.Image_URL__c} alt="">
+
+                           <!-- Global Search -->
+                           <div class="slds-align_absolute-center search-container">
+                              <input type="text" placeholder="Search here..." class="search-input" onclick={showProductList} onkeyup={handleOnChange}/>
+                              <button class="search-button" onclick={handleSearch}>
+                                 <lightning-icon size="xx-large" class="slds-icon sds-icon" icon-name="utility:search"></lightning-icon>
+                                 Search
+                              </button>
+                              <template if:true={isProductListVisible}>
+                                 <div class="dropdown">
+                                    <table>
+                                       <template for:each={productData} for:item="it">
+                                          <tr key={it.Product2.Id} onclick={handleProductSearch} data-label="product-details" data-id={it.Product2.Id} data-name={it.Product2.Name} data-type="comm__namedPage">
+                                             <td>
+                                                <div class="sug-img"><img src={it.Product2.Product_Image__c} style="width:inherit;"/></div>
+                                             </td>
+                                             <td>{it.Product2.Name}</td>
+                                             <td>{it.Product2.Product_Price__c}</td>
+                                          </tr>
+                                       </template>
+                                    </table>
+                                    <!-- <br> -->
+                                    <!-- <p class="slds-align_absolute-center" onclick={handleNavigate}>Show All Products</p> -->
+                                 </div>
+                              </template>
+                           </div>
+                           <!-- Global Search Ends-->
+
+                        </div>
+
+                     </template>
+
+                     <div class="navigation">
+                        <lightning-icon icon-name="utility:chevronleft" alternative-text="Left arrow" title="Click here previous"
+                           class="btn-class prev-btn">
+                        </lightning-icon>
+                        <lightning-icon icon-name="utility:chevronright" alternative-text="Right arrow" title="Click here next"
+                           class="btn-class next-btn">
+                        </lightning-icon>
+                     </div>
+
+                     <div class="navigation-visibility">
+                        <template for:each={sliderArray} for:item="newsitem">
+                           <div class={newsitem.Icon_Class__c} key={newsitem.Id}></div>
+                        </template>
+                     </div>
+                  </template>
+               </div>
+            </div>
+         </template>
+
+         <template lwc:else>
+            <!-- Global Search -->
+            <div class="search-main">
+               <div class="">
+                  <div class="slds-align_absolute-center only-search-container">
+                     <input type="text" placeholder="Search here..." class="search-input" onclick={showProductList} onkeyup={handleOnChange}/>
+                     <button class="search-button" onclick={handleSearch}>
+                        <lightning-icon size="xx-large" class="slds-icon sds-icon" icon-name="utility:search"></lightning-icon>
+                     </button>
+                     <template if:true={isProductListVisible}>
+                        <div class="dropdown">
+                           <table>
+                              <template for:each={productData} for:item="it">
+                                 <tr key={it.Product2.Id} onclick={handleProductSearch} data-label="product-details" data-id={it.Product2.Id} data-name={it.Product2.Name} data-type="comm__namedPage">
+                                    <td>
+                                       <div class="sug-img"><img src={it.Product2.Product_Image__c} style="width:inherit;"/></div>
+                                    </td>
+                                    <td>{it.Product2.Name}</td>
+                                    <td>{it.Product2.Product_Price__c}</td>
+                                 </tr>
+                              </template>
+                           </table>
+                           <!-- <br> -->
+                           <!-- <p class="slds-align_absolute-center" onclick={handleNavigate}>Show All Products</p> -->
+                        </div>
+                     </template>
+                  </div>
+               </div>
+            </div>
+            <!-- Global Search Ends-->
+         </template>
+      </c-container>
+
+
+   </template>
