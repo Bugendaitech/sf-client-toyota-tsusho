@@ -26,9 +26,9 @@ public without sharing class OrderApprovalHandler {
             orderItemIds.add(item.Product2Id);
         }
 
-        //get All stocks related to orderItems   Warehouse__r.Warehouse_Code__c,
+        //get All stocks related to orderItems   
         List<Stock__c> stocks = [SELECT Id, Product__c,Product__r.ProductCode,Product__r.Name,Warehouse__c,
-                                       Quantity__c
+                                       Quantity__c,Warehouse__r.Warehouse_Code__c
                                         FROM Stock__c WHERE Product__c IN: orderItemIds AND Warehouse__c =: CurrentWarehouseId];
 
         
